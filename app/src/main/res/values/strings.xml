@@ -1,0 +1,60 @@
+<!--
+  ~ Copyright (C) 2019 Andika Wasisto
+  ~
+  ~ This file is part of OpenSIAK.
+  ~
+  ~ OpenSIAK is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ OpenSIAK is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="app_name">OpenSIAK</string>
+    <string name="starting_error_message">An error occurred while starting the application. If the problem persists, try to clear application data.</string>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="close">Close</string>
+    <string name="retry">Retry</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_in_with_your_ui_account">Sign in with your username and password according to your UI account</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="next">Next</string>
+    <string name="wrong_username_or_password">Wrong username or password</string>
+    <string name="account_already_exists">Account already exists</string>
+    <string name="about_opensiak">About OpenSIAK</string>
+    <string name="version_text">Version %s</string>
+    <string name="copyright_text">&#169; %d Andika Wasisto</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="open_source_licenses">Open source licenses</string>
+    <string name="source_code">Source code</string>
+    <string name="privacy_policy_url">https://github.com/awasisto/opensiak/wiki/Privacy-Policy</string>
+    <string name="source_code_url">https://github.com/awasisto/opensiak</string>
+    <string name="summary">Summary</string>
+    <string name="student_photo">Student photo</string>
+    <string name="cgpa">CGPA</string>
+    <string name="cgpa_text">%.2f</string>
+    <string name="total_credits_earned">Total credits earned</string>
+    <string name="total_credits_earned_text">%d</string>
+    <string name="grade_statistics">Grade statistics</string>
+    <string name="grade">Grade</string>
+    <string name="total">Total</string>
+    <string name="schedule">Schedule</string>
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wed">WED</string>
+    <string name="thu">THU</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
+    <string name="sun">SUN</string>
+    <string name="room_text">Room %s</string>
+    <string name="no_classes">No classes</string>
+</resources>

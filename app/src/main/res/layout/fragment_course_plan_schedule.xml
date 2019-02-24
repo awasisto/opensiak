@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2019 Andika Wasisto
+  ~
+  ~ This file is part of OpenSIAK.
+  ~
+  ~ OpenSIAK is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ OpenSIAK is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.wasisto.opensiak.ui.siak.courseplanschedule.CoursePlanScheduleViewModel"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshingWhen="@{viewModel.isLoading}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="16dp"
+                android:clipToPadding="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:goneUnless="@{viewModel.shouldShowSchedule}"
+                app:days="@{viewModel.days}"
+                tools:listitem="@layout/item_day"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/graduation_cap"
+            android:drawablePadding="16dp"
+            android:gravity="center"
+            android:text="@string/no_classes"
+            android:textSize="20sp"
+            android:fontFamily="@font/nunito_sans"
+            app:goneUnless="@{viewModel.shouldShowNoClassesIndicator}"
+            tools:visibility="gone"/>
+
+        <include
+            layout="@layout/layout_error"
+            app:shouldShowError="@{viewModel.shouldShowError}"
+            tools:visibility="gone"/>
+    </FrameLayout>
+</layout>
