@@ -19,6 +19,7 @@
 
 package com.wasisto.opensiak.ui.signin
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -29,6 +30,7 @@ import com.wasisto.opensiak.R
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import com.wasisto.opensiak.databinding.ActivitySignInBinding
 import com.wasisto.opensiak.ui.about.AboutActivity
@@ -57,6 +59,15 @@ class SignInActivity : DaggerAppCompatActivity() {
         KeyboardVisibilityEvent.setEventListener(this) { isOpen ->
             aboutButton.visibility = if (isOpen) View.GONE else View.VISIBLE
         }
+
+        viewModel.isLoading.observe(this, Observer { isLoading ->
+            if (isLoading) {
+                currentFocus?.let { view ->
+                    (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.hideSoftInputFromWindow(
+                        view.windowToken, 0)
+                }
+            }
+        })
 
         viewModel.launchSiakActivityEvent.observe(this, Observer {
             startActivity(Intent(this, SiakActivity::class.java))
