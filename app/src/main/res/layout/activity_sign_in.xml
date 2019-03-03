@@ -92,6 +92,8 @@
                                 android:layout_height="wrap_content"
                                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890."
                                 android:inputType="text|textNoSuggestions"
+                                android:imeOptions="actionNext"
+                                android:singleLine="true"
                                 android:text="@={viewModel.username}"
                                 android:focusable="@{!viewModel.shouldDisableForm}"
                                 android:focusableInTouchMode="@{!viewModel.shouldDisableForm}"/>
