@@ -26,6 +26,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
 import android.widget.TextView
+import com.wasisto.opensiak.R
 
 @BindingAdapter("goneUnless")
 fun goneUnless(view: View, visible: Boolean) {
@@ -39,8 +40,9 @@ fun refreshingWhen(swipeRefreshLayout: SwipeRefreshLayout, refreshing: Boolean) 
 
 @BindingAdapter("photoData")
 fun photoData(imageView: ImageView, photoData: ByteArray?) {
-    photoData?.let {
-        BitmapFactory.decodeByteArray(photoData, 0, photoData.size)?.let { bitmap ->
+    if (photoData != null) {
+        val bitmap = BitmapFactory.decodeByteArray(photoData, 0, photoData.size)
+        if (bitmap != null) {
             imageView.setImageBitmap(
                 if (bitmap.width > bitmap.height) {
                     Bitmap.createBitmap(
@@ -60,7 +62,11 @@ fun photoData(imageView: ImageView, photoData: ByteArray?) {
                     )
                 }
             )
+        } else {
+            imageView.setImageResource(R.drawable.empty_student_photo)
         }
+    } else {
+        imageView.setImageResource(R.drawable.empty_student_photo)
     }
 }
 
