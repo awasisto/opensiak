@@ -26,6 +26,6 @@
     <color name="dark_orange">#cc7a00</color>
     <color name="splash_text">#32000000</color>
     <color name="status_bar">#33000000</color>
-    <color name="navigation_bar">#ffffff</color>
+    <color name="navigation_bar">#fafafa</color>
     <color name="navigation_bar_divider">#e0e0e0</color>
 </resources>
