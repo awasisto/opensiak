@@ -20,6 +20,7 @@
 
 <resources>
     <color name="orange_500">#ff9800</color>
+    <color name="orange_700">#f57c00</color>
     <color name="blue_a200">#448aff</color>
     <color name="light_gray">#eeeeee</color>
     <color name="dark_orange">#cc7a00</color>
