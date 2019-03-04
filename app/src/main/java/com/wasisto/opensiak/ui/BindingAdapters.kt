@@ -39,15 +39,28 @@ fun refreshingWhen(swipeRefreshLayout: SwipeRefreshLayout, refreshing: Boolean) 
 
 @BindingAdapter("photoData")
 fun photoData(imageView: ImageView, photoData: ByteArray?) {
-    if (photoData != null) {
-        val bitmap = BitmapFactory.decodeByteArray(photoData, 0, photoData.size)
-        imageView.setImageBitmap(
-            if (bitmap.width > bitmap.height) {
-                Bitmap.createBitmap(bitmap, bitmap.width / 2 - bitmap.height / 2, 0, bitmap.height, bitmap.height)
-            } else {
-                Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.width)
-            }
-        )
+    photoData?.let {
+        BitmapFactory.decodeByteArray(photoData, 0, photoData.size)?.let { bitmap ->
+            imageView.setImageBitmap(
+                if (bitmap.width > bitmap.height) {
+                    Bitmap.createBitmap(
+                        bitmap,
+                        bitmap.width / 2 - bitmap.height / 2,
+                        0,
+                        bitmap.height,
+                        bitmap.height
+                    )
+                } else {
+                    Bitmap.createBitmap(
+                        bitmap,
+                        0,
+                        0,
+                        bitmap.width,
+                        bitmap.width
+                    )
+                }
+            )
+        }
     }
 }
 
