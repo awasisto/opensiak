@@ -48,7 +48,7 @@
         android:layout_gravity="center_horizontal"
         android:fontFamily="@font/nunito_sans_bold"
         android:text="@string/app_name"
-        android:textColor="@color/splash_text"
+        android:textColor="@color/launcher_text"
         android:textSize="36sp"/>
 
     <View
