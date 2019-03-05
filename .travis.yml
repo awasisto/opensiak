@@ -9,6 +9,8 @@ android:
     - sys-img-armeabi-v7a-android-22
 
 before_script:
+  - openssl aes-256-cbc -K $encrypted_fcdb820f5189_key -iv $encrypted_fcdb820f5189_iv -in release-keystore-files.tar.enc -out release-keystore-files.tar -d
+  - tar xvf release-keystore-files.tar
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
@@ -23,3 +25,14 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
+
+deploy:
+  provider: releases
+  api_key:
+    secure: ShOIDeQic6h0JQal74wxOXMpkw/Ic3Ck2V/jnB75E8RrPzacTzAMqFGUFcgig42tMEbpi/C9K0Az01CGx4IM6wE91ehu+PvUj2em75T9QRVGErEMMsTDn7Dg85sUAjC1PwlxYNH5tlDyQvdmLwp61iXe9b5WjAqEd7rXuInhiC3+4ZzLbQ+dZ/zlZAAiJfHdE63Srn+4HO53LxeNGaV6OzxmMeHZeF3k8QEnnnSMC4JCUvVr6w69kH7Z08e7KUEX/DpAnFb4Ub1UoNidOEgkZtWZ9VscZjvkgE11Z8d9FK3zKcPjOIWHeWLPURy2jvmz87Eopq+TJNNEWgZfMeZko1dHxecWAgme2lEL/eYEwYOkTNWlI0UZc4mMvYe9S4bQvYQJttxRB629tN/JzkNUR2ubPyrYNzPceFZS7jPyMuk8pc1qHFi23jM/JutG7ib5okEgsPZ6VNDgQV/lZl0GKDYKFAQJ2H5v+LqYpP/RW755kOdgzlOm0SsDV6j3+Yz6cc5XZu9tIl+lY9QzrJSOrQOzUysqVCO8iuHfgCSeHNX73zKNrS3aLZVkn4CVB/2Q+EbXF2RiYRuIYJW0w5Zy5Zg9PlN9SAsENZk3sP1hYVFs3W44SRRynkQOhOzb8nrOJAv8h1ha5Ltf5WJjD/PztdrjxrS9dIWxZl9lUn7U3AQ=
+  file_glob: true
+  file: app/build/outputs/apk/prod/release/*.apk
+  skip_cleanup: true
+  body: Automated release from Travis CI
+  on:
+    tags: true
