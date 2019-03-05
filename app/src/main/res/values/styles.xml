@@ -36,8 +36,4 @@
     <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:fontFamily">@font/nunito_sans_semibold</item>
     </style>
-
-    <style name="NavigationDrawerItemTextAppearance">
-        <item name="android:fontFamily">@font/nunito_sans_bold</item>
-    </style>
 </resources>
