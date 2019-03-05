@@ -111,7 +111,7 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
     }
 
     private fun doSignIn() {
-        val credentials = Credentials(username.value.orEmpty(), password.value.orEmpty())
+        val credentials = Credentials(username.value.orEmpty().toLowerCase(), password.value.orEmpty())
         signInResult.addSource(signInUseCase.executeAsync(credentials)) { result ->
             if (result is UseCase.Result.Success) {
                 Timber.d("result.data: %s", result.data)
