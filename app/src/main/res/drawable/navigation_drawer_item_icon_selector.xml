@@ -18,15 +18,7 @@
   ~ along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<resources>
-    <color name="orange_500">#ff9800</color>
-    <color name="orange_700">#f57c00</color>
-    <color name="blue_a200">#448aff</color>
-    <color name="light_gray">#eeeeee</color>
-    <color name="dark_orange">#cc7a00</color>
-    <color name="unchecked_navigation_drawer_item_icon">#757575</color>
-    <color name="launcher_text">#cdcdcd</color>
-    <color name="status_bar">#33000000</color>
-    <color name="navigation_bar">#fafafa</color>
-    <color name="navigation_bar_divider">#e0e0e0</color>
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/orange_700" android:state_checked="true"/>
+    <item android:color="@color/unchecked_navigation_drawer_item_icon"/>
+</selector>
