@@ -60,7 +60,7 @@ android {
         releaseKeystoreProperties.load(releaseKeystorePropertiesFile.newDataInputStream())
         signingConfigs {
             release {
-                storeFile releaseKeystoreProperties['storeFile']
+                storeFile rootProject.file(releaseKeystoreProperties['storeFileName'])
                 storePassword releaseKeystoreProperties['storePassword']
                 keyAlias releaseKeystoreProperties['keyAlias']
                 keyPassword releaseKeystoreProperties['keyPassword']
