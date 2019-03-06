@@ -20,14 +20,28 @@
 package com.wasisto.opensiak.domain
 
 import com.wasisto.opensiak.data.account.AccountDataSource
+import com.wasisto.opensiak.data.siakng.SiakNgDataSource
 import com.wasisto.opensiak.model.Account
+import com.wasisto.opensiak.model.Credentials
 import com.wasisto.opensiak.util.executor.ExecutorProvider
 import javax.inject.Inject
 
 class GetActiveAccountUseCase @Inject constructor(
-    executorProvider: ExecutorProvider,
-    private val accountDataSource: AccountDataSource
+    private val executorProvider: ExecutorProvider,
+    private val accountDataSource: AccountDataSource,
+    private val siakNgDataSource: SiakNgDataSource
 ) : UseCase<Unit, Account>(executorProvider) {
 
-    override fun execute(params: Unit) = accountDataSource.getLastAccountActive()
+    override fun execute(params: Unit): Account {
+        val account = accountDataSource.getLastAccountActive()
+
+        // refresh cached student photo in background
+        executorProvider.computation().submit {
+            account.photoData = siakNgDataSource.getAcademicSummary(Credentials(account.username,
+                account.password)).studentPhotoData
+            accountDataSource.update(account)
+        }
+
+        return account
+    }
 }
