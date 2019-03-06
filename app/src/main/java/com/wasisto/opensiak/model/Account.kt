@@ -26,7 +26,7 @@ data class Account(
     val password: String,
     val name: String,
     val email: String,
-    val photoData: ByteArray,
+    var photoData: ByteArray,
     val lastActive: Date = Date()
 ) {
     override fun equals(other: Any?): Boolean {
