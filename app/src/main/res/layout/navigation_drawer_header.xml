@@ -52,7 +52,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="@string/student_photo"
-                app:photoData="@{viewModel.activeAccountPhotoData}"/>
+                app:photoData="@{viewModel.activeAccountPhotoData}"
+                tools:src="@drawable/empty_student_photo"/>
 
             <TextView
                 android:layout_width="wrap_content"
