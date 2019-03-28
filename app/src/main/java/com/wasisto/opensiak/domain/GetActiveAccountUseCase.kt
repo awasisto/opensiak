@@ -35,10 +35,14 @@ class GetActiveAccountUseCase @Inject constructor(
     override fun execute(params: Unit): Account {
         val account = accountDataSource.getLastAccountActive()
 
-        // refresh cached student photo in background
+        // refresh cached student data in the background
         executorProvider.computation().submit {
-            account.photoData = siakNgDataSource.getAcademicSummary(Credentials(account.username,
-                account.password)).studentPhotoData
+            val credentials = Credentials(account.username, account.password)
+            val academicSummary = siakNgDataSource.getAcademicSummary(credentials)
+            val studentProfile = siakNgDataSource.getStudentProfile(credentials)
+            account.name = academicSummary.studentName
+            account.email = studentProfile.uiEmail
+            account.photoData = academicSummary.studentPhotoData
             accountDataSource.update(account)
         }
 

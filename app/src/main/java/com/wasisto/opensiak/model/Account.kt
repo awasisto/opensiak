@@ -24,8 +24,8 @@ import java.util.Date
 data class Account(
     val username: String,
     val password: String,
-    val name: String,
-    val email: String,
+    var name: String,
+    var email: String,
     var photoData: ByteArray,
     val lastActive: Date = Date()
 ) {
