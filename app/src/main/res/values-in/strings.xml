@@ -19,7 +19,7 @@
   -->
 
 <resources>
-    <string name="starting_error_message">Terjadi kesalahan saat memulai aplikasi. Jika masalah terus terjadi, silahkan coba hapus data aplikasi.</string>
+    <string name="starting_error_message">Terjadi kesalahan saat menjalankan aplikasi. Silahkan coba hapus data aplikasi.</string>
     <string name="something_went_wrong">Terjadi kesalahan. Silahkan periksa koneksi internet Anda.</string>
     <string name="close">Tutup</string>
     <string name="retry">Coba lagi</string>
