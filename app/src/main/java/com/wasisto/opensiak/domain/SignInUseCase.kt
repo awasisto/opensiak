@@ -35,9 +35,9 @@ class SignInUseCase @Inject constructor(
 ) : UseCase<Credentials, Unit>(executorProvider) {
 
     override fun execute(params: Credentials) {
-        val academicSummaryFuture = executorProvider.computation()
+        val academicSummaryFuture = executorProvider.io()
             .submit(Callable { siakNgDataSource.getAcademicSummary(params) })
-        val studentProfileFuture = executorProvider.computation()
+        val studentProfileFuture = executorProvider.io()
             .submit(Callable { siakNgDataSource.getStudentProfile(params) })
 
         try {

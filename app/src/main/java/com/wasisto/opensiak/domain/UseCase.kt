@@ -28,7 +28,7 @@ abstract class UseCase<P, R> constructor(private val executorProvider: ExecutorP
     fun executeAsync(params: P): LiveData<Result<R>> {
         val result = MutableLiveData<Result<R>>()
         result.value = Result.Loading
-        executorProvider.computation().submit {
+        executorProvider.io().submit {
             try {
                 result.postValue(Result.Success(execute(params)))
             } catch (error: Throwable) {

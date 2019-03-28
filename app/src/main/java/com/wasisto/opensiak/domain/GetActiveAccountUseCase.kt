@@ -36,7 +36,7 @@ class GetActiveAccountUseCase @Inject constructor(
         val account = accountDataSource.getLastAccountActive()
 
         // refresh cached student data in the background
-        executorProvider.computation().submit {
+        executorProvider.io().submit {
             val credentials = Credentials(account.username, account.password)
             val academicSummary = siakNgDataSource.getAcademicSummary(credentials)
             val studentProfile = siakNgDataSource.getStudentProfile(credentials)
