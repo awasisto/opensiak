@@ -192,6 +192,10 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                             room = "3.3113"
                         )
                     )
+                ),
+                CoursePlanSchedule.Day(
+                    dayOfWeek = DayOfWeek.SATURDAY,
+                    classes = emptyList()
                 )
             )
         )
