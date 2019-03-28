@@ -18,7 +18,7 @@
   ~ along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/blue_a200"/>
-    <corners android:radius="4dp"/>
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/navigation_drawer_selected_item_background" android:state_checked="true"/>
+    <item android:drawable="@android:color/transparent"/>
+</selector>

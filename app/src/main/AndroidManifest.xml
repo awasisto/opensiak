@@ -36,30 +36,28 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-            android:theme="@style/AppTheme.DarkActionBar" />
+            android:name=".ui.about.AboutActivity"
+            android:label="@string/about_activity_title"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".ui.about.AboutActivity"
-            android:label="@string/about_activity_title"/>
-
-        <activity android:name=".ui.siak.SiakActivity"/>
+            android:name=".ui.siak.SiakActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".ui.signin.SignInActivity"
             android:label="@string/sign_in"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".ui.launcher.LauncherActivity">
+        <activity
+            android:name=".ui.launcher.LauncherActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts"/>
     </application>
 </manifest>

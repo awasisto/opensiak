@@ -20,7 +20,8 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -36,40 +37,47 @@
             type="String"/>
     </data>
 
-    <LinearLayout
-        android:id="@+id/classLayout"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:padding="8dp"
-        android:orientation="vertical"
-        android:gravity="bottom"
-        android:background="@drawable/class_background">
+        app:cardElevation="0dp"
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="@color/blue_500">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/classLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="?android:textColorPrimaryInverse"
-            android:text="@{name}"
-            tools:text="Software Engineering"/>
+            android:layout_margin="8dp"
+            android:orientation="vertical"
+            android:gravity="bottom">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?android:textColorPrimaryInverse"
-            android:text="@{time}"
-            tools:text="08:00 – 08:50"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="?android:textColorPrimaryInverse"
+                android:text="@{name}"
+                tools:text="Software Engineering"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?android:textColorPrimaryInverse"
-            android:text="@{@string/room_text(room)}"
-            tools:text="Room 2.2402"/>
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?android:textColorPrimaryInverse"
+                android:text="@{time}"
+                tools:text="08:00 – 08:50"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?android:textColorPrimaryInverse"
+                android:text="@{@string/room_text(room)}"
+                tools:text="Room 2.2402"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

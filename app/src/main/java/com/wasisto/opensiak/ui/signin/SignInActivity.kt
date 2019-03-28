@@ -31,6 +31,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.wasisto.opensiak.databinding.ActivitySignInBinding
 import com.wasisto.opensiak.ui.about.AboutActivity
@@ -53,8 +54,6 @@ class SignInActivity : DaggerAppCompatActivity() {
             setLifecycleOwner(this@SignInActivity)
             viewModel = this@SignInActivity.viewModel
         }
-
-        setSupportActionBar(toolbar)
 
         KeyboardVisibilityEvent.setEventListener(this) { isOpen ->
             aboutButton.visibility = if (isOpen) View.GONE else View.VISIBLE
@@ -83,6 +82,9 @@ class SignInActivity : DaggerAppCompatActivity() {
                 snackbar.setAction(R.string.retry) {
                     viewModel.onRetrySignInButtonClick()
                 }
+                val snackbarAction = snackbar.view.findViewById<TextView>(R.id.snackbar_action)
+                snackbarAction.isAllCaps = false
+                snackbarAction.letterSpacing = 0f
             }
             snackbar.show()
         })

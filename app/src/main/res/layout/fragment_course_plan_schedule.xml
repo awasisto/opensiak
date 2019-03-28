@@ -59,7 +59,6 @@
             android:gravity="center"
             android:text="@string/no_classes"
             android:textSize="20sp"
-            android:fontFamily="@font/nunito_sans"
             app:goneUnless="@{viewModel.shouldShowNoClassesIndicator}"
             tools:visibility="gone"/>
 

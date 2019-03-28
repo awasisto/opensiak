@@ -22,6 +22,7 @@ package com.wasisto.opensiak.ui.siak
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -46,13 +47,14 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
     private lateinit var errorDialog: AlertDialog
 
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_siak)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
         viewModel = ViewModelProviders.of(this@SiakActivity, viewModelFactory).get(SiakViewModel::class.java)
 
@@ -66,6 +68,19 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             .setPositiveButton(R.string.close) { _, _ ->  finish() }
             .setCancelable(false)
             .create()
+
+        actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.open_navigation_drawer,
+            R.string.close_navigation_drawer
+        ).apply {
+            isDrawerSlideAnimationEnabled = false
+            syncState()
+        }
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
 
         navigationView.setNavigationItemSelectedListener(this)
         navigationView.isSaveEnabled = false

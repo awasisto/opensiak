@@ -28,52 +28,60 @@
             name="viewModel"
             type="com.wasisto.opensiak.ui.siak.SiakViewModel"/>
     </data>
-    
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="172dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/header_background"
-            tools:ignore="ContentDescription"/>
+        android:layout_height="96dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical">
+            android:layout_gravity="bottom">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="@string/student_photo"
+                app:civ_border_color="@color/student_photo_border"
+                app:civ_border_width="2px"
                 app:photoData="@{viewModel.activeAccountPhotoData}"
-                tools:src="@drawable/empty_student_photo"/>
+                tools:src="@drawable/empty_student_photo"
+                tools:ignore="PxUsage"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="?android:textColorPrimaryInverse"
-                android:text="@{viewModel.activeAccountName}"
-                tools:text="Ali Connors"/>
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="?android:textColorPrimaryInverse"
-                android:text="@{viewModel.activeAccountEmail}"
-                tools:text="ali.connors@ui.example"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="?android:textColorPrimary"
+                    android:text="@{viewModel.activeAccountName}"
+                    tools:text="Ali Connors"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:textColorSecondary"
+                    android:textSize="12sp"
+                    android:text="@{viewModel.activeAccountEmail}"
+                    tools:text="ali.connors@ui.example"/>
+            </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="?android:listDivider"/>
     </FrameLayout>
 </layout>

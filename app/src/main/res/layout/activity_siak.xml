@@ -34,8 +34,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -59,5 +58,6 @@
         app:headerLayout="@layout/navigation_drawer_header"
         app:menu="@menu/navigation_drawer_items"
         app:itemTextColor="@drawable/navigation_drawer_item_text_selector"
-        app:itemIconTint="@drawable/navigation_drawer_item_icon_selector"/>
+        app:itemIconTint="@drawable/navigation_drawer_item_icon_selector"
+        app:itemBackground="@drawable/navigation_drawer_item_background"/>
 </androidx.drawerlayout.widget.DrawerLayout>
