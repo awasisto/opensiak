@@ -68,10 +68,10 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
             ),
             academicStatusInd = "Aktif",
             academicStatusEng = "Active",
-            totalCreditsPassed = 20,
-            totalGradePoints = 15.3f,
-            cumulativeGpa = 3.26f,
-            totalCreditsEarned = 20,
+            totalCreditsPassed = 36,
+            totalGradePoints = 112.80f,
+            cumulativeGpa = 3.13f,
+            totalCreditsEarned = 36,
             gradeStatistics = AcademicSummary.GradeStatistics(
                 gradeCounts = listOf(
                     AcademicSummary.GradeStatistics.GradeCount(
@@ -80,14 +80,22 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                     ),
                     AcademicSummary.GradeStatistics.GradeCount(
                         grade = "B+",
-                        count = 2
+                        count = 3
                     ),
                     AcademicSummary.GradeStatistics.GradeCount(
-                        grade = "B-",
+                        grade = "B",
                         count = 1
                     ),
                     AcademicSummary.GradeStatistics.GradeCount(
+                        grade = "B-",
+                        count = 3
+                    ),
+                    AcademicSummary.GradeStatistics.GradeCount(
                         grade = "C",
+                        count = 1
+                    ),
+                    AcademicSummary.GradeStatistics.GradeCount(
+                        grade = "D",
                         count = 1
                     )
                 )
