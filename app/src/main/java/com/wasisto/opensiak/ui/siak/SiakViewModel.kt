@@ -64,7 +64,7 @@ class SiakViewModel @Inject constructor(getActiveAccountUseCase: GetActiveAccoun
 
         showErrorEvent.addSource(getActiveAccountResult) { result ->
             if (result is UseCase.Result.Error) {
-                Event(Unit)
+                showErrorEvent.value = Event(Unit)
             }
         }
     }

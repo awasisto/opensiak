@@ -69,7 +69,7 @@ class LauncherViewModel @Inject constructor(checkUserHasSignedInUseCase: CheckUs
 
         showErrorEvent.addSource(checkUserHasSignedInResult) { result ->
             if (result is UseCase.Result.Error) {
-                Event(Unit)
+                showErrorEvent.value = Event(Unit)
             }
         }
     }
