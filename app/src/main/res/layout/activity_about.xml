@@ -68,7 +68,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
-                        android:text="@string/app_name"
+                        android:text="@string/opensiak"
                         android:textStyle="bold"
                         tools:text="OpenSIAK"/>
 

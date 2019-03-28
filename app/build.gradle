@@ -42,9 +42,11 @@ android {
         mock {
             dimension "mode"
             applicationIdSuffix = ".mock"
+            resValue "string", "app_name", "OpenSIAK (mock)"
         }
         prod {
             dimension "mode"
+            resValue "string", "app_name", "OpenSIAK"
         }
     }
     variantFilter { variant ->
