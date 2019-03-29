@@ -46,7 +46,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:contentDescription="@string/student_photo"
                 app:civ_border_color="@color/student_photo_border"
                 app:civ_border_width="2px"
                 app:photoData="@{viewModel.activeAccountPhotoData}"

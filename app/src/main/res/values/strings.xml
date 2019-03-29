@@ -45,7 +45,6 @@
     <string name="academic">Academic</string>
     <string name="course_plan">Course plan</string>
     <string name="summary">Summary</string>
-    <string name="student_photo">Student photo</string>
     <string name="cgpa">CGPA</string>
     <string name="cgpa_text" translatable="false">%.2f</string>
     <string name="total_credits_earned">Total credits earned</string>
