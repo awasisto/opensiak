@@ -58,7 +58,7 @@ class ClassesAdapter : RecyclerView.Adapter<ClassesAdapter.ViewHolder>() {
             binding.room = cls.room
 
             if (Duration.between(cls.startTime, cls.endTime) > Duration.ofHours(1)) {
-                binding.classLayout.minimumHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 128f,
+                binding.classLayout.minimumHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 112f,
                     binding.classLayout.context.resources.displayMetrics).toInt()
             }
         }
