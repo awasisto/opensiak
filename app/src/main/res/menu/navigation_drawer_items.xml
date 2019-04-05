@@ -27,6 +27,11 @@
                         android:id="@+id/navigation_academic_summary"
                         android:icon="@drawable/ic_summary"
                         android:title="@string/summary"/>
+
+                    <item
+                        android:id="@+id/navigation_payment_info"
+                        android:icon="@drawable/ic_payment_info"
+                        android:title="@string/payment"/>
                 </group>
             </menu>
         </item>

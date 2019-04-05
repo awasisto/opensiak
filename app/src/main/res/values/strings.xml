@@ -52,6 +52,10 @@
     <string name="grade_statistics">Grade statistics</string>
     <string name="grade">Grade</string>
     <string name="total">Total</string>
+    <string name="payment">Payment</string>
+    <string name="academic_year">Academic year</string>
+    <string name="term">Term</string>
+    <string name="status">Status</string>
     <string name="schedule">Schedule</string>
     <string name="mon">Mon</string>
     <string name="tue">Tue</string>

@@ -48,6 +48,10 @@
     <string name="grade_statistics">Statistik nilai</string>
     <string name="grade">Nilai</string>
     <string name="total">Jumlah</string>
+    <string name="payment">Pembayaran</string>
+    <string name="academic_year">Tahun akademik</string>
+    <string name="term">Term</string>
+    <string name="status">Status</string>
     <string name="schedule">Jadwal</string>
     <string name="mon">Sen</string>
     <string name="tue">Sel</string>

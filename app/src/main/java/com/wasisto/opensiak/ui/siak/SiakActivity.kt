@@ -35,6 +35,7 @@ import com.wasisto.opensiak.databinding.NavigationDrawerHeaderBinding
 import com.wasisto.opensiak.ui.about.AboutActivity
 import com.wasisto.opensiak.ui.siak.academicsummary.AcademicSummaryFragment
 import com.wasisto.opensiak.ui.siak.courseplanschedule.CoursePlanScheduleFragment
+import com.wasisto.opensiak.ui.siak.paymentinfo.PaymentInfoFragment
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_siak.*
 import javax.inject.Inject
@@ -107,6 +108,10 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         when (item.itemId) {
             R.id.navigation_academic_summary -> {
                 replaceFragment(AcademicSummaryFragment())
+                supportActionBar?.title = item.title
+            }
+            R.id.navigation_payment_info -> {
+                replaceFragment(PaymentInfoFragment())
                 supportActionBar?.title = item.title
             }
             R.id.navigation_course_plan_schedule -> {

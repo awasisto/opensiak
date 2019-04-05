@@ -30,6 +30,8 @@ import com.wasisto.opensiak.di.FragmentScoped
 import com.wasisto.opensiak.ui.siak.academicsummary.AcademicSummaryModule
 import com.wasisto.opensiak.ui.siak.courseplanschedule.CoursePlanScheduleFragment
 import com.wasisto.opensiak.ui.siak.courseplanschedule.CoursePlanScheduleModule
+import com.wasisto.opensiak.ui.siak.paymentinfo.PaymentInfoFragment
+import com.wasisto.opensiak.ui.siak.paymentinfo.PaymentInfoModule
 
 @Module
 abstract class SiakModule {
@@ -42,6 +44,10 @@ abstract class SiakModule {
     @FragmentScoped
     @ContributesAndroidInjector(modules = [AcademicSummaryModule::class])
     abstract fun contributeAcademicSummaryFragment(): AcademicSummaryFragment
+
+    @FragmentScoped
+    @ContributesAndroidInjector(modules = [PaymentInfoModule::class])
+    abstract fun contributePaymentInfoFragment(): PaymentInfoFragment
 
     @FragmentScoped
     @ContributesAndroidInjector(modules = [CoursePlanScheduleModule::class])

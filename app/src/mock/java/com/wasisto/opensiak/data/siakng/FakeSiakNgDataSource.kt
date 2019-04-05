@@ -22,10 +22,7 @@ package com.wasisto.opensiak.data.siakng
 import android.content.Context
 
 import com.wasisto.opensiak.R
-import com.wasisto.opensiak.model.AcademicSummary
-import com.wasisto.opensiak.model.CoursePlanSchedule
-import com.wasisto.opensiak.model.Credentials
-import com.wasisto.opensiak.model.StudentProfile
+import com.wasisto.opensiak.model.*
 
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalTime
@@ -97,6 +94,92 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                     AcademicSummary.GradeStatistics.GradeCount(
                         grade = "D",
                         count = 1
+                    )
+                )
+            )
+        )
+    }
+
+    override fun getPaymentInfo(credentials: Credentials): PaymentInfo {
+        return PaymentInfo(
+            academicYears = listOf(
+                PaymentInfo.AcademicYear(
+                    year1 = 2017,
+                    year2 = 2018,
+                    termPaymentInfoList = listOf(
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 2,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 1,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        )
+                    )
+                ),
+                PaymentInfo.AcademicYear(
+                    year1 = 2016,
+                    year2 = 2017,
+                    termPaymentInfoList = listOf(
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 3,
+                            statusInd = "Tidak Ada Tagihan",
+                            statusEng = "No Dues"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 2,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 1,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        )
+                    )
+                ),
+                PaymentInfo.AcademicYear(
+                    year1 = 2015,
+                    year2 = 2016,
+                    termPaymentInfoList = listOf(
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 3,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 2,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 1,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        )
+                    )
+                ),
+                PaymentInfo.AcademicYear(
+                    year1 = 2014,
+                    year2 = 2015,
+                    termPaymentInfoList = listOf(
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 3,
+                            statusInd = "Tidak Ada Tagihan",
+                            statusEng = "No Dues"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 2,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 1,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        )
                     )
                 )
             )
