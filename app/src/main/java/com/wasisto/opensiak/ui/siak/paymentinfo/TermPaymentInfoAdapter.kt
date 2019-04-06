@@ -42,9 +42,9 @@ class TermPaymentInfoAdapter : RecyclerView.Adapter<TermPaymentInfoAdapter.ViewH
         fun bind(termPaymentInfo: PaymentInfo.AcademicYear.TermPaymentInfo) {
             binding.term = termPaymentInfo.term.toString()
             binding.status = if (LocaleUtils.isDefaultLocaleLanguageIndonesian()) {
-                termPaymentInfo.statusInd.capitalize()
+                termPaymentInfo.statusInd.toLowerCase().capitalize()
             } else {
-                termPaymentInfo.statusEng.capitalize()
+                termPaymentInfo.statusEng.toLowerCase().capitalize()
             }
         }
     }
