@@ -35,7 +35,7 @@ class LauncherActivity : DaggerAppCompatActivity() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var errorDialog: AlertDialog
+    private lateinit var startingErrorDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,7 @@ class LauncherActivity : DaggerAppCompatActivity() {
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LauncherViewModel::class.java)
 
-        errorDialog = AlertDialog.Builder(this)
+        startingErrorDialog = AlertDialog.Builder(this)
             .setMessage(R.string.starting_error_message)
             .setPositiveButton(R.string.close) { _, _ ->  finish() }
             .setCancelable(false)
@@ -61,9 +61,9 @@ class LauncherActivity : DaggerAppCompatActivity() {
             finish()
         })
 
-        viewModel.showErrorEvent.observe(this, Observer {
-            if (!errorDialog.isShowing) {
-                errorDialog.show()
+        viewModel.showStartingErrorEvent.observe(this, Observer {
+            if (!startingErrorDialog.isShowing) {
+                startingErrorDialog.show()
             }
         })
     }
