@@ -45,7 +45,7 @@
     <string name="sign_out">Sign out</string>
     <string name="sign_out_confirmation_dialog_message">Apakah Anda yakin ingin sign out?</string>
     <string name="sign_out_error_message">Something went wrong while signing you out. Try to clear application data.</string>
-    <string name="academic">Akademik</string>
+    <string name="academic">Akademis</string>
     <string name="course_plan">IRS</string>
     <string name="summary">Ringkasan</string>
     <string name="cgpa">IPK</string>
