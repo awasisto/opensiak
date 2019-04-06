@@ -40,9 +40,9 @@
             <menu>
                 <group android:checkableBehavior="single">
                     <item
-                        android:id="@+id/navigation_course_plan_schedule"
+                        android:id="@+id/navigation_class_schedule"
                         android:icon="@drawable/ic_schedule"
-                        android:title="@string/schedule"/>
+                        android:title="@string/class_schedule"/>
                 </group>
             </menu>
         </item>

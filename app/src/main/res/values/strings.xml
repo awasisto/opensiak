@@ -61,7 +61,7 @@
     <string name="academic_year">Academic year</string>
     <string name="term">Term</string>
     <string name="status">Status</string>
-    <string name="schedule">Schedule</string>
+    <string name="class_schedule">Class schedule</string>
     <string name="mon">Mon</string>
     <string name="tue">Tue</string>
     <string name="wed">Wed</string>

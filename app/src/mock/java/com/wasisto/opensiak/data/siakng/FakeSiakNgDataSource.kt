@@ -182,27 +182,27 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
         )
     }
 
-    override fun getCoursePlanSchedule(credentials: Credentials): CoursePlanSchedule {
-        return CoursePlanSchedule(
+    override fun getClassSchedule(credentials: Credentials): ClassSchedule {
+        return ClassSchedule(
             days = listOf(
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.MONDAY,
                     classes = listOf(
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("08:00"),
                             endTime = LocalTime.parse("09:40"),
                             courseNameInd = "Analisis Numerik",
                             courseNameEng = "Numerical Analysis",
                             room = "2.2405"
                         ),
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("13:00"),
                             endTime = LocalTime.parse("14:40"),
                             courseNameInd = "Teori Bahasa & Automata",
                             courseNameEng = "Automata & Theory of Languages",
                             room = "2.2405"
                         ),
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("16:00"),
                             endTime = LocalTime.parse("17:40"),
                             courseNameInd = "Layanan Aplikasi Web",
@@ -211,35 +211,35 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                         )
                     )
                 ),
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.TUESDAY,
                     classes = emptyList()
                 ),
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.WEDNESDAY,
                     classes = listOf(
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("10:00"),
                             endTime = LocalTime.parse("11:40"),
                             courseNameInd = "Data Science & Analytics",
                             courseNameEng = "Data Science & Analytics",
                             room = "3.3113"
                         ),
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("12:00"),
                             endTime = LocalTime.parse("12:30"),
                             courseNameInd = "Kerja Praktik",
                             courseNameEng = "Internship",
                             room = "2.2401"
                         ),
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("14:00"),
                             endTime = LocalTime.parse("15:40"),
                             courseNameInd = "Teori Bahasa & Automata",
                             courseNameEng = "Automata & Theory of Languages",
                             room = "2.2405"
                         ),
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("16:00"),
                             endTime = LocalTime.parse("17:40"),
                             courseNameInd = "Layanan Aplikasi Web",
@@ -248,10 +248,10 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                         )
                     )
                 ),
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.THURSDAY,
                     classes = listOf(
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("08:00"),
                             endTime = LocalTime.parse("08:50"),
                             courseNameInd = "Analisis Numerik",
@@ -260,10 +260,10 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                         )
                     )
                 ),
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.FRIDAY,
                     classes = listOf(
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("09:00"),
                             endTime = LocalTime.parse("09:50"),
                             courseNameInd = "Data Science & Analytics",
@@ -272,7 +272,7 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                         )
                     )
                 ),
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.SATURDAY,
                     classes = emptyList()
                 )

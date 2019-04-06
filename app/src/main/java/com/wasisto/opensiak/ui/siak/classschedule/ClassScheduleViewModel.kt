@@ -17,24 +17,24 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.ui.siak.courseplanschedule
+package com.wasisto.opensiak.ui.siak.classschedule
 
 import androidx.lifecycle.*
-import com.wasisto.opensiak.domain.GetCoursePlanScheduleUseCase
+import com.wasisto.opensiak.domain.GetClassScheduleUseCase
 import com.wasisto.opensiak.domain.UseCase
-import com.wasisto.opensiak.model.CoursePlanSchedule
+import com.wasisto.opensiak.model.ClassSchedule
 import timber.log.Timber
 import javax.inject.Inject
 
-class CoursePlanScheduleViewModel @Inject constructor(
-    private val getCoursePlanScheduleUseCase: GetCoursePlanScheduleUseCase
+class ClassScheduleViewModel @Inject constructor(
+    private val getClassScheduleUseCase: GetClassScheduleUseCase
 ) : ViewModel() {
 
-    private val getCoursePlanScheduleResult = MediatorLiveData<UseCase.Result<CoursePlanSchedule>>()
+    private val getClassScheduleResult = MediatorLiveData<UseCase.Result<ClassSchedule>>()
 
     val isLoading: LiveData<Boolean>
 
-    val days = MediatorLiveData<List<CoursePlanSchedule.Day>>()
+    val days = MediatorLiveData<List<ClassSchedule.Day>>()
 
     val shouldShowSchedule = MediatorLiveData<Boolean>()
 
@@ -43,13 +43,13 @@ class CoursePlanScheduleViewModel @Inject constructor(
     val shouldShowError: LiveData<Boolean>
 
     init {
-        loadCoursePlanSchedule()
+        loadClassSchedule()
 
-        isLoading = Transformations.map(getCoursePlanScheduleResult) { result ->
+        isLoading = Transformations.map(getClassScheduleResult) { result ->
             result is UseCase.Result.Loading
         }
 
-        days.addSource(getCoursePlanScheduleResult) { result ->
+        days.addSource(getClassScheduleResult) { result ->
             if (result is UseCase.Result.Success) {
                 days.value = result.data.days
             }
@@ -57,7 +57,7 @@ class CoursePlanScheduleViewModel @Inject constructor(
 
         shouldShowSchedule.value = false
 
-        shouldShowSchedule.addSource(getCoursePlanScheduleResult) { result ->
+        shouldShowSchedule.addSource(getClassScheduleResult) { result ->
             if (result is UseCase.Result.Success) {
                 shouldShowSchedule.value = true
             } else if (result is UseCase.Result.Error) {
@@ -67,7 +67,7 @@ class CoursePlanScheduleViewModel @Inject constructor(
 
         shouldShowNoClassesIndicator.value = false
 
-        shouldShowNoClassesIndicator.addSource(getCoursePlanScheduleResult) { result ->
+        shouldShowNoClassesIndicator.addSource(getClassScheduleResult) { result ->
             if (result is UseCase.Result.Success) {
                 for (day in result.data.days) {
                     if (day.classes.isNotEmpty()) {
@@ -81,20 +81,20 @@ class CoursePlanScheduleViewModel @Inject constructor(
             }
         }
 
-        shouldShowError = Transformations.map(getCoursePlanScheduleResult) { result ->
+        shouldShowError = Transformations.map(getClassScheduleResult) { result ->
             result is UseCase.Result.Error
         }
     }
 
-    fun onRefresh() = loadCoursePlanSchedule()
+    fun onRefresh() = loadClassSchedule()
 
-    private fun loadCoursePlanSchedule() =
-        getCoursePlanScheduleResult.addSource(getCoursePlanScheduleUseCase.executeAsync(Unit)) { result ->
+    private fun loadClassSchedule() =
+        getClassScheduleResult.addSource(getClassScheduleUseCase.executeAsync(Unit)) { result ->
             if (result is UseCase.Result.Success) {
                 Timber.d("result.data: %s", result.data)
             } else if (result is UseCase.Result.Error) {
                 Timber.w(result.error)
             }
-            getCoursePlanScheduleResult.value = result
+            getClassScheduleResult.value = result
         }
 }

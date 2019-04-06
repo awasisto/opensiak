@@ -34,7 +34,7 @@ import com.wasisto.opensiak.R
 import com.wasisto.opensiak.databinding.NavigationDrawerHeaderBinding
 import com.wasisto.opensiak.ui.about.AboutActivity
 import com.wasisto.opensiak.ui.siak.academicsummary.AcademicSummaryFragment
-import com.wasisto.opensiak.ui.siak.courseplanschedule.CoursePlanScheduleFragment
+import com.wasisto.opensiak.ui.siak.classschedule.ClassScheduleFragment
 import com.wasisto.opensiak.ui.siak.paymentinfo.PaymentInfoFragment
 import com.wasisto.opensiak.ui.signin.SignInActivity
 import dagger.android.support.DaggerAppCompatActivity
@@ -151,8 +151,8 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                 replaceFragment(PaymentInfoFragment())
                 supportActionBar?.title = item.title
             }
-            R.id.navigation_course_plan_schedule -> {
-                replaceFragment(CoursePlanScheduleFragment())
+            R.id.navigation_class_schedule -> {
+                replaceFragment(ClassScheduleFragment())
                 supportActionBar?.title = item.title
             }
             R.id.navigation_about -> {

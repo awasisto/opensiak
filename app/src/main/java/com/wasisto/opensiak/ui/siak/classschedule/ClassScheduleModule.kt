@@ -17,24 +17,19 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.model
+package com.wasisto.opensiak.ui.siak.classschedule
 
-import org.threeten.bp.DayOfWeek
-import org.threeten.bp.LocalTime
+import androidx.lifecycle.ViewModel
+import com.wasisto.opensiak.di.ViewModelKey
+import dagger.Binds
+import dagger.Module
+import dagger.multibindings.IntoMap
 
-data class CoursePlanSchedule(
-    val days: List<Day>
-) {
-    data class Day(
-        val dayOfWeek: DayOfWeek,
-        val classes: List<Class>
-    ) {
-        data class Class(
-            val startTime: LocalTime,
-            val endTime: LocalTime,
-            val courseNameInd: String,
-            val courseNameEng: String,
-            val room: String
-        )
-    }
+@Module
+abstract class ClassScheduleModule {
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ClassScheduleViewModel::class)
+    abstract fun bindViewModel(viewModel: ClassScheduleViewModel): ViewModel
 }

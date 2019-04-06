@@ -17,19 +17,19 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.ui.siak.courseplanschedule
+package com.wasisto.opensiak.ui.siak.classschedule
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wasisto.opensiak.R
 import com.wasisto.opensiak.databinding.ItemDayBinding
-import com.wasisto.opensiak.model.CoursePlanSchedule
+import com.wasisto.opensiak.model.ClassSchedule
 import org.threeten.bp.DayOfWeek
 
 class DaysAdapter : RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
 
-    lateinit var data: List<CoursePlanSchedule.Day>
+    lateinit var data: List<ClassSchedule.Day>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(ItemDayBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -40,7 +40,7 @@ class DaysAdapter : RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: ItemDayBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(day: CoursePlanSchedule.Day) {
+        fun bind(day: ClassSchedule.Day) {
             binding.dayNameResId = when (day.dayOfWeek) {
                 DayOfWeek.MONDAY ->  R.string.mon
                 DayOfWeek.TUESDAY ->  R.string.tue

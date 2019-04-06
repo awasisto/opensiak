@@ -17,19 +17,22 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.ui.siak.courseplanschedule
+package com.wasisto.opensiak.ui.siak.classschedule
 
-import androidx.lifecycle.ViewModel
-import com.wasisto.opensiak.di.ViewModelKey
-import dagger.Binds
-import dagger.Module
-import dagger.multibindings.IntoMap
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.wasisto.opensiak.model.ClassSchedule
 
-@Module
-abstract class CoursePlanScheduleModule {
+@BindingAdapter("days")
+fun days(recyclerView: RecyclerView, days: List<ClassSchedule.Day>?) {
+    recyclerView.adapter = (recyclerView.adapter as? DaysAdapter ?: DaysAdapter()).apply {
+        data = days ?: emptyList()
+    }
+}
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(CoursePlanScheduleViewModel::class)
-    abstract fun bindViewModel(viewModel: CoursePlanScheduleViewModel): ViewModel
+@BindingAdapter("classes")
+fun classes(recyclerView: RecyclerView, classes: List<ClassSchedule.Day.Class>?) {
+    recyclerView.adapter = (recyclerView.adapter as? ClassesAdapter ?: ClassesAdapter()).apply {
+        data = classes ?: emptyList()
+    }
 }

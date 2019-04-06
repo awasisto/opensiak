@@ -17,21 +17,21 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.ui.siak.courseplanschedule
+package com.wasisto.opensiak.ui.siak.classschedule
 
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wasisto.opensiak.databinding.ItemClassBinding
-import com.wasisto.opensiak.model.CoursePlanSchedule
+import com.wasisto.opensiak.model.ClassSchedule
 import com.wasisto.opensiak.util.LocaleUtils
 import org.threeten.bp.Duration
 import org.threeten.bp.format.DateTimeFormatter
 
 class ClassesAdapter : RecyclerView.Adapter<ClassesAdapter.ViewHolder>() {
 
-    lateinit var data: List<CoursePlanSchedule.Day.Class>
+    lateinit var data: List<ClassSchedule.Day.Class>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(ItemClassBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -46,7 +46,7 @@ class ClassesAdapter : RecyclerView.Adapter<ClassesAdapter.ViewHolder>() {
             private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
         }
 
-        fun bind(cls: CoursePlanSchedule.Day.Class) {
+        fun bind(cls: ClassSchedule.Day.Class) {
             binding.name = if (LocaleUtils.isDefaultLocaleLanguageIndonesian()) {
                 cls.courseNameInd
             } else {

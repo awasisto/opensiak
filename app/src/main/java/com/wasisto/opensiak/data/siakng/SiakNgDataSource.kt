@@ -27,7 +27,7 @@ interface SiakNgDataSource {
 
     fun getPaymentInfo(credentials: Credentials): PaymentInfo
 
-    fun getCoursePlanSchedule(credentials: Credentials): CoursePlanSchedule
+    fun getClassSchedule(credentials: Credentials): ClassSchedule
 
     fun getStudentProfile(credentials: Credentials): StudentProfile
 }

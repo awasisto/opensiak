@@ -30,7 +30,7 @@
 
         <variable
             name="classes"
-            type="java.util.List&lt;com.wasisto.opensiak.model.CoursePlanSchedule.Day.Class>"/>
+            type="java.util.List&lt;com.wasisto.opensiak.model.ClassSchedule.Day.Class>"/>
     </data>
 
     <FrameLayout
