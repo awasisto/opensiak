@@ -21,6 +21,6 @@ package com.wasisto.opensiak.data.siakng.pagescraper
 
 import com.wasisto.opensiak.model.Credentials
 
-interface PageScraper<P, R> {
+interface PageScraper<in P, out R> {
     fun scrape(credentials: Credentials, params: P): R
 }
