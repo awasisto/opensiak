@@ -43,15 +43,11 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                 "ali.connors" -> "Ali Connors"
                 "jonathan.lee" -> "Jonathan Lee"
                 else -> {
-                    val str = credentials.username.replace("\\.".toRegex(), "")
+                    credentials.username
+                        .replace("\\.".toRegex(), " ")
                         .replace("\\d".toRegex(), "")
-                    val split = str.split(" ".toRegex())
-                    val stringBuilder = StringBuilder()
-                    for (s in split) {
-                        stringBuilder.append(s.substring(0, 1).toUpperCase()).append(
-                            s.substring(1).toLowerCase()).append(" ")
-                    }
-                    stringBuilder.toString()
+                        .split(" ")
+                        .joinToString(separator = " ") { it.capitalize() }
                 }
             },
             batch = 2014,
