@@ -21,6 +21,8 @@
 <resources>
     <string name="starting_error_message">Terjadi kesalahan saat menjalankan aplikasi. Silahkan coba hapus data aplikasi.</string>
     <string name="something_went_wrong">Terjadi kesalahan. Silahkan periksa koneksi internet Anda.</string>
+    <string name="yes">Ya</string>
+    <string name="cancel">Batal</string>
     <string name="close">Tutup</string>
     <string name="retry">Coba lagi</string>
     <string name="try_again">Coba lagi</string>
@@ -40,6 +42,9 @@
     <string name="privacy_policy_url">https://awasisto.github.io/opensiak/privacy-policy</string>
     <string name="open_navigation_drawer">Buka menu navigasi</string>
     <string name="close_navigation_drawer">Tutup menu navigasi</string>
+    <string name="sign_out">Sign out</string>
+    <string name="sign_out_confirmation_dialog_message">Apakah Anda yakin ingin sign out?</string>
+    <string name="sign_out_error_message">Something went wrong while signing you out. Try to clear application data.</string>
     <string name="academic">Akademik</string>
     <string name="course_plan">IRS</string>
     <string name="summary">Ringkasan</string>

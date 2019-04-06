@@ -21,6 +21,8 @@
     <string name="opensiak" translatable="false">OpenSIAK</string>
     <string name="starting_error_message">Something went wrong while starting the application. Try to clear application data.</string>
     <string name="something_went_wrong">Something went wrong. Check your internet connection.</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
     <string name="close">Close</string>
     <string name="retry">Retry</string>
     <string name="try_again">Try again</string>
@@ -42,6 +44,9 @@
     <string name="source_code_url" translatable="false">https://github.com/awasisto/opensiak</string>
     <string name="open_navigation_drawer">Open navigation menu</string>
     <string name="close_navigation_drawer">Close navigation menu</string>
+    <string name="sign_out">Sign out</string>
+    <string name="sign_out_confirmation_dialog_message">Are you sure you want to sign out?</string>
+    <string name="sign_out_error_message">Something went wrong while signing you out. Try to clear application data.</string>
     <string name="academic">Academic</string>
     <string name="course_plan">Course plan</string>
     <string name="summary">Summary</string>
