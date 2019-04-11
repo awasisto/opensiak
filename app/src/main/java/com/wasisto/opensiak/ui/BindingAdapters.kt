@@ -71,9 +71,7 @@ fun photoData(imageView: ImageView, photoData: ByteArray?) {
 }
 
 @BindingAdapter("textResId")
-fun textResId(textView: TextView, textResId: Int) {
-    textView.setText(textResId)
-}
+fun textResId(textView: TextView, textResId: Int) = textView.setText(textResId)
 
 @BindingAdapter("flipVerticallyWhen")
 fun flipVerticallyWhen(view: View, flipVertically: Boolean) {
