@@ -19,24 +19,36 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item android:title="@string/academic">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/navigation_academic_summary"
+                        android:icon="@drawable/ic_summary"
+                        android:title="@string/summary"/>
 
-    <group
-        android:id="@+id/navigation_group_1"
-        android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/navigation_payment_info"
+                        android:icon="@drawable/ic_payment_info"
+                        android:title="@string/payment"/>
+                </group>
+            </menu>
+        </item>
 
-        <item
-            android:id="@+id/navigation_academic_summary"
-            android:icon="@drawable/ic_summary"
-            android:title="@string/summary"/>
-
-        <item
-            android:id="@+id/navigation_course_plan_schedule"
-            android:icon="@drawable/ic_schedule"
-            android:title="@string/schedule"/>
+        <item android:title="@string/course_plan">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/navigation_class_schedule"
+                        android:icon="@drawable/ic_schedule"
+                        android:title="@string/class_schedule"/>
+                </group>
+            </menu>
+        </item>
     </group>
 
-    <group android:id="@+id/navigation_group_2">
-
+    <group>
         <item
             android:id="@+id/navigation_about"
             android:title="@string/about_opensiak"/>

@@ -18,9 +18,19 @@
   ~ along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<font-family
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:fontProviderAuthority="com.google.android.gms.fonts"
-    app:fontProviderPackage="com.google.android.gms"
-    app:fontProviderQuery="Nunito Sans"
-    app:fontProviderCerts="@array/com_google_android_gms_fonts_certs"/>
+<inset
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="8dp"
+    android:insetRight="8dp"
+    android:insetTop="4dp"
+    android:insetBottom="4dp">
+
+    <shape
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+
+        <solid android:color="@color/amber_100"/>
+
+        <corners android:radius="6dp"/>
+    </shape>
+</inset>

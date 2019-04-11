@@ -19,7 +19,7 @@
 
 package com.wasisto.opensiak.data.siakng.pagescraper
 
-import com.wasisto.opensiak.model.CoursePlanSchedule
+import com.wasisto.opensiak.model.ClassSchedule
 import com.wasisto.opensiak.model.Credentials
 import com.wasisto.opensiak.util.executor.ExecutorProvider
 import org.jsoup.Jsoup
@@ -27,23 +27,23 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalTime
 import javax.inject.Inject
 
-class CoursePlanSchedulePageScraper @Inject constructor(
+class ClassSchedulePageScraper @Inject constructor(
     private val executorProvider: ExecutorProvider
-) : PageScraper<Unit, CoursePlanSchedule> {
+) : PageScraper<Unit, ClassSchedule> {
 
-    override fun scrape(credentials: Credentials, params: Unit): CoursePlanSchedule {
+    override fun scrape(credentials: Credentials, params: Unit): ClassSchedule {
         val siakHttpClient = SiakHttpClient.get(credentials, executorProvider)
 
-        val coursePlanScheduleResponse = siakHttpClient.httpGet(
+        val classScheduleResponse = siakHttpClient.httpGet(
             "https://academic.ui.ac.id/main/CoursePlan/CoursePlanViewSchedule")
 
-        val coursePlanScheduleDocumentInd = Jsoup.parse(coursePlanScheduleResponse.responseInd.body()!!.string())
-        val coursePlanScheduleDocumentEng = Jsoup.parse(coursePlanScheduleResponse.responseEng.body()!!.string())
+        val classScheduleDocumentInd = Jsoup.parse(classScheduleResponse.responseInd.body()!!.string())
+        val classScheduleDocumentEng = Jsoup.parse(classScheduleResponse.responseEng.body()!!.string())
 
-        val dayTdElementsInd = coursePlanScheduleDocumentInd.select("#ti_m1 > table td")
-        val dayTdElementsEng = coursePlanScheduleDocumentEng.select("#ti_m1 > table td")
+        val dayTdElementsInd = classScheduleDocumentInd.select("#ti_m1 > table td")
+        val dayTdElementsEng = classScheduleDocumentEng.select("#ti_m1 > table td")
 
-        val days = mutableListOf<CoursePlanSchedule.Day>()
+        val days = mutableListOf<ClassSchedule.Day>()
 
         for (i in 1..6) {
             val dayOfWeek: DayOfWeek = when (i) {
@@ -59,7 +59,7 @@ class CoursePlanSchedulePageScraper @Inject constructor(
             val classElementsInd = dayTdElementsInd[i].select(".sch-inner")
             val classElementsEng = dayTdElementsEng[i].select(".sch-inner")
 
-            val classes = mutableListOf<CoursePlanSchedule.Day.Class>()
+            val classes = mutableListOf<ClassSchedule.Day.Class>()
 
             for (j in classElementsInd.indices) {
                 val classElementInd = classElementsInd[j]
@@ -80,7 +80,7 @@ class CoursePlanSchedulePageScraper @Inject constructor(
                 val classEndTime = LocalTime.parse(timeText.substring(8, 13))
 
                 classes.add(
-                    CoursePlanSchedule.Day.Class(
+                    ClassSchedule.Day.Class(
                         startTime = classStartTime,
                         endTime = classEndTime,
                         courseNameInd = classCourseNameInd,
@@ -91,14 +91,14 @@ class CoursePlanSchedulePageScraper @Inject constructor(
             }
 
             days.add(
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = dayOfWeek,
                     classes = classes
                 )
             )
         }
 
-        return CoursePlanSchedule(
+        return ClassSchedule(
             days = days
         )
     }

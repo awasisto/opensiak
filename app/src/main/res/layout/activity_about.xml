@@ -35,9 +35,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        app:statusBarBackground="?colorPrimaryDark">
+        android:layout_height="match_parent">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -45,8 +43,7 @@
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -71,7 +68,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
-                        android:text="@string/app_name"
+                        android:text="@string/opensiak"
                         android:textStyle="bold"
                         tools:text="OpenSIAK"/>
 
@@ -89,40 +86,31 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="12dp"
                         android:text="@{@string/copyright_text(Year.now().value)}"
-                        tools:text="Copyright &#169; 2019 Andika Wasisto"/>
+                        tools:text="&#169; 2019 Andika Wasisto"/>
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginStart="8dp"
                         android:text="@string/privacy_policy"
-                        android:textAllCaps="false"
-                        android:fontFamily="sans-serif"
-                        android:letterSpacing="0"
                         android:onClick="@{() -> viewModel.onPrivacyPolicyButtonClick()}"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                        style="@style/AboutButton"/>
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginStart="8dp"
                         android:text="@string/open_source_licenses"
-                        android:textAllCaps="false"
-                        android:fontFamily="sans-serif"
-                        android:letterSpacing="0"
                         android:onClick="@{() -> viewModel.onOpenSourceLicensesButtonClick()}"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                        style="@style/AboutButton"/>
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginStart="8dp"
                         android:text="@string/source_code"
-                        android:textAllCaps="false"
-                        android:fontFamily="sans-serif"
-                        android:letterSpacing="0"
                         android:onClick="@{() -> viewModel.onSourceCodeButtonClick()}"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                        style="@style/AboutButton"/>
                 </LinearLayout>
             </ScrollView>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

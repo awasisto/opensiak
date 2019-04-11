@@ -17,41 +17,35 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.ui.siak.courseplanschedule
+package com.wasisto.opensiak.ui.siak.paymentinfo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.wasisto.opensiak.R
-import com.wasisto.opensiak.databinding.ItemDayBinding
-import com.wasisto.opensiak.model.CoursePlanSchedule
-import org.threeten.bp.DayOfWeek
+import com.wasisto.opensiak.databinding.ItemPaymentInfoAcademicYearBinding
+import com.wasisto.opensiak.model.PaymentInfo
 
-class DaysAdapter : RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
+class AcademicYearsAdapter : RecyclerView.Adapter<AcademicYearsAdapter.ViewHolder>() {
 
-    lateinit var data: List<CoursePlanSchedule.Day>
+    lateinit var data: List<PaymentInfo.AcademicYear>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(ItemDayBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        ViewHolder(ItemPaymentInfoAcademicYearBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(data[position])
 
-    class ViewHolder(private val binding: ItemDayBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ItemPaymentInfoAcademicYearBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(day: CoursePlanSchedule.Day) {
-            binding.dayNameResId = when (day.dayOfWeek) {
-                DayOfWeek.MONDAY ->  R.string.mon
-                DayOfWeek.TUESDAY ->  R.string.tue
-                DayOfWeek.WEDNESDAY ->  R.string.wed
-                DayOfWeek.THURSDAY ->  R.string.thu
-                DayOfWeek.FRIDAY ->  R.string.fri
-                DayOfWeek.SATURDAY ->  R.string.sat
-                DayOfWeek.SUNDAY ->  R.string.sun
+        fun bind(academicYear: PaymentInfo.AcademicYear) {
+            val formattedYear2 = if (academicYear.year2 / 100 == academicYear.year1 / 100) {
+                academicYear.year2 % 100
+            } else {
+                academicYear.year2
             }
-
-            binding.classes = day.classes
+            binding.academicYear = "${academicYear.year1}-$formattedYear2"
+            binding.termPaymentInfoList = academicYear.termPaymentInfoList
         }
     }
 }

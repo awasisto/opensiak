@@ -23,12 +23,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.wasisto.opensiak.util.executor.ExecutorProvider
 
-abstract class UseCase<P, R> constructor(private val executorProvider: ExecutorProvider) {
+abstract class UseCase<in P, R> constructor(private val executorProvider: ExecutorProvider) {
 
     fun executeAsync(params: P): LiveData<Result<R>> {
         val result = MutableLiveData<Result<R>>()
         result.value = Result.Loading
-        executorProvider.computation().submit {
+        executorProvider.io().submit {
             try {
                 result.postValue(Result.Success(execute(params)))
             } catch (error: Throwable) {

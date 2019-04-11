@@ -22,10 +22,7 @@ package com.wasisto.opensiak.data.siakng
 import android.content.Context
 
 import com.wasisto.opensiak.R
-import com.wasisto.opensiak.model.AcademicSummary
-import com.wasisto.opensiak.model.CoursePlanSchedule
-import com.wasisto.opensiak.model.Credentials
-import com.wasisto.opensiak.model.StudentProfile
+import com.wasisto.opensiak.model.*
 
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalTime
@@ -46,15 +43,11 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                 "ali.connors" -> "Ali Connors"
                 "jonathan.lee" -> "Jonathan Lee"
                 else -> {
-                    val str = credentials.username.replace("\\.".toRegex(), "")
+                    credentials.username
+                        .replace("\\.".toRegex(), " ")
                         .replace("\\d".toRegex(), "")
-                    val split = str.split(" ".toRegex())
-                    val stringBuilder = StringBuilder()
-                    for (s in split) {
-                        stringBuilder.append(s.substring(0, 1).toUpperCase()).append(
-                            s.substring(1).toLowerCase()).append(" ")
-                    }
-                    stringBuilder.toString()
+                        .split(" ")
+                        .joinToString(separator = " ") { it.capitalize() }
                 }
             },
             batch = 2014,
@@ -68,10 +61,10 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
             ),
             academicStatusInd = "Aktif",
             academicStatusEng = "Active",
-            totalCreditsPassed = 20,
-            totalGradePoints = 15.3f,
-            cumulativeGpa = 3.26f,
-            totalCreditsEarned = 20,
+            totalCreditsPassed = 36,
+            totalGradePoints = 112.80f,
+            cumulativeGpa = 3.13f,
+            totalCreditsEarned = 36,
             gradeStatistics = AcademicSummary.GradeStatistics(
                 gradeCounts = listOf(
                     AcademicSummary.GradeStatistics.GradeCount(
@@ -80,14 +73,22 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                     ),
                     AcademicSummary.GradeStatistics.GradeCount(
                         grade = "B+",
-                        count = 2
+                        count = 3
                     ),
                     AcademicSummary.GradeStatistics.GradeCount(
-                        grade = "B-",
+                        grade = "B",
                         count = 1
                     ),
                     AcademicSummary.GradeStatistics.GradeCount(
+                        grade = "B-",
+                        count = 3
+                    ),
+                    AcademicSummary.GradeStatistics.GradeCount(
                         grade = "C",
+                        count = 1
+                    ),
+                    AcademicSummary.GradeStatistics.GradeCount(
+                        grade = "D",
                         count = 1
                     )
                 )
@@ -95,27 +96,113 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
         )
     }
 
-    override fun getCoursePlanSchedule(credentials: Credentials): CoursePlanSchedule {
-        return CoursePlanSchedule(
+    override fun getPaymentInfo(credentials: Credentials): PaymentInfo {
+        return PaymentInfo(
+            academicYears = listOf(
+                PaymentInfo.AcademicYear(
+                    year1 = 2017,
+                    year2 = 2018,
+                    termPaymentInfoList = listOf(
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 2,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 1,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        )
+                    )
+                ),
+                PaymentInfo.AcademicYear(
+                    year1 = 2016,
+                    year2 = 2017,
+                    termPaymentInfoList = listOf(
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 3,
+                            statusInd = "Tidak Ada Tagihan",
+                            statusEng = "No Dues"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 2,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 1,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        )
+                    )
+                ),
+                PaymentInfo.AcademicYear(
+                    year1 = 2015,
+                    year2 = 2016,
+                    termPaymentInfoList = listOf(
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 3,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 2,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 1,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        )
+                    )
+                ),
+                PaymentInfo.AcademicYear(
+                    year1 = 2014,
+                    year2 = 2015,
+                    termPaymentInfoList = listOf(
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 3,
+                            statusInd = "Tidak Ada Tagihan",
+                            statusEng = "No Dues"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 2,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        ),
+                        PaymentInfo.AcademicYear.TermPaymentInfo(
+                            term = 1,
+                            statusInd = "Lunas",
+                            statusEng = "Paid"
+                        )
+                    )
+                )
+            )
+        )
+    }
+
+    override fun getClassSchedule(credentials: Credentials): ClassSchedule {
+        return ClassSchedule(
             days = listOf(
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.MONDAY,
                     classes = listOf(
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("08:00"),
                             endTime = LocalTime.parse("09:40"),
                             courseNameInd = "Analisis Numerik",
                             courseNameEng = "Numerical Analysis",
                             room = "2.2405"
                         ),
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("13:00"),
                             endTime = LocalTime.parse("14:40"),
                             courseNameInd = "Teori Bahasa & Automata",
                             courseNameEng = "Automata & Theory of Languages",
                             room = "2.2405"
                         ),
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("16:00"),
                             endTime = LocalTime.parse("17:40"),
                             courseNameInd = "Layanan Aplikasi Web",
@@ -124,35 +211,35 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                         )
                     )
                 ),
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.TUESDAY,
                     classes = emptyList()
                 ),
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.WEDNESDAY,
                     classes = listOf(
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("10:00"),
                             endTime = LocalTime.parse("11:40"),
                             courseNameInd = "Data Science & Analytics",
                             courseNameEng = "Data Science & Analytics",
                             room = "3.3113"
                         ),
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("12:00"),
                             endTime = LocalTime.parse("12:30"),
                             courseNameInd = "Kerja Praktik",
                             courseNameEng = "Internship",
                             room = "2.2401"
                         ),
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("14:00"),
                             endTime = LocalTime.parse("15:40"),
                             courseNameInd = "Teori Bahasa & Automata",
                             courseNameEng = "Automata & Theory of Languages",
                             room = "2.2405"
                         ),
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("16:00"),
                             endTime = LocalTime.parse("17:40"),
                             courseNameInd = "Layanan Aplikasi Web",
@@ -161,10 +248,10 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                         )
                     )
                 ),
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.THURSDAY,
                     classes = listOf(
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("08:00"),
                             endTime = LocalTime.parse("08:50"),
                             courseNameInd = "Analisis Numerik",
@@ -173,10 +260,10 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                         )
                     )
                 ),
-                CoursePlanSchedule.Day(
+                ClassSchedule.Day(
                     dayOfWeek = DayOfWeek.FRIDAY,
                     classes = listOf(
-                        CoursePlanSchedule.Day.Class(
+                        ClassSchedule.Day.Class(
                             startTime = LocalTime.parse("09:00"),
                             endTime = LocalTime.parse("09:50"),
                             courseNameInd = "Data Science & Analytics",
@@ -184,6 +271,10 @@ class FakeSiakNgDataSource @Inject constructor(private val context: Context) : S
                             room = "3.3113"
                         )
                     )
+                ),
+                ClassSchedule.Day(
+                    dayOfWeek = DayOfWeek.SATURDAY,
+                    classes = emptyList()
                 )
             )
         )

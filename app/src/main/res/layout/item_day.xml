@@ -30,7 +30,7 @@
 
         <variable
             name="classes"
-            type="java.util.List&lt;com.wasisto.opensiak.model.CoursePlanSchedule.Day.Class>"/>
+            type="java.util.List&lt;com.wasisto.opensiak.model.ClassSchedule.Day.Class>"/>
     </data>
 
     <FrameLayout
@@ -54,10 +54,8 @@
                 android:layout_marginStart="8dp"
                 android:gravity="center"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="?android:textColorPrimary"
-                android:textAllCaps="true"
                 app:textResId="@{dayNameResId}"
-                tools:text="MON"/>
+                tools:text="Mon"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -37,7 +37,7 @@ class LauncherViewModel @Inject constructor(checkUserHasSignedInUseCase: CheckUs
 
     val finishActivityEvent = MediatorLiveData<Event<Unit>>()
 
-    val showErrorEvent = MediatorLiveData<Event<Unit>>()
+    val showStartingErrorEvent = MediatorLiveData<Event<Unit>>()
 
     init {
         checkUserHasSignedInResult.addSource(checkUserHasSignedInUseCase.executeAsync(Unit)) { result ->
@@ -67,9 +67,9 @@ class LauncherViewModel @Inject constructor(checkUserHasSignedInUseCase: CheckUs
             }
         }
 
-        showErrorEvent.addSource(checkUserHasSignedInResult) { result ->
+        showStartingErrorEvent.addSource(checkUserHasSignedInResult) { result ->
             if (result is UseCase.Result.Error) {
-                Event(Unit)
+                showStartingErrorEvent.value = Event(Unit)
             }
         }
     }

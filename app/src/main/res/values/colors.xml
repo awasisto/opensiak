@@ -19,15 +19,16 @@
   -->
 
 <resources>
-    <color name="orange_500">#ff9800</color>
-    <color name="orange_700">#f57c00</color>
-    <color name="blue_a200">#448aff</color>
-    <color name="light_gray">#eeeeee</color>
-    <color name="dark_orange">#cc7a00</color>
-    <color name="unchecked_navigation_drawer_item_icon">#757575</color>
+    <color name="yellow_800">#f9a825</color>
+    <color name="yellow_900">#f57f17</color>
+    <color name="amber_100">#ffecb3</color>
+    <color name="blue_100">#bbdefb</color>
+    <color name="blue_500">#2196f3</color>
+    <color name="gray_700">#616161</color>
     <color name="launcher_text">#cdcdcd</color>
     <color name="status_bar">#33000000</color>
-    <color name="window_background">#fafafa</color>
-    <color name="navigation_bar">#fafafa</color>
     <color name="navigation_bar_divider">#e0e0e0</color>
+    <color name="student_photo_border">#e0e0e0</color>
+    <color name="card_stroke">#e0e0e0</color>
+    <color name="table_border">#e0e0e0</color>
 </resources>

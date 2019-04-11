@@ -32,7 +32,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_gray"
         android:focusableInTouchMode="true">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -48,145 +47,141 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
                     android:orientation="vertical"
                     app:goneUnless="@{viewModel.shouldShowSummary}">
 
-                    <com.google.android.material.card.MaterialCardView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardPreventCornerOverlap="false"
-                        app:cardUseCompatPadding="true">
+                        android:orientation="vertical">
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="136dp"
-                            android:src="@drawable/header_background"
-                            android:scaleType="centerCrop"
-                            tools:ignore="ContentDescription"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_gravity="center_horizontal"
+                            app:civ_border_width="2px"
+                            app:civ_border_color="@color/student_photo_border"
+                            app:photoData="@{viewModel.studentPhotoData}"
+                            tools:src="@drawable/empty_student_photo"
+                            tools:ignore="PxUsage"/>
 
-                        <LinearLayout
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
-                            android:layout_marginTop="152dp"
-                            android:orientation="vertical">
+                            android:layout_marginTop="16dp"
+                            android:gravity="center_horizontal"
+                            android:textColor="?android:textColorPrimary"
+                            android:textSize="24sp"
+                            android:text="@{viewModel.studentName}"
+                            tools:text="Ali Connors"/>
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:fontFamily="@font/nunito_sans_semibold"
-                                android:textColor="?android:textColorPrimary"
-                                android:textSize="24sp"
-                                android:text="@{viewModel.studentName}"
-                                tools:text="Ali Connors"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center_horizontal"
+                            android:textSize="16sp"
+                            android:text="@{viewModel.majorAndDegree}"
+                            tools:text="Computer Science Undergraduate"/>
 
-                            <TextView
-                                android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:gravity="center_horizontal"
-                                android:text="@{viewModel.majorAndDegree}"
-                                tools:text="Computer Science Undergraduate"/>
+                                android:layout_weight="1"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:text="@string/cgpa"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:textSize="24sp"
+                                    android:textColor="?android:textColorPrimary"
+                                    android:text="@{@string/cgpa_text(viewModel.cgpa)}"
+                                    tools:text="3.01"/>
+                            </LinearLayout>
 
                             <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginBottom="16dp"
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
                                 android:background="?android:listDivider"/>
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:orientation="horizontal"
-                                android:baselineAligned="false">
+                                android:layout_weight="1"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
+                                <TextView
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
+                                    android:gravity="center_horizontal"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:text="@string/total_credits_earned"/>
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/cgpa"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"/>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/hind"
-                                        android:textSize="27sp"
-                                        android:textColor="?android:textColorPrimary"
-                                        android:text="@{@string/cgpa_text(viewModel.cgpa)}"
-                                        tools:text="3.01"/>
-                                </LinearLayout>
-
-                                <View
-                                    android:layout_width="16dp"
-                                    android:layout_height="0dp"/>
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
+                                <TextView
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/total_credits_earned"
-                                        android:maxLines="1"
-                                        android:ellipsize="end"/>
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/hind"
-                                        android:textSize="27sp"
-                                        android:textColor="?android:textColorPrimary"
-                                        android:text="@{@string/total_credits_earned_text(viewModel.totalCreditsEarned)}"
-                                        tools:text="102"/>
-                                </LinearLayout>
+                                    android:gravity="center_horizontal"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
+                                    android:textSize="24sp"
+                                    android:textColor="?android:textColorPrimary"
+                                    android:text="@{@string/total_credits_earned_text(viewModel.totalCreditsEarned)}"
+                                    tools:text="102"/>
                             </LinearLayout>
                         </LinearLayout>
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="112dp"
-                            android:layout_height="112dp"
-                            android:layout_marginTop="40dp"
-                            android:layout_gravity="center_horizontal"
-                            android:elevation="4dp"
-                            app:civ_border_width="4dp"
-                            app:civ_border_color="@android:color/white"
-                            app:photoData="@{viewModel.studentPhotoData}"/>
-                    </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="32dp"
                         android:text="@string/grade_statistics"
-                        android:textColor="?android:textColorPrimary"
-                        android:textSize="16sp"
-                        android:fontFamily="sans-serif-medium"/>
+                        android:textColor="?android:textColorSecondary"
+                        android:textSize="12sp"
+                        android:textAllCaps="true"
+                        android:fontFamily="sans-serif-medium"
+                        android:letterSpacing="0.1"/>
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardUseCompatPadding="true">
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp"
+                        style="@style/CardStyle">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -196,8 +191,8 @@
                             <FrameLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:padding="16dp">
+                                android:layout_margin="16dp"
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:layout_width="wrap_content"

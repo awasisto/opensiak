@@ -21,17 +21,17 @@ package com.wasisto.opensiak.domain
 
 import com.wasisto.opensiak.data.account.AccountDataSource
 import com.wasisto.opensiak.data.siakng.SiakNgDataSource
-import com.wasisto.opensiak.model.CoursePlanSchedule
+import com.wasisto.opensiak.model.ClassSchedule
 import com.wasisto.opensiak.model.Credentials
 import com.wasisto.opensiak.util.executor.ExecutorProvider
 import javax.inject.Inject
 
-class GetCoursePlanScheduleUseCase @Inject constructor(
+class GetClassScheduleUseCase @Inject constructor(
     executorProvider: ExecutorProvider,
     private val siakNgDataSource: SiakNgDataSource,
     private val accountDataSource: AccountDataSource
-) : UseCase<Unit, CoursePlanSchedule>(executorProvider) {
+) : UseCase<Unit, ClassSchedule>(executorProvider) {
 
     override fun execute(params: Unit) =
-        siakNgDataSource.getCoursePlanSchedule(Credentials.fromAccount(accountDataSource.getLastAccountActive()))
+        siakNgDataSource.getClassSchedule(Credentials.fromAccount(accountDataSource.getLastAccountActive()))
 }

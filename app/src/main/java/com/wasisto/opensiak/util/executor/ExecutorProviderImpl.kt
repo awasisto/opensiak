@@ -27,7 +27,7 @@ class ExecutorProviderImpl @Inject constructor() : ExecutorProvider {
 
     private val computationExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
 
-    private val ioExecutor = Executors.newSingleThreadExecutor()
+    private val ioExecutor = Executors.newCachedThreadPool()
 
     override fun computation(): ExecutorService = computationExecutor
 

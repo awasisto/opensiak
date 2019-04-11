@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2019 Andika Wasisto
   ~
@@ -17,8 +18,7 @@
   ~ along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<vector android:height="24dp" android:tint="#FFFFFF"
-    android:viewportHeight="24.0" android:viewportWidth="24.0"
-    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="#FF000000" android:pathData="M3,18h18v-2L3,16v2zM3,13h18v-2L3,11v2zM3,6v2h18L21,6L3,6z"/>
-</vector>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/navigation_drawer_selected_item_background" android:state_checked="true"/>
+    <item android:drawable="@android:color/transparent"/>
+</selector>

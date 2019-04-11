@@ -92,7 +92,7 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
                         Timber.w(result.error)
                         showSignInErrorSnackbarEvent.value = Event(
                             SignInErrorSnackbarEventData(
-                                messageResId = R.string.an_error_occurred,
+                                messageResId = R.string.something_went_wrong,
                                 showRetryButton = true
                             )
                         )

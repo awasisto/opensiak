@@ -17,22 +17,24 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.ui.siak.courseplanschedule
+package com.wasisto.opensiak.model
 
-import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.wasisto.opensiak.model.CoursePlanSchedule
+import org.threeten.bp.DayOfWeek
+import org.threeten.bp.LocalTime
 
-@BindingAdapter("days")
-fun days(recyclerView: RecyclerView, days: List<CoursePlanSchedule.Day>?) {
-    recyclerView.adapter = (recyclerView.adapter as? DaysAdapter ?: DaysAdapter()).apply {
-        data = days ?: emptyList()
-    }
-}
-
-@BindingAdapter("classes")
-fun classes(recyclerView: RecyclerView, classes: List<CoursePlanSchedule.Day.Class>?) {
-    recyclerView.adapter = (recyclerView.adapter as? ClassesAdapter ?: ClassesAdapter()).apply {
-        data = classes ?: emptyList()
+data class ClassSchedule(
+    val days: List<Day>
+) {
+    data class Day(
+        val dayOfWeek: DayOfWeek,
+        val classes: List<Class>
+    ) {
+        data class Class(
+            val startTime: LocalTime,
+            val endTime: LocalTime,
+            val courseNameInd: String,
+            val courseNameEng: String,
+            val room: String
+        )
     }
 }

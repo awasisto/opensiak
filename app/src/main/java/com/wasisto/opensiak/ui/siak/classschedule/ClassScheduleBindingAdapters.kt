@@ -17,17 +17,22 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.data.siakng
+package com.wasisto.opensiak.ui.siak.classschedule
 
-import com.wasisto.opensiak.model.*
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.wasisto.opensiak.model.ClassSchedule
 
-interface SiakNgDataSource {
+@BindingAdapter("days")
+fun days(recyclerView: RecyclerView, days: List<ClassSchedule.Day>?) {
+    recyclerView.adapter = (recyclerView.adapter as? DaysAdapter ?: DaysAdapter()).apply {
+        data = days ?: emptyList()
+    }
+}
 
-    fun getAcademicSummary(credentials: Credentials): AcademicSummary
-
-    fun getPaymentInfo(credentials: Credentials): PaymentInfo
-
-    fun getClassSchedule(credentials: Credentials): ClassSchedule
-
-    fun getStudentProfile(credentials: Credentials): StudentProfile
+@BindingAdapter("classes")
+fun classes(recyclerView: RecyclerView, classes: List<ClassSchedule.Day.Class>?) {
+    recyclerView.adapter = (recyclerView.adapter as? ClassesAdapter ?: ClassesAdapter()).apply {
+        data = classes ?: emptyList()
+    }
 }

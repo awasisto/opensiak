@@ -17,17 +17,20 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.data.siakng
+package com.wasisto.opensiak.model
 
-import com.wasisto.opensiak.model.*
-
-interface SiakNgDataSource {
-
-    fun getAcademicSummary(credentials: Credentials): AcademicSummary
-
-    fun getPaymentInfo(credentials: Credentials): PaymentInfo
-
-    fun getClassSchedule(credentials: Credentials): ClassSchedule
-
-    fun getStudentProfile(credentials: Credentials): StudentProfile
+data class PaymentInfo(
+    val academicYears: List<AcademicYear>
+) {
+    data class AcademicYear(
+        val year1: Int,
+        val year2: Int,
+        val termPaymentInfoList: List<TermPaymentInfo>
+    ) {
+        data class TermPaymentInfo(
+            val term: Int,
+            val statusInd: String,
+            val statusEng: String
+        )
+    }
 }

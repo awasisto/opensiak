@@ -59,11 +59,11 @@ class SiakHttpClient private constructor(
     }
 
     private fun unauthenticatedHttpGet(url: String): BilingualResponse {
-        val responseIndFuture = executorProvider.computation().submit<Response> {
+        val responseIndFuture = executorProvider.io().submit<Response> {
             unauthenticatedHttpGet(url, okHttpClientInd)
         }
 
-        val responseEngFuture = executorProvider.computation().submit<Response> {
+        val responseEngFuture = executorProvider.io().submit<Response> {
             unauthenticatedHttpGet(url, okHttpClientEng)
         }
 
@@ -108,7 +108,7 @@ class SiakHttpClient private constructor(
             )
             .build()
 
-        val authenticateIndFuture = executorProvider.computation().submit<Unit> {
+        val authenticateIndFuture = executorProvider.io().submit<Unit> {
             val authenticationResponse = okHttpClientInd.newCall(authenticationRequest).execute()
 
             if (isAuthenticationSuccess(authenticationResponse)) {
@@ -120,7 +120,7 @@ class SiakHttpClient private constructor(
             }
         }
 
-        val authenticateEngFuture = executorProvider.computation().submit<Unit> {
+        val authenticateEngFuture = executorProvider.io().submit<Unit> {
             val authenticationResponse = okHttpClientEng.newCall(authenticationRequest).execute()
 
             if (isAuthenticationSuccess(authenticationResponse)) {

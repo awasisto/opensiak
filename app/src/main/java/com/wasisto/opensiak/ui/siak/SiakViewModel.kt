@@ -22,15 +22,21 @@ package com.wasisto.opensiak.ui.siak
 import androidx.lifecycle.*
 import com.wasisto.opensiak.model.Account
 import com.wasisto.opensiak.domain.GetActiveAccountUseCase
+import com.wasisto.opensiak.domain.SignOutUseCase
 import com.wasisto.opensiak.domain.UseCase
 import com.wasisto.opensiak.domain.UseCase.Result
 import com.wasisto.opensiak.ui.Event
 import timber.log.Timber
 import javax.inject.Inject
 
-class SiakViewModel @Inject constructor(getActiveAccountUseCase: GetActiveAccountUseCase): ViewModel() {
+class SiakViewModel @Inject constructor(
+    getActiveAccountUseCase: GetActiveAccountUseCase,
+    private val signOutUseCase: SignOutUseCase
+): ViewModel() {
 
     private val getActiveAccountResult = MediatorLiveData<Result<Account>>()
+
+    private val signOutResult = MediatorLiveData<Result<Unit>>()
 
     val activeAccountPhotoData: LiveData<ByteArray>
 
@@ -38,7 +44,17 @@ class SiakViewModel @Inject constructor(getActiveAccountUseCase: GetActiveAccoun
 
     val activeAccountEmail: LiveData<String>
 
-    val showErrorEvent = MediatorLiveData<Event<Unit>>()
+    val shouldShowAccountMenu = MutableLiveData<Boolean>()
+
+    val showSignOutConfirmationDialogEvent = MutableLiveData<Event<Unit>>()
+
+    val launchSignInActivityEvent = MediatorLiveData<Event<Unit>>()
+
+    val finishActivityEvent = MediatorLiveData<Event<Unit>>()
+
+    val showSignOutErrorEvent = MediatorLiveData<Event<Unit>>()
+
+    val showStartingErrorEvent = MediatorLiveData<Event<Unit>>()
 
     init {
         getActiveAccountResult.addSource(getActiveAccountUseCase.executeAsync(Unit)) { result ->
@@ -62,10 +78,47 @@ class SiakViewModel @Inject constructor(getActiveAccountUseCase: GetActiveAccoun
             (result as? Result.Success)?.data?.email
         }
 
-        showErrorEvent.addSource(getActiveAccountResult) { result ->
-            if (result is UseCase.Result.Error) {
-                Event(Unit)
+        launchSignInActivityEvent.addSource(signOutResult) { result ->
+            if (result is Result.Success) {
+                launchSignInActivityEvent.value = Event(Unit)
             }
+        }
+
+        finishActivityEvent.addSource(signOutResult) { result ->
+            if (result is Result.Success) {
+                finishActivityEvent.value = Event(Unit)
+            }
+        }
+
+        showSignOutErrorEvent.addSource(signOutResult) { result ->
+            if (result is Result.Error) {
+                showSignOutErrorEvent.value = Event(Unit)
+            }
+        }
+
+        showStartingErrorEvent.addSource(getActiveAccountResult) { result ->
+            if (result is UseCase.Result.Error) {
+                showStartingErrorEvent.value = Event(Unit)
+            }
+        }
+    }
+
+    fun onShowOrHideAccountMenuButtonClick() {
+        shouldShowAccountMenu.value = shouldShowAccountMenu.value != true
+    }
+
+    fun onSignOutButtonClick() {
+        showSignOutConfirmationDialogEvent.value = Event(Unit)
+    }
+
+    fun onSignOutConfirmationDialogYesButtonClick() {
+        signOutResult.addSource(signOutUseCase.executeAsync(Unit)) { result ->
+            if (result is UseCase.Result.Success) {
+                Timber.d("result.data: %s", result.data)
+            } else if (result is UseCase.Result.Error) {
+                Timber.w(result.error)
+            }
+            signOutResult.value = result
         }
     }
 }

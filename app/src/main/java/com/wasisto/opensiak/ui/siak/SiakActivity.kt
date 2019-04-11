@@ -22,6 +22,7 @@ package com.wasisto.opensiak.ui.siak
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -33,7 +34,9 @@ import com.wasisto.opensiak.R
 import com.wasisto.opensiak.databinding.NavigationDrawerHeaderBinding
 import com.wasisto.opensiak.ui.about.AboutActivity
 import com.wasisto.opensiak.ui.siak.academicsummary.AcademicSummaryFragment
-import com.wasisto.opensiak.ui.siak.courseplanschedule.CoursePlanScheduleFragment
+import com.wasisto.opensiak.ui.siak.classschedule.ClassScheduleFragment
+import com.wasisto.opensiak.ui.siak.paymentinfo.PaymentInfoFragment
+import com.wasisto.opensiak.ui.signin.SignInActivity
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_siak.*
 import javax.inject.Inject
@@ -44,7 +47,13 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
     private lateinit var viewModel: SiakViewModel
 
-    private lateinit var errorDialog: AlertDialog
+    private lateinit var signOutConfirmationDialog: AlertDialog
+
+    private lateinit var startingErrorDialog: AlertDialog
+
+    private lateinit var signOutErrorDialog: AlertDialog
+
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +61,6 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
         viewModel = ViewModelProviders.of(this@SiakActivity, viewModelFactory).get(SiakViewModel::class.java)
 
@@ -61,11 +69,36 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             setLifecycleOwner(this@SiakActivity)
         }
 
-        errorDialog = AlertDialog.Builder(this)
+        signOutConfirmationDialog = AlertDialog.Builder(this)
+            .setMessage(R.string.sign_out_confirmation_dialog_message)
+            .setPositiveButton(R.string.yes) { _, _ -> viewModel.onSignOutConfirmationDialogYesButtonClick() }
+            .setNegativeButton(R.string.cancel) { _, _ -> }
+            .create()
+
+        startingErrorDialog = AlertDialog.Builder(this)
             .setMessage(R.string.starting_error_message)
             .setPositiveButton(R.string.close) { _, _ ->  finish() }
             .setCancelable(false)
             .create()
+
+        signOutErrorDialog = AlertDialog.Builder(this)
+            .setMessage(R.string.sign_out_error_message)
+            .setPositiveButton(R.string.close) { _, _ ->  finish() }
+            .setCancelable(false)
+            .create()
+
+        actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.open_navigation_drawer,
+            R.string.close_navigation_drawer
+        ).apply {
+            isDrawerSlideAnimationEnabled = false
+            syncState()
+        }
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
 
         navigationView.setNavigationItemSelectedListener(this)
         navigationView.isSaveEnabled = false
@@ -73,10 +106,30 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         navigationView.setCheckedItem(R.id.navigation_academic_summary)
         onNavigationItemSelected(navigationView.menu.findItem(R.id.navigation_academic_summary))
 
-        viewModel.showErrorEvent.observe(this, Observer {
-            if (!errorDialog.isShowing) {
-                errorDialog.show()
+        viewModel.showSignOutConfirmationDialogEvent.observe(this, Observer {
+            if (!signOutConfirmationDialog.isShowing) {
+                signOutConfirmationDialog.show()
             }
+        })
+
+        viewModel.showStartingErrorEvent.observe(this, Observer {
+            if (!startingErrorDialog.isShowing) {
+                startingErrorDialog.show()
+            }
+        })
+
+        viewModel.showSignOutErrorEvent.observe(this, Observer {
+            if (!signOutErrorDialog.isShowing) {
+                signOutErrorDialog.show()
+            }
+        })
+
+        viewModel.launchSignInActivityEvent.observe(this, Observer {
+            startActivity(Intent(this, SignInActivity::class.java))
+        })
+
+        viewModel.finishActivityEvent.observe(this, Observer {
+            finish()
         })
     }
 
@@ -94,8 +147,12 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                 replaceFragment(AcademicSummaryFragment())
                 supportActionBar?.title = item.title
             }
-            R.id.navigation_course_plan_schedule -> {
-                replaceFragment(CoursePlanScheduleFragment())
+            R.id.navigation_payment_info -> {
+                replaceFragment(PaymentInfoFragment())
+                supportActionBar?.title = item.title
+            }
+            R.id.navigation_class_schedule -> {
+                replaceFragment(ClassScheduleFragment())
                 supportActionBar?.title = item.title
             }
             R.id.navigation_about -> {

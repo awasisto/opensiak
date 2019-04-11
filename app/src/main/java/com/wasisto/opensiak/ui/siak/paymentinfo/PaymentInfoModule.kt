@@ -17,17 +17,19 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.data.siakng
+package com.wasisto.opensiak.ui.siak.paymentinfo
 
-import com.wasisto.opensiak.model.*
+import androidx.lifecycle.ViewModel
+import com.wasisto.opensiak.di.ViewModelKey
+import dagger.Binds
+import dagger.Module
+import dagger.multibindings.IntoMap
 
-interface SiakNgDataSource {
+@Module
+abstract class PaymentInfoModule {
 
-    fun getAcademicSummary(credentials: Credentials): AcademicSummary
-
-    fun getPaymentInfo(credentials: Credentials): PaymentInfo
-
-    fun getClassSchedule(credentials: Credentials): ClassSchedule
-
-    fun getStudentProfile(credentials: Credentials): StudentProfile
+    @Binds
+    @IntoMap
+    @ViewModelKey(PaymentInfoViewModel::class)
+    abstract fun bindViewModel(viewModel: PaymentInfoViewModel): ViewModel
 }

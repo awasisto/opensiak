@@ -21,59 +21,127 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="ContentDescription,PxUsage,RtlSymmetry,UseCompoundDrawables">
 
     <data>
         <variable
             name="viewModel"
             type="com.wasisto.opensiak.ui.siak.SiakViewModel"/>
     </data>
-    
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="172dp">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/header_background"
-            tools:ignore="ContentDescription"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical">
+            android:onClick="@{() -> viewModel.onShowOrHideAccountMenuButtonClick()}">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:contentDescription="@string/student_photo"
+                app:civ_border_color="@color/student_photo_border"
+                app:civ_border_width="2px"
                 app:photoData="@{viewModel.activeAccountPhotoData}"
                 tools:src="@drawable/empty_student_photo"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="?android:textColorPrimaryInverse"
-                android:text="@{viewModel.activeAccountName}"
-                tools:text="Ali Connors"/>
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="?android:textColorPrimaryInverse"
-                android:text="@{viewModel.activeAccountEmail}"
-                tools:text="ali.connors@ui.example"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|bottom"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="?android:textColorPrimary"
+                    android:text="@{viewModel.activeAccountName}"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    tools:text="Ali Connors"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/activeAccountEmailTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="21dp"
+                        android:textColor="?android:textColorSecondary"
+                        android:textSize="12sp"
+                        android:text="@{viewModel.activeAccountEmail}"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        tools:text="ali.connors@ui.example"/>
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_expand"
+                        android:tint="@color/gray_700"
+                        android:layout_alignEnd="@+id/activeAccountEmailTextView"
+                        app:flipVerticallyWhen="@{viewModel.shouldShowAccountMenu}"/>
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
-    </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:goneUnless="@{viewModel.shouldShowAccountMenu}">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="60dp"
+                android:background="?android:listDivider"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingStart="22dp"
+                android:paddingEnd="22dp"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?selectableItemBackground"
+                android:onClick="@{() -> viewModel.onSignOutButtonClick()}">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_sign_out"
+                    android:tint="@color/gray_700"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="?android:textColorPrimary"
+                    android:text="@string/sign_out"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:listDivider"/>
+    </LinearLayout>
 </layout>

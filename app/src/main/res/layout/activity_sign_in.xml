@@ -33,142 +33,137 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
-        android:fitsSystemWindows="true"
-        app:statusBarBackground="?colorPrimaryDark">
+        android:focusableInTouchMode="true">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <com.google.android.material.appbar.AppBarLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                android:orientation="vertical">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/product_logo"
+                    tools:ignore="ContentDescription"/>
+
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="?actionBarSize"
-                    app:titleTextAppearance="@style/ToolbarTitleTextAppearance"/>
-            </com.google.android.material.appbar.AppBarLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:gravity="center"
+                    android:text="@string/sign_in"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="24sp"/>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                <ScrollView
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fillViewport="true">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:gravity="center"
+                    android:text="@string/with_your_ui_account"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="16sp"/>
 
-                    <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="24dp"
+                    android:hint="@string/username"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890."
+                        android:inputType="text|textNoSuggestions"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:text="@={viewModel.username}"
+                        android:focusable="@{!viewModel.shouldDisableForm}"
+                        android:focusableInTouchMode="@{!viewModel.shouldDisableForm}"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="24dp"
-                            android:layout_marginEnd="24dp"
-                            android:text="@string/sign_in_with_your_ui_account"
-                            android:textColor="?android:textColorPrimary"
-                            android:textSize="16sp"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="24dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginEnd="24dp"
-                            android:hint="@string/username"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:imeOptions="actionDone"
+                        android:text="@={viewModel.password}"
+                        android:focusable="@{!viewModel.shouldDisableForm}"
+                        android:focusableInTouchMode="@{!viewModel.shouldDisableForm}"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890."
-                                android:inputType="text|textNoSuggestions"
-                                android:imeOptions="actionNext"
-                                android:singleLine="true"
-                                android:text="@={viewModel.username}"
-                                android:focusable="@{!viewModel.shouldDisableForm}"
-                                android:focusableInTouchMode="@{!viewModel.shouldDisableForm}"/>
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginEnd="24dp"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/password"
-                                android:inputType="textPassword"
-                                android:text="@={viewModel.password}"
-                                android:focusable="@{!viewModel.shouldDisableForm}"
-                                android:focusableInTouchMode="@{!viewModel.shouldDisableForm}"/>
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="24dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/next"
-                            android:textAllCaps="false"
-                            android:letterSpacing="0"
-                            android:fontFamily="@font/nunito_sans_bold"
-                            android:clickable="@{!viewModel.isLoading}"
-                            android:onClick="@{() -> viewModel.onSignInButtonClick()}"
-                            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"/>
-
-                        <Button
-                            android:id="@+id/aboutButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text="@string/about_opensiak"
-                            android:textColor="?android:textColorSecondary"
-                            android:textSize="12sp"
-                            android:textAllCaps="false"
-                            android:fontFamily="sans-serif"
-                            android:letterSpacing="0"
-                            android:onClick="@{() -> viewModel.onAboutButtonClick()}"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"/>
-                    </LinearLayout>
-                </ScrollView>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/next"
+                    android:textAllCaps="false"
+                    android:letterSpacing="0"
+                    android:clickable="@{!viewModel.isLoading}"
+                    android:onClick="@{() -> viewModel.onSignInButtonClick()}"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white"
-                    android:alpha="0.5"
-                    app:goneUnless="@{viewModel.shouldDisableForm}"
-                    tools:visibility="gone"/>
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
 
-                <ProgressBar
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/aboutButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-7dp"
-                    android:indeterminate="true"
-                    app:goneUnless="@{viewModel.isLoading}"
-                    style="?android:attr/progressBarStyleHorizontal"/>
-            </FrameLayout>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/about_opensiak"
+                    android:textColor="?android:textColorSecondary"
+                    android:textSize="12sp"
+                    android:textAllCaps="false"
+                    android:fontFamily="sans-serif"
+                    android:letterSpacing="0"
+                    android:onClick="@{() -> viewModel.onAboutButtonClick()}"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:alpha="0.5"
+            app:goneUnless="@{viewModel.shouldDisableForm}"
+            tools:visibility="gone"/>
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="-8.25dp"
+            android:indeterminate="true"
+            app:goneUnless="@{viewModel.isLoading}"
+            style="?android:attr/progressBarStyleHorizontal"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

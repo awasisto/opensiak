@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2019 Andika Wasisto
+  ~
+  ~ This file is part of OpenSIAK.
+  ~
+  ~ OpenSIAK is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ OpenSIAK is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="starting_error_message">Terjadi kesalahan saat menjalankan aplikasi. Silahkan coba hapus data aplikasi.</string>
+    <string name="something_went_wrong">Terjadi kesalahan. Silahkan periksa koneksi internet Anda.</string>
+    <string name="yes">Ya</string>
+    <string name="cancel">Batal</string>
+    <string name="close">Tutup</string>
+    <string name="retry">Coba lagi</string>
+    <string name="try_again">Coba lagi</string>
+    <string name="sign_in">Sign in</string>
+    <string name="with_your_ui_account">menggunakan akun UI Anda</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="next">Berikutnya</string>
+    <string name="wrong_username_or_password">Username atau password salah</string>
+    <string name="account_already_exists">Akun sudah ada</string>
+    <string name="about_opensiak">Tentang OpenSIAK</string>
+    <string name="about_activity_title">Tentang OpenSIAK</string>
+    <string name="version_text">Versi %s</string>
+    <string name="privacy_policy">Kebijakan privasi</string>
+    <string name="open_source_licenses">Lisensi open source</string>
+    <string name="source_code">Kode sumber</string>
+    <string name="privacy_policy_url">https://awasisto.github.io/opensiak/privacy-policy</string>
+    <string name="open_navigation_drawer">Buka menu navigasi</string>
+    <string name="close_navigation_drawer">Tutup menu navigasi</string>
+    <string name="sign_out">Sign out</string>
+    <string name="sign_out_confirmation_dialog_message">Apakah Anda yakin ingin sign out?</string>
+    <string name="sign_out_error_message">Something went wrong while signing you out. Try to clear application data.</string>
+    <string name="academic">Akademis</string>
+    <string name="course_plan">IRS</string>
+    <string name="summary">Ringkasan</string>
+    <string name="cgpa">IPK</string>
+    <string name="total_credits_earned">SKS diperoleh</string>
+    <string name="grade_statistics">Statistik nilai</string>
+    <string name="grade">Nilai</string>
+    <string name="total">Jumlah</string>
+    <string name="payment">Pembayaran</string>
+    <string name="academic_year">Tahun akademik</string>
+    <string name="term">Term</string>
+    <string name="status">Status</string>
+    <string name="class_schedule">Jadwal kelas</string>
+    <string name="mon">Sen</string>
+    <string name="tue">Sel</string>
+    <string name="wed">Rab</string>
+    <string name="thu">Kam</string>
+    <string name="fri">Jum</string>
+    <string name="sat">Sab</string>
+    <string name="sun">Min</string>
+    <string name="room_text">Ruang %s</string>
+    <string name="no_classes">Tidak ada kelas</string>
+</resources>

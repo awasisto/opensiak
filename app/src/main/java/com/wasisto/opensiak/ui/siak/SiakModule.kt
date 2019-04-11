@@ -28,8 +28,10 @@ import com.wasisto.opensiak.ui.siak.academicsummary.AcademicSummaryFragment
 import dagger.android.ContributesAndroidInjector
 import com.wasisto.opensiak.di.FragmentScoped
 import com.wasisto.opensiak.ui.siak.academicsummary.AcademicSummaryModule
-import com.wasisto.opensiak.ui.siak.courseplanschedule.CoursePlanScheduleFragment
-import com.wasisto.opensiak.ui.siak.courseplanschedule.CoursePlanScheduleModule
+import com.wasisto.opensiak.ui.siak.classschedule.ClassScheduleFragment
+import com.wasisto.opensiak.ui.siak.classschedule.ClassScheduleModule
+import com.wasisto.opensiak.ui.siak.paymentinfo.PaymentInfoFragment
+import com.wasisto.opensiak.ui.siak.paymentinfo.PaymentInfoModule
 
 @Module
 abstract class SiakModule {
@@ -44,6 +46,10 @@ abstract class SiakModule {
     abstract fun contributeAcademicSummaryFragment(): AcademicSummaryFragment
 
     @FragmentScoped
-    @ContributesAndroidInjector(modules = [CoursePlanScheduleModule::class])
-    abstract fun contributeCoursePlanScheduleFragment(): CoursePlanScheduleFragment
+    @ContributesAndroidInjector(modules = [PaymentInfoModule::class])
+    abstract fun contributePaymentInfoFragment(): PaymentInfoFragment
+
+    @FragmentScoped
+    @ContributesAndroidInjector(modules = [ClassScheduleModule::class])
+    abstract fun contributeClassScheduleFragment(): ClassScheduleFragment
 }

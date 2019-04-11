@@ -17,19 +17,16 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.ui.siak.courseplanschedule
+package com.wasisto.opensiak.domain
 
-import androidx.lifecycle.ViewModel
-import com.wasisto.opensiak.di.ViewModelKey
-import dagger.Binds
-import dagger.Module
-import dagger.multibindings.IntoMap
+import com.wasisto.opensiak.data.account.AccountDataSource
+import com.wasisto.opensiak.util.executor.ExecutorProvider
+import javax.inject.Inject
 
-@Module
-abstract class CoursePlanScheduleModule {
+class SignOutUseCase @Inject constructor(
+    executorProvider: ExecutorProvider,
+    private val accountDataSource: AccountDataSource
+) : UseCase<Unit, Unit>(executorProvider) {
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(CoursePlanScheduleViewModel::class)
-    abstract fun bindViewModel(viewModel: CoursePlanScheduleViewModel): ViewModel
+    override fun execute(params: Unit) = accountDataSource.remove(accountDataSource.getLastAccountActive())
 }

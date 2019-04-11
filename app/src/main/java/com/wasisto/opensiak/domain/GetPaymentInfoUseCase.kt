@@ -20,38 +20,18 @@
 package com.wasisto.opensiak.domain
 
 import com.wasisto.opensiak.data.account.AccountDataSource
-import com.wasisto.opensiak.model.Account
 import com.wasisto.opensiak.data.siakng.SiakNgDataSource
 import com.wasisto.opensiak.model.Credentials
+import com.wasisto.opensiak.model.PaymentInfo
 import com.wasisto.opensiak.util.executor.ExecutorProvider
-import java.util.concurrent.Callable
-import java.util.concurrent.ExecutionException
 import javax.inject.Inject
 
-class SignInUseCase @Inject constructor(
-    private val executorProvider: ExecutorProvider,
+class GetPaymentInfoUseCase @Inject constructor(
+    executorProvider: ExecutorProvider,
     private val siakNgDataSource: SiakNgDataSource,
     private val accountDataSource: AccountDataSource
-) : UseCase<Credentials, Unit>(executorProvider) {
+) : UseCase<Unit, PaymentInfo>(executorProvider) {
 
-    override fun execute(params: Credentials) {
-        val academicSummaryFuture = executorProvider.io()
-            .submit(Callable { siakNgDataSource.getAcademicSummary(params) })
-        val studentProfileFuture = executorProvider.io()
-            .submit(Callable { siakNgDataSource.getStudentProfile(params) })
-
-        try {
-            accountDataSource.add(
-                Account(
-                    username = params.username,
-                    password = params.password,
-                    name = academicSummaryFuture.get().studentName,
-                    email = studentProfileFuture.get().uiEmail,
-                    photoData = academicSummaryFuture.get().studentPhotoData
-                )
-            )
-        } catch (e: ExecutionException) {
-            throw e.cause!!
-        }
-    }
+    override fun execute(params: Unit) =
+        siakNgDataSource.getPaymentInfo(Credentials.fromAccount(accountDataSource.getLastAccountActive()))
 }

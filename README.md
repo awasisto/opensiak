@@ -10,10 +10,10 @@ https://play.google.com/store/apps/details?id=com.wasisto.opensiak
 Screenshots
 -----------
 
-![OpenSIAK screenshot 1](https://lh3.googleusercontent.com/N62OHVlCDQXOJ-a386GM1e8RBQkrP2Zu2aGT2puC4_YgYRQ1_capGb559TZEhcMLxBBU=w300-rw)
-![OpenSIAK screenshot 2](https://lh3.googleusercontent.com/ApCuE2imgROIG83VQFo1XYcwtPCwvE6l9H4rY6-P6B4M_gU6Tp_4qrElU9C6d7qUqw=w300-rw)
-![OpenSIAK screenshot 3](https://lh3.googleusercontent.com/NwMeEU9pwnE3OqsJhoQFM_jVOWRW3sgrrvLJWoGbVMqycOlEdto-_Apc1ytxt-ECqEI=w300-rw)
-![OpenSIAK screenshot 4](https://lh3.googleusercontent.com/TGl7LgxAGwmyOz1navOwdAqWQ8ZZm-zGl-JWPRc1UQrI1zm4eeMUxLO8MssKR67JwrI=w300-rw)
+![OpenSIAK screenshot 1](https://lh3.googleusercontent.com/N7qEkleTb5YQRMwOZ97DZCWQziXyFTSWSrjLwuTS29bPesR_F8lciF9zJVkepHn-yng=w300-rw)
+![OpenSIAK screenshot 2](https://lh3.googleusercontent.com/T3hYRO7NpuLgw_lweaLGMpGue3sghjhnSoooa3FYzhKg6yo_TJRvKXDCXi9ZV1S4rw=w300-rw)
+![OpenSIAK screenshot 3](https://lh3.googleusercontent.com/OdwXTZddYU48hQB1Ac4Pv7_Dbv-7rrETmYhuuH_GGwJJx7aikvFZzqjTdjmUgqubzg=w300-rw)
+![OpenSIAK screenshot 4](https://lh3.googleusercontent.com/l8oFl8GOV_qvRjDR-CX1eBTmdb935IhSQy9vTKgE_rWlkMEPecZMc0MjFcHpHcXl8g=w300-rw)
 
 License
 -------

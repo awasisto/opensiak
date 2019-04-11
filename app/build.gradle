@@ -29,8 +29,8 @@ android {
         applicationId "com.wasisto.opensiak"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 5
-        versionName "1.0.4"
+        versionCode 6
+        versionName "2.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "opensiak-$versionName")
     }
@@ -42,9 +42,11 @@ android {
         mock {
             dimension "mode"
             applicationIdSuffix = ".mock"
+            resValue "string", "app_name", "OpenSIAK (mock)"
         }
         prod {
             dimension "mode"
+            resValue "string", "app_name", "OpenSIAK"
         }
     }
     variantFilter { variant ->
@@ -83,9 +85,9 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
 
-    implementation 'androidx.core:core-ktx:1.1.0-alpha04'
+    implementation 'androidx.core:core-ktx:1.1.0-alpha05'
 
     implementation 'androidx.drawerlayout:drawerlayout:1.0.0'
 
@@ -93,8 +95,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
 
-    implementation 'androidx.room:room-runtime:2.1.0-alpha04'
-    kapt 'androidx.room:room-compiler:2.1.0-alpha04'
+    implementation 'androidx.room:room-runtime:2.1.0-alpha05'
+    kapt 'androidx.room:room-compiler:2.1.0-alpha05'
 
     implementation 'com.google.android.gms:play-services-oss-licenses:16.0.2'
 
