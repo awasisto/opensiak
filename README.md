@@ -10,10 +10,8 @@ https://play.google.com/store/apps/details?id=com.wasisto.opensiak
 Screenshots
 -----------
 
-![OpenSIAK screenshot 1](https://lh3.googleusercontent.com/N7qEkleTb5YQRMwOZ97DZCWQziXyFTSWSrjLwuTS29bPesR_F8lciF9zJVkepHn-yng=w300-rw)
-![OpenSIAK screenshot 2](https://lh3.googleusercontent.com/T3hYRO7NpuLgw_lweaLGMpGue3sghjhnSoooa3FYzhKg6yo_TJRvKXDCXi9ZV1S4rw=w300-rw)
-![OpenSIAK screenshot 3](https://lh3.googleusercontent.com/OdwXTZddYU48hQB1Ac4Pv7_Dbv-7rrETmYhuuH_GGwJJx7aikvFZzqjTdjmUgqubzg=w300-rw)
-![OpenSIAK screenshot 4](https://lh3.googleusercontent.com/l8oFl8GOV_qvRjDR-CX1eBTmdb935IhSQy9vTKgE_rWlkMEPecZMc0MjFcHpHcXl8g=w300-rw)
+![OpenSIAK screenshot 1](https://lh3.googleusercontent.com/hkWjfFX2J-eJsUgs_PQtBgTNtauPqNy3RCgb1B43NT4c5Slvy7cQ0XwKoHz_bTNUFbsU=w300-rw)
+![OpenSIAK screenshot 2](https://lh3.googleusercontent.com/y6FqoxTIAOj2H-37XDeQG1dlQW5jmqrHNnjjCQD7XmjGhj4txInz3xowMjE-VXT76cU=w300-rw)
 
 License
 -------
