@@ -103,6 +103,10 @@ class SiakViewModel @Inject constructor(
         }
     }
 
+    fun onNavigationDrawerClosed() {
+        shouldShowAccountMenu.value = false
+    }
+
     fun onShowOrHideAccountMenuButtonClick() {
         shouldShowAccountMenu.value = shouldShowAccountMenu.value != true
     }
