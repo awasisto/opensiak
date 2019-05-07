@@ -36,7 +36,7 @@
     <string name="about_opensiak">About OpenSIAK</string>
     <string name="about_activity_title">About</string>
     <string name="version_text">Version %s</string>
-    <string name="copyright_text" translatable="false">&#169; %d Andika Wasisto</string>
+    <string name="copyright_notice" translatable="false">&#169; 2019 Andika Wasisto</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="open_source_licenses">Open source licenses</string>
     <string name="source_code">Source code</string>

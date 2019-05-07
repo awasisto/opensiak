@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="12dp"
-                        android:text="@{@string/copyright_text(Year.now().value)}"
+                        android:text="@string/copyright_notice"
                         tools:text="&#169; 2019 Andika Wasisto"/>
 
                     <Button

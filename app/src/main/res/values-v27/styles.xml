@@ -33,6 +33,7 @@
         <item name="buttonBarPositiveButtonStyle">@style/ButtonBarStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/ButtonBarStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/ButtonBarStyle</item>
+        <item name="actionBarSize">@dimen/action_bar_size</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -49,5 +50,6 @@
         <item name="buttonBarPositiveButtonStyle">@style/ButtonBarStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/ButtonBarStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/ButtonBarStyle</item>
+        <item name="actionBarSize">@dimen/action_bar_size</item>
     </style>
 </resources>

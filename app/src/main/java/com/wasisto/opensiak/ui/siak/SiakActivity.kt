@@ -22,6 +22,7 @@ package com.wasisto.opensiak.ui.siak
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
@@ -87,13 +88,18 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             .setCancelable(false)
             .create()
 
-        actionBarDrawerToggle = ActionBarDrawerToggle(
+        actionBarDrawerToggle = object : ActionBarDrawerToggle(
             this,
             drawerLayout,
             toolbar,
             R.string.open_navigation_drawer,
             R.string.close_navigation_drawer
-        ).apply {
+        ) {
+            override fun onDrawerClosed(view: View) {
+                viewModel.onNavigationDrawerClosed()
+                super.onDrawerClosed(view)
+            }
+        }.apply {
             isDrawerSlideAnimationEnabled = false
             syncState()
         }
