@@ -73,7 +73,7 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
         signOutConfirmationDialog = AlertDialog.Builder(this)
             .setMessage(R.string.sign_out_confirmation_dialog_message)
-            .setPositiveButton(R.string.yes) { _, _ -> viewModel.onSignOutConfirmationDialogYesButtonClick() }
+            .setPositiveButton(R.string.sign_out) { _, _ -> viewModel.onSignOutConfirmationDialogYesButtonClick() }
             .setNegativeButton(R.string.cancel) { _, _ -> }
             .create()
 
