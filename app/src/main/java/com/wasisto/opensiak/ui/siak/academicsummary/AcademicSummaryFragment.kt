@@ -54,8 +54,6 @@ class AcademicSummaryFragment : DaggerFragment() {
 
         swipeRefreshLayout.setOnRefreshListener { viewModel.onRefresh() }
 
-        gradeCountsRecyclerView.isNestedScrollingEnabled = false
-
         retryButton.setOnClickListener { viewModel.onRefresh() }
     }
 }
