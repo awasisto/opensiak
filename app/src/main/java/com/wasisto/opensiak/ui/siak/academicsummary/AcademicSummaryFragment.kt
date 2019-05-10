@@ -25,7 +25,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import com.wasisto.opensiak.databinding.FragmentAcademicSummaryBinding
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_academic_summary.*
@@ -54,9 +53,6 @@ class AcademicSummaryFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
 
         swipeRefreshLayout.setOnRefreshListener { viewModel.onRefresh() }
-
-        gradeCountsRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        gradeCountsRecyclerView.isNestedScrollingEnabled = false
 
         retryButton.setOnClickListener { viewModel.onRefresh() }
     }

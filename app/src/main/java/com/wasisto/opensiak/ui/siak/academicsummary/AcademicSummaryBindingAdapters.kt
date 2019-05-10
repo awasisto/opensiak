@@ -26,6 +26,7 @@ import com.wasisto.opensiak.model.AcademicSummary
 @BindingAdapter("gradeCounts")
 fun gradeCounts(recyclerView: RecyclerView, gradeCounts: List<AcademicSummary.GradeStatistics.GradeCount>?) {
     recyclerView.adapter = (recyclerView.adapter as? GradeCountsAdapter ?: GradeCountsAdapter()).apply {
+        recyclerView.isNestedScrollingEnabled = false
         data = gradeCounts ?: emptyList()
     }
 }

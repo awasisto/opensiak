@@ -26,6 +26,7 @@ import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -72,7 +73,7 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
         signOutConfirmationDialog = AlertDialog.Builder(this)
             .setMessage(R.string.sign_out_confirmation_dialog_message)
-            .setPositiveButton(R.string.yes) { _, _ -> viewModel.onSignOutConfirmationDialogYesButtonClick() }
+            .setPositiveButton(R.string.sign_out) { _, _ -> viewModel.onSignOutConfirmationDialogYesButtonClick() }
             .setNegativeButton(R.string.cancel) { _, _ -> }
             .create()
 
@@ -88,23 +89,24 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             .setCancelable(false)
             .create()
 
-        actionBarDrawerToggle = object : ActionBarDrawerToggle(
+        actionBarDrawerToggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
             toolbar,
             R.string.open_navigation_drawer,
             R.string.close_navigation_drawer
-        ) {
-            override fun onDrawerClosed(view: View) {
-                viewModel.onNavigationDrawerClosed()
-                super.onDrawerClosed(view)
-            }
-        }.apply {
+        ).apply {
             isDrawerSlideAnimationEnabled = false
             syncState()
         }
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
+
+        drawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
+            override fun onDrawerClosed(drawerView: View) {
+                viewModel.onNavigationDrawerClosed()
+            }
+        })
 
         navigationView.setNavigationItemSelectedListener(this)
         navigationView.isSaveEnabled = false
