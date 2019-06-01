@@ -59,7 +59,13 @@ class ClassScheduleViewModel @Inject constructor(
 
         shouldShowSchedule.addSource(getClassScheduleResult) { result ->
             if (result is UseCase.Result.Success) {
-                shouldShowSchedule.value = true
+                for (day in result.data.days) {
+                    if (day.classes.isNotEmpty()) {
+                        shouldShowSchedule.value = true
+                        return@addSource
+                    }
+                }
+                shouldShowSchedule.value = false
             } else if (result is UseCase.Result.Error) {
                 shouldShowSchedule.value = false
             }
