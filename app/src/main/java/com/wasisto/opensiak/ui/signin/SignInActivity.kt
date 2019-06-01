@@ -51,7 +51,7 @@ class SignInActivity : DaggerAppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SignInViewModel::class.java)
 
         DataBindingUtil.setContentView<ActivitySignInBinding>(this, R.layout.activity_sign_in).apply {
-            setLifecycleOwner(this@SignInActivity)
+            lifecycleOwner = this@SignInActivity
             viewModel = this@SignInActivity.viewModel
         }
 

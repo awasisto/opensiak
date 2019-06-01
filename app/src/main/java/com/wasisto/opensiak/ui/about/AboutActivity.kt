@@ -46,7 +46,7 @@ class AboutActivity : DaggerAppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AboutViewModel::class.java)
 
         DataBindingUtil.setContentView<ActivityAboutBinding>(this, R.layout.activity_about).apply {
-            setLifecycleOwner(this@AboutActivity)
+            lifecycleOwner = this@AboutActivity
             viewModel = this@AboutActivity.viewModel
         }
 
