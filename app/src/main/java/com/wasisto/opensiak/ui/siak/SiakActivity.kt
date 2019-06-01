@@ -68,7 +68,7 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
         NavigationDrawerHeaderBinding.bind(navigationView.getHeaderView(0)).apply {
             viewModel = this@SiakActivity.viewModel
-            setLifecycleOwner(this@SiakActivity)
+            lifecycleOwner = this@SiakActivity
         }
 
         signOutConfirmationDialog = AlertDialog.Builder(this)

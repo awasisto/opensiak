@@ -43,7 +43,7 @@ class AcademicSummaryFragment : DaggerFragment() {
 
         val binding = FragmentAcademicSummaryBinding.inflate(inflater, container, false).apply {
             viewModel = this@AcademicSummaryFragment.viewModel
-            setLifecycleOwner(this@AcademicSummaryFragment)
+            lifecycleOwner = this@AcademicSummaryFragment
         }
 
         return binding.root

@@ -43,7 +43,7 @@ class PaymentInfoFragment : DaggerFragment() {
 
         val binding = FragmentPaymentInfoBinding.inflate(inflater, container, false).apply {
             viewModel = this@PaymentInfoFragment.viewModel
-            setLifecycleOwner(this@PaymentInfoFragment)
+            lifecycleOwner = this@PaymentInfoFragment
         }
 
         return binding.root

@@ -43,7 +43,7 @@ class ClassScheduleFragment : DaggerFragment() {
 
         val binding = FragmentClassScheduleBinding.inflate(inflater, container, false).apply {
             viewModel = this@ClassScheduleFragment.viewModel
-            setLifecycleOwner(this@ClassScheduleFragment)
+            lifecycleOwner = this@ClassScheduleFragment
         }
 
         return binding.root
