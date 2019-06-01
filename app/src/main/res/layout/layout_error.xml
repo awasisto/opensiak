@@ -49,11 +49,11 @@
             android:id="@+id/retryButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="24dp"
+            android:minWidth="0dp"
             android:text="@string/retry"
-            android:textColor="?android:textColorSecondary"
             android:textAllCaps="false"
             android:letterSpacing="0"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
     </LinearLayout>
 </layout>
