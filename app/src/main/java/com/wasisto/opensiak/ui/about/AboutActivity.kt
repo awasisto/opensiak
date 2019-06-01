@@ -59,6 +59,7 @@ class AboutActivity : DaggerAppCompatActivity() {
 
         viewModel.launchOssLicensesMenuActivity.observe(this, Observer {
             startActivity(Intent(this, OssLicensesMenuActivity::class.java))
+            OssLicensesMenuActivity.setActivityTitle(getString(R.string.open_source_licenses))
         })
     }
 
