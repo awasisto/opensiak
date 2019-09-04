@@ -13,6 +13,23 @@ Screenshots
 ![OpenSIAK screenshot 1](https://lh3.googleusercontent.com/nA9OICiZZ17jZO5i_YBrtELvKIIZztFUYNW4MJqKnQ8fIJTVJVdabFCh9-DEOrM81g=w250-rw)
 ![OpenSIAK screenshot 2](https://lh3.googleusercontent.com/l5e4zvcRLP3AVuXUqWnkVz5G1OW3kHEQrYJP_rI_rTEfcWAtxjGVctK8lRuEjYI4lw=w250-rw)
 
+Architecture
+------------
+
+The architecture is built around the Android Architecture Components with Dagger 2 for dependency
+injection.
+
+The presentation logic is kept away from Activities and Fragments and moved to the viewmodels. The
+data are observed using LiveData Data Binding Library is used to bind UI components in layouts
+to the app's data sources.
+
+A Repository layer is implemented for handling data operations. The data come from different
+sources - student data are scraped from the SIAK-NG website using jsoup library, user preferences
+and settings are stored in a local database.
+
+A lightweight domain layer is implemented between the data layer and the presentation layer to
+handle discrete pieces of business logic off the UI thread.
+
 License
 -------
 
