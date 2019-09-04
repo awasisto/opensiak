@@ -20,8 +20,8 @@ The architecture is built around the Android Architecture Components with Dagger
 injection.
 
 The presentation logic is kept away from Activities and Fragments and moved to the viewmodels. The
-data are observed using LiveData Data Binding Library is used to bind UI components in layouts
-to the app's data sources.
+data are observed using LiveData and the UI components are bound to the data sources using Data
+Binding Library.
 
 A Repository layer is implemented for handling data operations. The data come from different
 sources - student data are scraped from the SIAK-NG website using jsoup library, user preferences
