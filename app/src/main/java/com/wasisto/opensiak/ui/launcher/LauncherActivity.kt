@@ -35,35 +35,35 @@ class LauncherActivity : DaggerAppCompatActivity() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var startingErrorDialog: AlertDialog
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launcher)
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LauncherViewModel::class.java)
 
-        startingErrorDialog = AlertDialog.Builder(this)
-            .setMessage(R.string.starting_error_message)
-            .setPositiveButton(R.string.close) { _, _ ->  finish() }
-            .setCancelable(false)
-            .create()
-
-        viewModel.launchSiakActivityEvent.observe(this, Observer {
-            startActivity(Intent(this, SiakActivity::class.java))
+        viewModel.launchSiakActivityEvent.observe(this, Observer { event ->
+            if (!event.hasBeenHandled) {
+                startActivity(Intent(this, SiakActivity::class.java))
+            }
         })
 
-        viewModel.launchSignInActivityEvent.observe(this, Observer {
-            startActivity(Intent(this, SignInActivity::class.java))
+        viewModel.launchSignInActivityEvent.observe(this, Observer { event ->
+            if (!event.hasBeenHandled) {
+                startActivity(Intent(this, SignInActivity::class.java))
+            }
         })
 
         viewModel.finishActivityEvent.observe(this, Observer {
             finish()
         })
 
-        viewModel.showStartingErrorEvent.observe(this, Observer {
-            if (!startingErrorDialog.isShowing) {
-                startingErrorDialog.show()
+        viewModel.showStartingErrorEvent.observe(this, Observer { event ->
+            if (!event.hasBeenHandled) {
+                AlertDialog.Builder(this)
+                    .setMessage(R.string.starting_error_message)
+                    .setPositiveButton(R.string.close) { _, _ ->  finish() }
+                    .setCancelable(false)
+                    .show()
             }
         })
     }

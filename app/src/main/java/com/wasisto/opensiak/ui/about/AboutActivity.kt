@@ -54,12 +54,16 @@ class AboutActivity : DaggerAppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel.launchBrowserEvent.observe(this, Observer { event ->
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(event.data))))
+            event.getContentIfNotHandled()?.let { url ->
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(url))))
+            }
         })
 
-        viewModel.launchOssLicensesMenuActivity.observe(this, Observer {
-            startActivity(Intent(this, OssLicensesMenuActivity::class.java))
-            OssLicensesMenuActivity.setActivityTitle(getString(R.string.open_source_licenses))
+        viewModel.launchOssLicensesMenuActivity.observe(this, Observer { event ->
+            if (!event.hasBeenHandled) {
+                startActivity(Intent(this, OssLicensesMenuActivity::class.java))
+                OssLicensesMenuActivity.setActivityTitle(getString(R.string.open_source_licenses))
+            }
         })
     }
 

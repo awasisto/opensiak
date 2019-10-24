@@ -46,7 +46,7 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
 
     val finishActivityEvent = MediatorLiveData<Event<Unit>>()
 
-    val showSignInErrorSnackbarEvent = MediatorLiveData<Event<SignInErrorSnackbarEventData>>()
+    val showSignInErrorSnackbarEvent = MediatorLiveData<Event<SignInErrorSnackbarEventContent>>()
 
     val launchAboutActivityEvent = MediatorLiveData<Event<Unit>>()
 
@@ -76,14 +76,14 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
                 when {
                     result.error is AuthenticationFailedException ->
                         showSignInErrorSnackbarEvent.value = Event(
-                            SignInErrorSnackbarEventData(
+                            SignInErrorSnackbarEventContent(
                                 messageResId = R.string.wrong_username_or_password,
                                 showRetryButton = false
                             )
                         )
                     result.error is AccountAlreadyExistsException ->
                         showSignInErrorSnackbarEvent.value = Event(
-                            SignInErrorSnackbarEventData(
+                            SignInErrorSnackbarEventContent(
                                 messageResId = R.string.account_already_exists,
                                 showRetryButton = false
                             )
@@ -91,7 +91,7 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
                     else -> {
                         Timber.w(result.error)
                         showSignInErrorSnackbarEvent.value = Event(
-                            SignInErrorSnackbarEventData(
+                            SignInErrorSnackbarEventContent(
                                 messageResId = R.string.something_went_wrong,
                                 showRetryButton = true
                             )
@@ -122,7 +122,7 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
         }
     }
 
-    data class SignInErrorSnackbarEventData(
+    data class SignInErrorSnackbarEventContent(
         val messageResId: Int,
         val showRetryButton: Boolean
     )

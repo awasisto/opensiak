@@ -19,4 +19,19 @@
 
 package com.wasisto.opensiak.ui
 
-data class Event<T>(val data: T)
+class Event<T>(private val content: T) {
+
+    var hasBeenHandled = false
+        private set
+
+    fun getContentIfNotHandled(): T? {
+        return if (hasBeenHandled) {
+            null
+        } else {
+            hasBeenHandled = true
+            content
+        }
+    }
+
+    fun peekContent() = content
+}

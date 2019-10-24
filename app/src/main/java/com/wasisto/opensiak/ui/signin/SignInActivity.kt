@@ -68,8 +68,10 @@ class SignInActivity : DaggerAppCompatActivity() {
             }
         })
 
-        viewModel.launchSiakActivityEvent.observe(this, Observer {
-            startActivity(Intent(this, SiakActivity::class.java))
+        viewModel.launchSiakActivityEvent.observe(this, Observer { event ->
+            if (!event.hasBeenHandled) {
+                startActivity(Intent(this, SiakActivity::class.java))
+            }
         })
 
         viewModel.finishActivityEvent.observe(this, Observer {
@@ -77,20 +79,24 @@ class SignInActivity : DaggerAppCompatActivity() {
         })
 
         viewModel.showSignInErrorSnackbarEvent.observe(this, Observer { event ->
-            val snackbar = Snackbar.make(coordinatorLayout, event.data.messageResId, Snackbar.LENGTH_LONG)
-            if (event.data.showRetryButton) {
-                snackbar.setAction(R.string.retry) {
-                    viewModel.onRetrySignInButtonClick()
+            event.getContentIfNotHandled()?.let { content ->
+                val snackbar = Snackbar.make(coordinatorLayout, content.messageResId, Snackbar.LENGTH_LONG)
+                if (content.showRetryButton) {
+                    snackbar.setAction(R.string.retry) {
+                        viewModel.onRetrySignInButtonClick()
+                    }
+                    val snackbarAction = snackbar.view.findViewById<TextView>(R.id.snackbar_action)
+                    snackbarAction.isAllCaps = false
+                    snackbarAction.letterSpacing = 0f
                 }
-                val snackbarAction = snackbar.view.findViewById<TextView>(R.id.snackbar_action)
-                snackbarAction.isAllCaps = false
-                snackbarAction.letterSpacing = 0f
+                snackbar.show()
             }
-            snackbar.show()
         })
 
-        viewModel.launchAboutActivityEvent.observe(this, Observer {
-            startActivity(Intent(this, AboutActivity::class.java))
+        viewModel.launchAboutActivityEvent.observe(this, Observer { event ->
+            if (!event.hasBeenHandled) {
+                startActivity(Intent(this, AboutActivity::class.java))
+            }
         })
     }
 }

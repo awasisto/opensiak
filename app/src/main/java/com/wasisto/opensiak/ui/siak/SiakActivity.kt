@@ -49,12 +49,6 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
     private lateinit var viewModel: SiakViewModel
 
-    private lateinit var signOutConfirmationDialog: AlertDialog
-
-    private lateinit var startingErrorDialog: AlertDialog
-
-    private lateinit var signOutErrorDialog: AlertDialog
-
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,24 +64,6 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             viewModel = this@SiakActivity.viewModel
             lifecycleOwner = this@SiakActivity
         }
-
-        signOutConfirmationDialog = AlertDialog.Builder(this)
-            .setMessage(R.string.sign_out_confirmation_dialog_message)
-            .setPositiveButton(R.string.sign_out) { _, _ -> viewModel.onSignOutConfirmationDialogYesButtonClick() }
-            .setNegativeButton(R.string.cancel) { _, _ -> }
-            .create()
-
-        startingErrorDialog = AlertDialog.Builder(this)
-            .setMessage(R.string.starting_error_message)
-            .setPositiveButton(R.string.close) { _, _ ->  finish() }
-            .setCancelable(false)
-            .create()
-
-        signOutErrorDialog = AlertDialog.Builder(this)
-            .setMessage(R.string.sign_out_error_message)
-            .setPositiveButton(R.string.close) { _, _ ->  finish() }
-            .setCancelable(false)
-            .create()
 
         actionBarDrawerToggle = ActionBarDrawerToggle(
             this,
@@ -114,26 +90,40 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         navigationView.setCheckedItem(R.id.navigation_academic_summary)
         onNavigationItemSelected(navigationView.menu.findItem(R.id.navigation_academic_summary))
 
-        viewModel.showSignOutConfirmationDialogEvent.observe(this, Observer {
-            if (!signOutConfirmationDialog.isShowing) {
-                signOutConfirmationDialog.show()
+        viewModel.showSignOutConfirmationDialogEvent.observe(this, Observer { event ->
+            if (!event.hasBeenHandled) {
+                AlertDialog.Builder(this)
+                    .setMessage(R.string.sign_out_confirmation_dialog_message)
+                    .setPositiveButton(R.string.sign_out) { _, _ -> viewModel.onSignOutConfirmationDialogYesButtonClick() }
+                    .setNegativeButton(R.string.cancel) { _, _ -> }
+                    .show()
             }
         })
 
-        viewModel.showStartingErrorEvent.observe(this, Observer {
-            if (!startingErrorDialog.isShowing) {
-                startingErrorDialog.show()
+        viewModel.showStartingErrorEvent.observe(this, Observer { event ->
+            if (!event.hasBeenHandled) {
+                AlertDialog.Builder(this)
+                    .setMessage(R.string.starting_error_message)
+                    .setPositiveButton(R.string.close) { _, _ ->  finish() }
+                    .setCancelable(false)
+                    .show()
             }
         })
 
-        viewModel.showSignOutErrorEvent.observe(this, Observer {
-            if (!signOutErrorDialog.isShowing) {
-                signOutErrorDialog.show()
+        viewModel.showSignOutErrorEvent.observe(this, Observer { event ->
+            if (!event.hasBeenHandled) {
+                AlertDialog.Builder(this)
+                    .setMessage(R.string.sign_out_error_message)
+                    .setPositiveButton(R.string.close) { _, _ ->  finish() }
+                    .setCancelable(false)
+                    .show()
             }
         })
 
-        viewModel.launchSignInActivityEvent.observe(this, Observer {
-            startActivity(Intent(this, SignInActivity::class.java))
+        viewModel.launchSignInActivityEvent.observe(this, Observer { event ->
+            if (!event.hasBeenHandled) {
+                startActivity(Intent(this, SignInActivity::class.java))
+            }
         })
 
         viewModel.finishActivityEvent.observe(this, Observer {
