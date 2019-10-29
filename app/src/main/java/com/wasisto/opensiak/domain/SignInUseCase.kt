@@ -23,35 +23,29 @@ import com.wasisto.opensiak.data.account.AccountDataSource
 import com.wasisto.opensiak.model.Account
 import com.wasisto.opensiak.data.siakng.SiakNgDataSource
 import com.wasisto.opensiak.model.Credentials
-import com.wasisto.opensiak.util.executor.ExecutorProvider
-import java.util.concurrent.Callable
-import java.util.concurrent.ExecutionException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class SignInUseCase @Inject constructor(
-    private val executorProvider: ExecutorProvider,
     private val siakNgDataSource: SiakNgDataSource,
     private val accountDataSource: AccountDataSource
-) : UseCase<Credentials, Unit>(executorProvider) {
+) : UseCase<Credentials, Unit>() {
 
     override fun execute(params: Credentials) {
-        val academicSummaryFuture = executorProvider.io()
-            .submit(Callable { siakNgDataSource.getAcademicSummary(params) })
-        val studentProfileFuture = executorProvider.io()
-            .submit(Callable { siakNgDataSource.getStudentProfile(params) })
-
-        try {
+        runBlocking {
+            val deferredAcademicSummary = async { siakNgDataSource.getAcademicSummary(credentials = params) }
+            val deferredStudentProfile = async { siakNgDataSource.getStudentProfile(credentials = params) }
             accountDataSource.add(
                 Account(
                     username = params.username,
                     password = params.password,
-                    name = academicSummaryFuture.get().studentName,
-                    email = studentProfileFuture.get().uiEmail,
-                    photoData = academicSummaryFuture.get().studentPhotoData
+                    name = deferredAcademicSummary.await().studentName,
+                    email = deferredStudentProfile.await().uiEmail,
+                    photoData = deferredAcademicSummary.await().studentPhotoData
                 )
             )
-        } catch (e: ExecutionException) {
-            throw e.cause!!
         }
     }
 }

@@ -20,13 +20,11 @@
 package com.wasisto.opensiak.domain
 
 import com.wasisto.opensiak.data.account.AccountDataSource
-import com.wasisto.opensiak.util.executor.ExecutorProvider
 import javax.inject.Inject
 
 class CheckUserHasSignedInUseCase @Inject constructor(
-    executorProvider: ExecutorProvider,
     private val accountDataSource: AccountDataSource
-) : UseCase<Unit, Boolean>(executorProvider) {
+) : UseCase<Unit, Boolean>() {
 
     override fun execute(params: Unit): Boolean = accountDataSource.getAll().isNotEmpty()
 }

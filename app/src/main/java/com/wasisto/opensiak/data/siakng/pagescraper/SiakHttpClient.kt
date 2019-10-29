@@ -21,26 +21,24 @@ package com.wasisto.opensiak.data.siakng.pagescraper
 
 import com.wasisto.opensiak.data.siakng.AuthenticationFailedException
 import com.wasisto.opensiak.model.Credentials
-import com.wasisto.opensiak.util.executor.ExecutorProvider
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import okhttp3.*
 import org.jsoup.Jsoup
 import java.net.CookieManager
-import java.util.concurrent.ExecutionException
 
 class SiakHttpClient private constructor(
-    private val credentials: Credentials,
-    private val executorProvider: ExecutorProvider
+    private val credentials: Credentials
 ) {
     companion object {
-        private val instances = mutableMapOf<Pair<Credentials, ExecutorProvider>, SiakHttpClient>()
+        private val instances = mutableMapOf<Credentials, SiakHttpClient>()
 
         @Synchronized
-        fun get(credentials: Credentials, executorProvider: ExecutorProvider): SiakHttpClient {
-            val params = Pair(credentials, executorProvider)
-            var instance = instances[params]
+        fun get(credentials: Credentials): SiakHttpClient {
+            var instance = instances[credentials]
             if (instance == null) {
-                instance = SiakHttpClient(credentials, executorProvider)
-                instances[params] = instance
+                instance = SiakHttpClient(credentials)
+                instances[credentials] = instance
             }
             return instance
         }
@@ -59,21 +57,13 @@ class SiakHttpClient private constructor(
     }
 
     private fun unauthenticatedHttpGet(url: String): BilingualResponse {
-        val responseIndFuture = executorProvider.io().submit<Response> {
-            unauthenticatedHttpGet(url, okHttpClientInd)
-        }
-
-        val responseEngFuture = executorProvider.io().submit<Response> {
-            unauthenticatedHttpGet(url, okHttpClientEng)
-        }
-
-        try {
-            return BilingualResponse(
-                responseInd = responseIndFuture.get(),
-                responseEng = responseEngFuture.get()
+        return runBlocking {
+            val deferredResponseInd = async { unauthenticatedHttpGet(url, okHttpClientInd) }
+            val deferredResponseEng = async { unauthenticatedHttpGet(url, okHttpClientEng) }
+            BilingualResponse(
+                responseInd = deferredResponseInd.await(),
+                responseEng = deferredResponseEng.await()
             )
-        } catch (e: ExecutionException) {
-            throw e.cause!!
         }
     }
 
@@ -108,35 +98,31 @@ class SiakHttpClient private constructor(
             )
             .build()
 
-        val authenticateIndFuture = executorProvider.io().submit<Unit> {
-            val authenticationResponse = okHttpClientInd.newCall(authenticationRequest).execute()
+        runBlocking {
+            val deferredAuthenticateInd = async {
+                val authenticationResponse = okHttpClientInd.newCall(authenticationRequest).execute()
 
-            if (isAuthenticationSuccess(authenticationResponse)) {
-                changeRole(okHttpClientInd)
-                unauthenticatedHttpGet("https://academic.ui.ac.id/main/System/Language?lang=id", okHttpClientInd)
-                return@submit
-            } else {
-                throw AuthenticationFailedException()
+                if (isAuthenticationSuccess(authenticationResponse)) {
+                    changeRole(okHttpClientInd)
+                    unauthenticatedHttpGet("https://academic.ui.ac.id/main/System/Language?lang=id", okHttpClientInd)
+                } else {
+                    throw AuthenticationFailedException()
+                }
             }
-        }
 
-        val authenticateEngFuture = executorProvider.io().submit<Unit> {
-            val authenticationResponse = okHttpClientEng.newCall(authenticationRequest).execute()
+            val deferredAuthenticateEng = async {
+                val authenticationResponse = okHttpClientEng.newCall(authenticationRequest).execute()
 
-            if (isAuthenticationSuccess(authenticationResponse)) {
-                changeRole(okHttpClientEng)
-                unauthenticatedHttpGet("https://academic.ui.ac.id/main/System/Language?lang=en", okHttpClientEng)
-                return@submit
-            } else {
-                throw AuthenticationFailedException()
+                if (isAuthenticationSuccess(authenticationResponse)) {
+                    changeRole(okHttpClientEng)
+                    unauthenticatedHttpGet("https://academic.ui.ac.id/main/System/Language?lang=en", okHttpClientEng)
+                } else {
+                    throw AuthenticationFailedException()
+                }
             }
-        }
 
-        try {
-            authenticateIndFuture.get()
-            authenticateEngFuture.get()
-        } catch (e: ExecutionException) {
-            throw e.cause!!
+            deferredAuthenticateInd.await()
+            deferredAuthenticateEng.await()
         }
     }
 

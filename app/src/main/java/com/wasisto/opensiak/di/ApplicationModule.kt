@@ -22,8 +22,6 @@ package com.wasisto.opensiak.di
 import android.content.Context
 import com.wasisto.androidkeystoreencryption.EncryptionService
 import com.wasisto.opensiak.OpenSiakApplication
-import com.wasisto.opensiak.util.executor.ExecutorProvider
-import com.wasisto.opensiak.util.executor.ExecutorProviderImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -35,10 +33,6 @@ abstract class ApplicationModule {
     @Singleton
     @Binds
     abstract fun bindContext(application: OpenSiakApplication): Context
-
-    @Singleton
-    @Binds
-    abstract fun bindExecutorProvider(executorProvider: ExecutorProviderImpl): ExecutorProvider
 
     @Module
     companion object {

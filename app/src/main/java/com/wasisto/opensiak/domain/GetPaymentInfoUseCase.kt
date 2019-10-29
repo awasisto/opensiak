@@ -23,14 +23,12 @@ import com.wasisto.opensiak.data.account.AccountDataSource
 import com.wasisto.opensiak.data.siakng.SiakNgDataSource
 import com.wasisto.opensiak.model.Credentials
 import com.wasisto.opensiak.model.PaymentInfo
-import com.wasisto.opensiak.util.executor.ExecutorProvider
 import javax.inject.Inject
 
 class GetPaymentInfoUseCase @Inject constructor(
-    executorProvider: ExecutorProvider,
     private val siakNgDataSource: SiakNgDataSource,
     private val accountDataSource: AccountDataSource
-) : UseCase<Unit, PaymentInfo>(executorProvider) {
+) : UseCase<Unit, PaymentInfo>() {
 
     override fun execute(params: Unit) =
         siakNgDataSource.getPaymentInfo(Credentials.fromAccount(accountDataSource.getLastAccountActive()))

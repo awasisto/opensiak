@@ -23,14 +23,12 @@ import com.wasisto.opensiak.data.account.AccountDataSource
 import com.wasisto.opensiak.data.siakng.SiakNgDataSource
 import com.wasisto.opensiak.model.ClassSchedule
 import com.wasisto.opensiak.model.Credentials
-import com.wasisto.opensiak.util.executor.ExecutorProvider
 import javax.inject.Inject
 
 class GetClassScheduleUseCase @Inject constructor(
-    executorProvider: ExecutorProvider,
     private val siakNgDataSource: SiakNgDataSource,
     private val accountDataSource: AccountDataSource
-) : UseCase<Unit, ClassSchedule>(executorProvider) {
+) : UseCase<Unit, ClassSchedule>() {
 
     override fun execute(params: Unit) =
         siakNgDataSource.getClassSchedule(Credentials.fromAccount(accountDataSource.getLastAccountActive()))

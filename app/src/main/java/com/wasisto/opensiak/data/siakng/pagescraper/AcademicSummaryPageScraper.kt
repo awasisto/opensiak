@@ -21,16 +21,13 @@ package com.wasisto.opensiak.data.siakng.pagescraper
 
 import com.wasisto.opensiak.model.AcademicSummary
 import com.wasisto.opensiak.model.Credentials
-import com.wasisto.opensiak.util.executor.ExecutorProvider
 import org.jsoup.Jsoup
 import javax.inject.Inject
 
-class AcademicSummaryPageScraper @Inject constructor(
-    private val executorProvider: ExecutorProvider
-) : PageScraper<Unit, AcademicSummary> {
+class AcademicSummaryPageScraper @Inject constructor() : PageScraper<Unit, AcademicSummary> {
 
     override fun scrape(credentials: Credentials, params: Unit): AcademicSummary {
-        val siakHttpClient = SiakHttpClient.get(credentials, executorProvider)
+        val siakHttpClient = SiakHttpClient.get(credentials)
 
         val academicSummaryResponse = siakHttpClient.httpGet("https://academic.ui.ac.id/main/Academic/Summary")
 

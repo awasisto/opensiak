@@ -23,14 +23,12 @@ import com.wasisto.opensiak.data.account.AccountDataSource
 import com.wasisto.opensiak.data.siakng.SiakNgDataSource
 import com.wasisto.opensiak.model.AcademicSummary
 import com.wasisto.opensiak.model.Credentials
-import com.wasisto.opensiak.util.executor.ExecutorProvider
 import javax.inject.Inject
 
 class GetAcademicSummaryUseCase @Inject constructor(
-    executorProvider: ExecutorProvider,
     private val siakNgDataSource: SiakNgDataSource,
     private val accountDataSource: AccountDataSource
-) : UseCase<Unit, AcademicSummary>(executorProvider) {
+) : UseCase<Unit, AcademicSummary>() {
 
     override fun execute(params: Unit): AcademicSummary =
         siakNgDataSource.getAcademicSummary(Credentials.fromAccount(accountDataSource.getLastAccountActive()))

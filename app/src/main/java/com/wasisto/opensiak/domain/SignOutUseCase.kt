@@ -20,13 +20,11 @@
 package com.wasisto.opensiak.domain
 
 import com.wasisto.opensiak.data.account.AccountDataSource
-import com.wasisto.opensiak.util.executor.ExecutorProvider
 import javax.inject.Inject
 
 class SignOutUseCase @Inject constructor(
-    executorProvider: ExecutorProvider,
     private val accountDataSource: AccountDataSource
-) : UseCase<Unit, Unit>(executorProvider) {
+) : UseCase<Unit, Unit>() {
 
     override fun execute(params: Unit) = accountDataSource.remove(accountDataSource.getLastAccountActive())
 }

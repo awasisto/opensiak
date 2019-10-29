@@ -20,22 +20,20 @@
 package com.wasisto.opensiak.domain
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.wasisto.opensiak.util.executor.ExecutorProvider
+import androidx.lifecycle.liveData
+import kotlinx.coroutines.Dispatchers
 
-abstract class UseCase<in P, R> constructor(private val executorProvider: ExecutorProvider) {
+abstract class UseCase<in P, R> {
 
     fun executeAsync(params: P): LiveData<Result<R>> {
-        val result = MutableLiveData<Result<R>>()
-        result.value = Result.Loading
-        executorProvider.io().submit {
+        return liveData(Dispatchers.IO) {
+            emit(Result.Loading)
             try {
-                result.postValue(Result.Success(execute(params)))
+                emit(Result.Success(execute(params)))
             } catch (error: Throwable) {
-                result.postValue(Result.Error(error))
+                emit(Result.Error(error))
             }
         }
-        return result
     }
 
     abstract fun execute(params: P): R
