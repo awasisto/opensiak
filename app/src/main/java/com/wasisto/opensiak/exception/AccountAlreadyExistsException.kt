@@ -17,6 +17,6 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.data.account
+package com.wasisto.opensiak.exception
 
-class AccountAlreadyExistsException : RuntimeException()
+class AccountAlreadyExistsException : Exception()

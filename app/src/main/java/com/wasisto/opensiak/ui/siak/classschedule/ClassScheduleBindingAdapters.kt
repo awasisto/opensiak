@@ -19,20 +19,31 @@
 
 package com.wasisto.opensiak.ui.siak.classschedule
 
+import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wasisto.opensiak.model.ClassSchedule
 
 @BindingAdapter("days")
 fun days(recyclerView: RecyclerView, days: List<ClassSchedule.Day>?) {
-    recyclerView.adapter = (recyclerView.adapter as? DaysAdapter ?: DaysAdapter()).apply {
-        data = days ?: emptyList()
+    if (days?.isNotEmpty() == true) {
+        recyclerView.visibility = View.VISIBLE
+        recyclerView.adapter = (recyclerView.adapter as? DaysAdapter ?: DaysAdapter()).apply {
+            data = days
+        }
+    } else {
+        recyclerView.visibility = View.GONE
     }
 }
 
 @BindingAdapter("classes")
 fun classes(recyclerView: RecyclerView, classes: List<ClassSchedule.Day.Class>?) {
-    recyclerView.adapter = (recyclerView.adapter as? ClassesAdapter ?: ClassesAdapter()).apply {
-        data = classes ?: emptyList()
+    if (classes?.isNotEmpty() == true) {
+        recyclerView.visibility = View.VISIBLE
+        recyclerView.adapter = (recyclerView.adapter as? ClassesAdapter ?: ClassesAdapter()).apply {
+            data = classes
+        }
+    } else {
+        recyclerView.visibility = View.GONE
     }
 }

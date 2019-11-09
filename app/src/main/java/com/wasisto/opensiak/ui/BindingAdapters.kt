@@ -45,21 +45,9 @@ fun photoData(imageView: ImageView, photoData: ByteArray?) {
         if (bitmap != null) {
             imageView.setImageBitmap(
                 if (bitmap.width > bitmap.height) {
-                    Bitmap.createBitmap(
-                        bitmap,
-                        bitmap.width / 2 - bitmap.height / 2,
-                        0,
-                        bitmap.height,
-                        bitmap.height
-                    )
+                    Bitmap.createBitmap(bitmap, bitmap.width / 2 - bitmap.height / 2, 0, bitmap.height, bitmap.height)
                 } else {
-                    Bitmap.createBitmap(
-                        bitmap,
-                        0,
-                        0,
-                        bitmap.width,
-                        bitmap.width
-                    )
+                    Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.width)
                 }
             )
         } else {
@@ -71,9 +59,11 @@ fun photoData(imageView: ImageView, photoData: ByteArray?) {
 }
 
 @BindingAdapter("textResId")
-fun textResId(textView: TextView, textResId: Int) = textView.setText(textResId)
+fun textResId(textView: TextView, textResId: Int) {
+    textView.setText(textResId)
+}
 
 @BindingAdapter("flipVerticallyWhen")
 fun flipVerticallyWhen(view: View, flipVertically: Boolean) {
-    view.rotation = if (flipVertically) 180f else 0f
+    view.scaleY = if (flipVertically) -1f else 1f
 }

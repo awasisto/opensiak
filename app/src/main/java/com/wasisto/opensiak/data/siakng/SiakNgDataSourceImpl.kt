@@ -23,7 +23,7 @@ import com.wasisto.opensiak.data.siakng.pagescraper.AcademicSummaryPageScraper
 import com.wasisto.opensiak.data.siakng.pagescraper.ClassSchedulePageScraper
 import com.wasisto.opensiak.data.siakng.pagescraper.PaymentInfoPageScraper
 import com.wasisto.opensiak.data.siakng.pagescraper.StudentProfilePageScraper
-import com.wasisto.opensiak.model.Credentials
+import com.wasisto.opensiak.model.*
 import javax.inject.Inject
 
 class SiakNgDataSourceImpl @Inject constructor(
@@ -33,11 +33,19 @@ class SiakNgDataSourceImpl @Inject constructor(
     private val studentProfilePageScraper: StudentProfilePageScraper
 ) : SiakNgDataSource {
 
-    override fun getAcademicSummary(credentials: Credentials) = academicSummaryPageScraper.scrape(credentials, Unit)
+    override fun getAcademicSummary(credentials: Credentials): AcademicSummary {
+        return academicSummaryPageScraper.scrape(credentials, Unit)
+    }
 
-    override fun getPaymentInfo(credentials: Credentials) = paymentInfoPageScraper.scrape(credentials, Unit)
+    override fun getPaymentInfo(credentials: Credentials): PaymentInfo {
+        return paymentInfoPageScraper.scrape(credentials, Unit)
+    }
 
-    override fun getClassSchedule(credentials: Credentials) = classSchedulePageScraper.scrape(credentials, Unit)
+    override fun getClassSchedule(credentials: Credentials): ClassSchedule {
+        return classSchedulePageScraper.scrape(credentials, Unit)
+    }
 
-    override fun getStudentProfile(credentials: Credentials) = studentProfilePageScraper.scrape(credentials, Unit)
+    override fun getStudentProfile(credentials: Credentials): StudentProfile {
+        return studentProfilePageScraper.scrape(credentials, Unit)
+    }
 }

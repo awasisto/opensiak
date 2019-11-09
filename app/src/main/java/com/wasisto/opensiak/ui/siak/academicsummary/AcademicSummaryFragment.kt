@@ -38,8 +38,7 @@ class AcademicSummaryFragment : DaggerFragment() {
     private lateinit var viewModel: AcademicSummaryViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(this@AcademicSummaryFragment, viewModelFactory)
-            .get(AcademicSummaryViewModel::class.java)
+        viewModel = ViewModelProviders.of(this@AcademicSummaryFragment, viewModelFactory).get(AcademicSummaryViewModel::class.java)
 
         val binding = FragmentAcademicSummaryBinding.inflate(inflater, container, false).apply {
             viewModel = this@AcademicSummaryFragment.viewModel
@@ -52,8 +51,12 @@ class AcademicSummaryFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        swipeRefreshLayout.setOnRefreshListener { viewModel.onRefresh() }
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.onRefresh()
+        }
 
-        retryButton.setOnClickListener { viewModel.onRefresh() }
+        retryButton.setOnClickListener {
+            viewModel.onRefresh()
+        }
     }
 }

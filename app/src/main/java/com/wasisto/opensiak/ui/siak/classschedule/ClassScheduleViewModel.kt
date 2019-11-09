@@ -20,8 +20,8 @@
 package com.wasisto.opensiak.ui.siak.classschedule
 
 import androidx.lifecycle.*
-import com.wasisto.opensiak.domain.GetClassScheduleUseCase
-import com.wasisto.opensiak.domain.UseCase
+import com.wasisto.opensiak.usecase.GetClassScheduleUseCase
+import com.wasisto.opensiak.usecase.UseCase
 import com.wasisto.opensiak.model.ClassSchedule
 import timber.log.Timber
 import javax.inject.Inject
@@ -34,11 +34,11 @@ class ClassScheduleViewModel @Inject constructor(
 
     val isLoading: LiveData<Boolean>
 
-    val days = MediatorLiveData<List<ClassSchedule.Day>>()
+    val days: LiveData<List<ClassSchedule.Day>> = MediatorLiveData<List<ClassSchedule.Day>>()
 
-    val shouldShowSchedule = MediatorLiveData<Boolean>()
+    val shouldShowSchedule: LiveData<Boolean> = MediatorLiveData<Boolean>()
 
-    val shouldShowNoClassesIndicator = MediatorLiveData<Boolean>()
+    val shouldShowNoClassesIndicator: LiveData<Boolean> = MediatorLiveData<Boolean>()
 
     val shouldShowError: LiveData<Boolean>
 
@@ -49,15 +49,15 @@ class ClassScheduleViewModel @Inject constructor(
             result is UseCase.Result.Loading
         }
 
-        days.addSource(getClassScheduleResult) { result ->
+        (days as MediatorLiveData).addSource(getClassScheduleResult) { result ->
             if (result is UseCase.Result.Success) {
                 days.value = result.data.days
             }
         }
 
-        shouldShowSchedule.value = false
+        (shouldShowSchedule as MutableLiveData).value = false
 
-        shouldShowSchedule.addSource(getClassScheduleResult) { result ->
+        (shouldShowSchedule as MediatorLiveData).addSource(getClassScheduleResult) { result ->
             if (result is UseCase.Result.Success) {
                 for (day in result.data.days) {
                     if (day.classes.isNotEmpty()) {
@@ -71,9 +71,9 @@ class ClassScheduleViewModel @Inject constructor(
             }
         }
 
-        shouldShowNoClassesIndicator.value = false
+        (shouldShowNoClassesIndicator as MutableLiveData).value = false
 
-        shouldShowNoClassesIndicator.addSource(getClassScheduleResult) { result ->
+        (shouldShowNoClassesIndicator as MediatorLiveData).addSource(getClassScheduleResult) { result ->
             if (result is UseCase.Result.Success) {
                 for (day in result.data.days) {
                     if (day.classes.isNotEmpty()) {
@@ -92,15 +92,16 @@ class ClassScheduleViewModel @Inject constructor(
         }
     }
 
-    fun onRefresh() = loadClassSchedule()
+    fun onRefresh() {
+        loadClassSchedule()
+    }
 
-    private fun loadClassSchedule() =
+    private fun loadClassSchedule() {
         getClassScheduleResult.addSource(getClassScheduleUseCase.executeAsync(Unit)) { result ->
-            if (result is UseCase.Result.Success) {
-                Timber.d("result.data: %s", result.data)
-            } else if (result is UseCase.Result.Error) {
+            if (result is UseCase.Result.Error) {
                 Timber.w(result.error)
             }
             getClassScheduleResult.value = result
         }
+    }
 }

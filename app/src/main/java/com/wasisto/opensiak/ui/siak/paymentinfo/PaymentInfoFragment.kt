@@ -38,8 +38,7 @@ class PaymentInfoFragment : DaggerFragment() {
     private lateinit var viewModel: PaymentInfoViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(this@PaymentInfoFragment, viewModelFactory)
-            .get(PaymentInfoViewModel::class.java)
+        viewModel = ViewModelProviders.of(this@PaymentInfoFragment, viewModelFactory).get(PaymentInfoViewModel::class.java)
 
         val binding = FragmentPaymentInfoBinding.inflate(inflater, container, false).apply {
             viewModel = this@PaymentInfoFragment.viewModel
@@ -52,8 +51,12 @@ class PaymentInfoFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        swipeRefreshLayout.setOnRefreshListener { viewModel.onRefresh() }
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.onRefresh()
+        }
 
-        retryButton.setOnClickListener { viewModel.onRefresh() }
+        retryButton.setOnClickListener {
+            viewModel.onRefresh()
+        }
     }
 }

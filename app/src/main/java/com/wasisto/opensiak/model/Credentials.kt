@@ -19,15 +19,13 @@
 
 package com.wasisto.opensiak.model
 
-data class Credentials(
+class Credentials(
     val username: String,
     val password: String
 ) {
     companion object {
-        fun fromAccount(account: Account) = Credentials(account.username, account.password)
-    }
-
-    override fun toString(): String {
-        return "Credentials(username='$username')"
+        fun fromAccount(account: Account): Credentials {
+            return Credentials(account.username, account.password)
+        }
     }
 }

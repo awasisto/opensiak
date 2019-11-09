@@ -23,8 +23,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.wasisto.opensiak.domain.GetPaymentInfoUseCase
-import com.wasisto.opensiak.domain.UseCase
+import com.wasisto.opensiak.usecase.GetPaymentInfoUseCase
+import com.wasisto.opensiak.usecase.UseCase
 import com.wasisto.opensiak.model.PaymentInfo
 import timber.log.Timber
 import javax.inject.Inject
@@ -37,9 +37,9 @@ class PaymentInfoViewModel @Inject constructor(
 
     val isLoading: LiveData<Boolean>
 
-    val academicYears = MediatorLiveData<List<PaymentInfo.AcademicYear>>()
+    val academicYears: LiveData<List<PaymentInfo.AcademicYear>> = MediatorLiveData<List<PaymentInfo.AcademicYear>>()
 
-    val shouldShowPaymentInfoTable = MediatorLiveData<Boolean>()
+    val shouldShowPaymentInfoTable: LiveData<Boolean> = MediatorLiveData<Boolean>()
 
     val shouldShowError: LiveData<Boolean>
 
@@ -50,13 +50,13 @@ class PaymentInfoViewModel @Inject constructor(
             result is UseCase.Result.Loading
         }
 
-        academicYears.addSource(getPaymentInfoResult) { result ->
+        (academicYears as MediatorLiveData).addSource(getPaymentInfoResult) { result ->
             if (result is UseCase.Result.Success) {
                 academicYears.value = result.data.academicYears
             }
         }
 
-        shouldShowPaymentInfoTable.value = false
+        (shouldShowPaymentInfoTable as MediatorLiveData).value = false
 
         shouldShowPaymentInfoTable.addSource(getPaymentInfoResult) { result ->
             if (result is UseCase.Result.Success) {
@@ -71,15 +71,16 @@ class PaymentInfoViewModel @Inject constructor(
         }
     }
 
-    fun onRefresh() = loadPaymentInfo()
+    fun onRefresh() {
+        loadPaymentInfo()
+    }
 
-    private fun loadPaymentInfo() =
+    private fun loadPaymentInfo() {
         getPaymentInfoResult.addSource(getPaymentInfoUseCase.executeAsync(Unit)) { result ->
-            if (result is UseCase.Result.Success) {
-                Timber.d("result.data: %s", result.data)
-            } else if (result is UseCase.Result.Error) {
+            if (result is UseCase.Result.Error) {
                 Timber.w(result.error)
             }
             getPaymentInfoResult.value = result
         }
+    }
 }

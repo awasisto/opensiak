@@ -19,10 +19,11 @@
 
 package com.wasisto.opensiak.ui.launcher
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.wasisto.opensiak.domain.CheckUserHasSignedInUseCase
-import com.wasisto.opensiak.domain.UseCase
+import com.wasisto.opensiak.usecase.CheckUserHasSignedInUseCase
+import com.wasisto.opensiak.usecase.UseCase
 import com.wasisto.opensiak.ui.Event
 import timber.log.Timber
 import javax.inject.Inject
@@ -31,45 +32,43 @@ class LauncherViewModel @Inject constructor(checkUserHasSignedInUseCase: CheckUs
 
     private val checkUserHasSignedInResult = MediatorLiveData<UseCase.Result<Boolean>>()
 
-    val launchSiakActivityEvent = MediatorLiveData<Event<Unit>>()
+    val launchSiakActivityEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
-    val launchSignInActivityEvent = MediatorLiveData<Event<Unit>>()
+    val launchSignInActivityEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
-    val finishActivityEvent = MediatorLiveData<Event<Unit>>()
+    val finishActivityEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
-    val showStartingErrorEvent = MediatorLiveData<Event<Unit>>()
+    val showGeneralErrorEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
     init {
         checkUserHasSignedInResult.addSource(checkUserHasSignedInUseCase.executeAsync(Unit)) { result ->
-            if (result is UseCase.Result.Success) {
-                Timber.d("result.data: %s", result.data)
-            } else if (result is UseCase.Result.Error) {
+            if (result is UseCase.Result.Error) {
                 Timber.w(result.error)
             }
             checkUserHasSignedInResult.value = result
         }
 
-        launchSiakActivityEvent.addSource(checkUserHasSignedInResult) { result ->
+        (launchSiakActivityEvent as MediatorLiveData).addSource(checkUserHasSignedInResult) { result ->
             if ((result as? UseCase.Result.Success)?.data == true) {
                 launchSiakActivityEvent.value = Event(Unit)
             }
         }
 
-        launchSignInActivityEvent.addSource(checkUserHasSignedInResult) { result ->
+        (launchSignInActivityEvent as MediatorLiveData).addSource(checkUserHasSignedInResult) { result ->
             if ((result as? UseCase.Result.Success)?.data == false) {
                 launchSignInActivityEvent.value = Event(Unit)
             }
         }
 
-        finishActivityEvent.addSource(checkUserHasSignedInResult) { result ->
+        (finishActivityEvent as MediatorLiveData).addSource(checkUserHasSignedInResult) { result ->
             if (result is UseCase.Result.Success) {
                 finishActivityEvent.value = Event(Unit)
             }
         }
 
-        showStartingErrorEvent.addSource(checkUserHasSignedInResult) { result ->
+        (showGeneralErrorEvent as MediatorLiveData).addSource(checkUserHasSignedInResult) { result ->
             if (result is UseCase.Result.Error) {
-                showStartingErrorEvent.value = Event(Unit)
+                showGeneralErrorEvent.value = Event(Unit)
             }
         }
     }

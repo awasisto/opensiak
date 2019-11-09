@@ -31,12 +31,17 @@ class DaysAdapter : RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
 
     lateinit var data: List<ClassSchedule.Day>
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(ItemDayBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(ItemDayBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount(): Int {
+        return data.size
+    }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(data[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(data[position])
+    }
 
     class ViewHolder(private val binding: ItemDayBinding) : RecyclerView.ViewHolder(binding.root) {
 

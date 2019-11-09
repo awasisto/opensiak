@@ -100,6 +100,7 @@
                             android:id="@+id/academicYearsRecyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:paymentInfoAcademicYears="@{viewModel.academicYears}"
                             tools:listitem="@layout/item_payment_info_academic_year"/>

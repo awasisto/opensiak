@@ -24,7 +24,7 @@ import com.wasisto.opensiak.model.StudentProfile
 import org.jsoup.Jsoup
 import javax.inject.Inject
 
-class StudentProfilePageScraper @Inject constructor() : PageScraper<Unit, StudentProfile> {
+class StudentProfilePageScraper @Inject constructor() : PageScraper<Unit, StudentProfile>() {
 
     override fun scrape(credentials: Credentials, params: Unit): StudentProfile {
         val siakHttpClient = SiakHttpClient.get(credentials)
@@ -33,12 +33,9 @@ class StudentProfilePageScraper @Inject constructor() : PageScraper<Unit, Studen
 
         val studentProfileDocument = Jsoup.parse(studentProfileResponse.responseInd.body()!!.string())
 
-        val uiEmailElement = studentProfileDocument.select(
-            "#ti_m1 > table > tbody > tr:nth-child(17) > td:nth-child(2)").first()
+        val uiEmailElement = studentProfileDocument.select("#ti_m1 > table > tbody > tr:nth-child(17) > td:nth-child(2)").first()
         val uiEmail = uiEmailElement.text()
 
-        return StudentProfile(
-            uiEmail = uiEmail
-        )
+        return StudentProfile(uiEmail)
     }
 }

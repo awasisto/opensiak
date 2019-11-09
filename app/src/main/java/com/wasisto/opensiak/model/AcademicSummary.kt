@@ -19,7 +19,7 @@
 
 package com.wasisto.opensiak.model
 
-data class AcademicSummary(
+class AcademicSummary(
     val studentPhotoData: ByteArray,
     val studentId: String,
     val studentName: String,
@@ -49,57 +49,5 @@ data class AcademicSummary(
             val grade: String,
             val count: Int
         )
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        other as AcademicSummary
-        if (!studentPhotoData.contentEquals(other.studentPhotoData)) return false
-        if (studentId != other.studentId) return false
-        if (studentName != other.studentName) return false
-        if (batch != other.batch) return false
-        if (majorInd != other.majorInd) return false
-        if (majorEng != other.majorEng) return false
-        if (degreeInd != other.degreeInd) return false
-        if (degreeEng != other.degreeEng) return false
-        if (academicSupervisor != other.academicSupervisor) return false
-        if (academicStatusInd != other.academicStatusInd) return false
-        if (academicStatusEng != other.academicStatusEng) return false
-        if (totalCreditsPassed != other.totalCreditsPassed) return false
-        if (totalGradePoints != other.totalGradePoints) return false
-        if (cumulativeGpa != other.cumulativeGpa) return false
-        if (totalCreditsEarned != other.totalCreditsEarned) return false
-        if (gradeStatistics != other.gradeStatistics) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = studentPhotoData.contentHashCode()
-        result = 31 * result + studentId.hashCode()
-        result = 31 * result + studentName.hashCode()
-        result = 31 * result + batch
-        result = 31 * result + majorInd.hashCode()
-        result = 31 * result + majorEng.hashCode()
-        result = 31 * result + degreeInd.hashCode()
-        result = 31 * result + degreeEng.hashCode()
-        result = 31 * result + academicSupervisor.hashCode()
-        result = 31 * result + academicStatusInd.hashCode()
-        result = 31 * result + academicStatusEng.hashCode()
-        result = 31 * result + totalCreditsPassed
-        result = 31 * result + totalGradePoints.hashCode()
-        result = 31 * result + cumulativeGpa.hashCode()
-        result = 31 * result + totalCreditsEarned
-        result = 31 * result + gradeStatistics.hashCode()
-        return result
-    }
-
-    override fun toString(): String {
-        return "AcademicSummary(studentId='$studentId', studentName='$studentName', batch=$batch, " +
-                "majorInd='$majorInd', majorEng='$majorEng', degreeInd='$degreeInd', degreeEng='$degreeEng', " +
-                "academicSupervisor=$academicSupervisor, academicStatusInd='$academicStatusInd', " +
-                "academicStatusEng='$academicStatusEng', totalCreditsPassed=$totalCreditsPassed, " +
-                "totalGradePoints=$totalGradePoints, cumulativeGpa=$cumulativeGpa, " +
-                "totalCreditsEarned=$totalCreditsEarned, gradeStatistics=$gradeStatistics)"
     }
 }

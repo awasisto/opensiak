@@ -44,6 +44,7 @@
                 android:layout_height="match_parent"
                 android:paddingTop="16dp"
                 android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:goneUnless="@{viewModel.shouldShowSchedule}"
                 app:days="@{viewModel.days}"

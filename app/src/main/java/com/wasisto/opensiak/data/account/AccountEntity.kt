@@ -25,7 +25,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "accounts")
-data class AccountEntity(
+class AccountEntity(
     @PrimaryKey val username: String,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val encryptedPassword: ByteArray,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val passwordEncryptionIv: ByteArray,
@@ -33,27 +33,4 @@ data class AccountEntity(
     val email: String,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val photoData: ByteArray,
     val lastActive: Date
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        other as AccountEntity
-        if (username != other.username) return false
-        if (!encryptedPassword.contentEquals(other.encryptedPassword)) return false
-        if (name != other.name) return false
-        if (email != other.email) return false
-        if (!photoData.contentEquals(other.photoData)) return false
-        if (lastActive != other.lastActive) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = username.hashCode()
-        result = 31 * result + encryptedPassword.contentHashCode()
-        result = 31 * result + name.hashCode()
-        result = 31 * result + email.hashCode()
-        result = 31 * result + photoData.contentHashCode()
-        result = 31 * result + lastActive.hashCode()
-        return result
-    }
-}
+)

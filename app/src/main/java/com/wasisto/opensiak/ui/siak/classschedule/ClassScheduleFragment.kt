@@ -38,8 +38,7 @@ class ClassScheduleFragment : DaggerFragment() {
     private lateinit var viewModel: ClassScheduleViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(this@ClassScheduleFragment, viewModelFactory)
-            .get(ClassScheduleViewModel::class.java)
+        viewModel = ViewModelProviders.of(this@ClassScheduleFragment, viewModelFactory).get(ClassScheduleViewModel::class.java)
 
         val binding = FragmentClassScheduleBinding.inflate(inflater, container, false).apply {
             viewModel = this@ClassScheduleFragment.viewModel
@@ -52,8 +51,12 @@ class ClassScheduleFragment : DaggerFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        swipeRefreshLayout.setOnRefreshListener { viewModel.onRefresh() }
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.onRefresh()
+        }
 
-        retryButton.setOnClickListener { viewModel.onRefresh() }
+        retryButton.setOnClickListener {
+            viewModel.onRefresh()
+        }
     }
 }

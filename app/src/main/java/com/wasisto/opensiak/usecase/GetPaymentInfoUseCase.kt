@@ -17,20 +17,20 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.data.account
+package com.wasisto.opensiak.usecase
 
-import androidx.room.TypeConverter
-import java.util.*
+import com.wasisto.opensiak.data.account.AccountDataSource
+import com.wasisto.opensiak.data.siakng.SiakNgDataSource
+import com.wasisto.opensiak.model.Credentials
+import com.wasisto.opensiak.model.PaymentInfo
+import javax.inject.Inject
 
-class AccountTypeConverters {
+class GetPaymentInfoUseCase @Inject constructor(
+    private val siakNgDataSource: SiakNgDataSource,
+    private val accountDataSource: AccountDataSource
+) : UseCase<Unit, PaymentInfo> {
 
-    @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return value?.let { Date(it) }
-    }
-
-    @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
+    override fun execute(params: Unit): PaymentInfo {
+        return siakNgDataSource.getPaymentInfo(Credentials.fromAccount(accountDataSource.getLastAccountActive()))
     }
 }

@@ -17,35 +17,20 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.domain
+package com.wasisto.opensiak.usecase
 
 import com.wasisto.opensiak.data.account.AccountDataSource
-import com.wasisto.opensiak.model.Account
 import com.wasisto.opensiak.data.siakng.SiakNgDataSource
+import com.wasisto.opensiak.model.AcademicSummary
 import com.wasisto.opensiak.model.Credentials
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-class SignInUseCase @Inject constructor(
+class GetAcademicSummaryUseCase @Inject constructor(
     private val siakNgDataSource: SiakNgDataSource,
     private val accountDataSource: AccountDataSource
-) : UseCase<Credentials, Unit>() {
+) : UseCase<Unit, AcademicSummary> {
 
-    override fun execute(params: Credentials) {
-        runBlocking {
-            val deferredAcademicSummary = async { siakNgDataSource.getAcademicSummary(credentials = params) }
-            val deferredStudentProfile = async { siakNgDataSource.getStudentProfile(credentials = params) }
-            accountDataSource.add(
-                Account(
-                    username = params.username,
-                    password = params.password,
-                    name = deferredAcademicSummary.await().studentName,
-                    email = deferredStudentProfile.await().uiEmail,
-                    photoData = deferredAcademicSummary.await().studentPhotoData
-                )
-            )
-        }
+    override fun execute(params: Unit): AcademicSummary {
+        return siakNgDataSource.getAcademicSummary(Credentials.fromAccount(accountDataSource.getLastAccountActive()))
     }
 }

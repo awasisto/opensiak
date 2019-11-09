@@ -21,6 +21,7 @@ package com.wasisto.opensiak.di
 
 import android.content.Context
 import androidx.room.Room
+import com.wasisto.opensiak.data.account.AccountDao
 import com.wasisto.opensiak.data.account.AccountDataSource
 import com.wasisto.opensiak.data.account.AccountDataSourceImpl
 import com.wasisto.opensiak.data.account.AccountDatabase
@@ -50,7 +51,8 @@ abstract class DataSourceModule {
         @JvmStatic
         @Singleton
         @Provides
-        fun provideAccountDao(context: Context) =
-            Room.databaseBuilder(context, AccountDatabase::class.java, "accounts.db").build().accountDao()
+        fun provideAccountDao(context: Context): AccountDao {
+            return Room.databaseBuilder(context, AccountDatabase::class.java, "accounts.db").build().accountDao()
+        }
     }
 }

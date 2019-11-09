@@ -24,7 +24,7 @@ import com.wasisto.opensiak.model.PaymentInfo
 import org.jsoup.Jsoup
 import javax.inject.Inject
 
-class PaymentInfoPageScraper @Inject constructor() : PageScraper<Unit, PaymentInfo> {
+class PaymentInfoPageScraper @Inject constructor() : PageScraper<Unit, PaymentInfo>() {
 
     override fun scrape(credentials: Credentials, params: Unit): PaymentInfo {
         val siakHttpClient = SiakHttpClient.get(credentials)
@@ -34,10 +34,8 @@ class PaymentInfoPageScraper @Inject constructor() : PageScraper<Unit, PaymentIn
         val paymentInfoDocumentInd = Jsoup.parse(paymentInfoResponse.responseInd.body()!!.string())
         val paymentInfoDocumentEng = Jsoup.parse(paymentInfoResponse.responseEng.body()!!.string())
 
-        val paymentInfoTableTrElementsInd = paymentInfoDocumentInd.select(
-            "#ti_m1 > table:nth-child(8) > tbody > tr")
-        val paymentInfoTableTrElementsEng = paymentInfoDocumentEng.select(
-            "#ti_m1 > table:nth-child(8) > tbody > tr")
+        val paymentInfoTableTrElementsInd = paymentInfoDocumentInd.select("#ti_m1 > table:nth-child(8) > tbody > tr")
+        val paymentInfoTableTrElementsEng = paymentInfoDocumentEng.select("#ti_m1 > table:nth-child(8) > tbody > tr")
 
         val academicYears = mutableListOf<PaymentInfo.AcademicYear>()
 
@@ -45,14 +43,12 @@ class PaymentInfoPageScraper @Inject constructor() : PageScraper<Unit, PaymentIn
             val paymentInfoTableTrElementInd = paymentInfoTableTrElementsInd[i]
             val paymentInfoTableTrElementEng = paymentInfoTableTrElementsEng[i]
 
-            val academicYearAndTermElement = paymentInfoTableTrElementInd.select(
-                "td:nth-child(1)").first()
+            val academicYearAndTermElement = paymentInfoTableTrElementInd.select("td:nth-child(1)").first()
             val academicYearAndTerm = academicYearAndTermElement.text()
             val splitAcademicYearAndTerm = academicYearAndTerm.split(Regex("/|\\s-\\s"))
             val year1 = splitAcademicYearAndTerm[0].toInt()
             val year2 = splitAcademicYearAndTerm[1].toInt()
-            val academicYear = academicYears.find { it.year1 == year1 && it.year2 == year2 }
-                ?: PaymentInfo.AcademicYear(year1, year2, mutableListOf()).also { academicYears.add(it) }
+            val academicYear = academicYears.find { it.year1 == year1 && it.year2 == year2 } ?: PaymentInfo.AcademicYear(year1, year2, mutableListOf()).also { academicYears.add(it) }
             val term = splitAcademicYearAndTerm[2].toInt()
 
             val statusElementInd = paymentInfoTableTrElementInd.select("td:nth-child(9)").first()
@@ -61,17 +57,9 @@ class PaymentInfoPageScraper @Inject constructor() : PageScraper<Unit, PaymentIn
             val statusElementEng = paymentInfoTableTrElementEng.select("td:nth-child(9)").first()
             val statusEng = statusElementEng.text()
 
-            (academicYear.termPaymentInfoList as MutableList).add(
-                PaymentInfo.AcademicYear.TermPaymentInfo(
-                    term = term,
-                    statusInd = statusInd,
-                    statusEng = statusEng
-                )
-            )
+            (academicYear.termPaymentInfoList as MutableList) += PaymentInfo.AcademicYear.TermPaymentInfo(term, statusInd, statusEng)
         }
 
-        return PaymentInfo(
-            academicYears = academicYears
-        )
+        return PaymentInfo(academicYears)
     }
 }

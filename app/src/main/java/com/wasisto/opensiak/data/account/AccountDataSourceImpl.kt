@@ -22,6 +22,7 @@ package com.wasisto.opensiak.data.account
 import android.database.sqlite.SQLiteConstraintException
 import com.wasisto.androidkeystoreencryption.EncryptionService
 import com.wasisto.androidkeystoreencryption.model.EncryptedDataAndIv
+import com.wasisto.opensiak.exception.AccountAlreadyExistsException
 import com.wasisto.opensiak.model.Account
 
 import javax.inject.Inject
@@ -31,41 +32,55 @@ class AccountDataSourceImpl @Inject constructor(
     private val encryptionService: EncryptionService
 ) : AccountDataSource {
 
-    override fun getAll() = accountDao.getAll().map(this::toAccount)
+    override fun getAll(): List<Account> {
+        return accountDao.getAll().map(this::toAccount)
+    }
 
-    override fun getByEmail(email: String) = accountDao.getByEmail(email).let(this::toAccount)
+    override fun getByEmail(email: String): Account {
+        return accountDao.getByEmail(email).let(this::toAccount)
+    }
 
-    override fun getLastAccountActive() = accountDao.getLastAccountActive().let(this::toAccount)
+    override fun getLastAccountActive(): Account {
+        return accountDao.getLastAccountActive().let(this::toAccount)
+    }
 
-    override fun add(account: Account) = try {
-        accountDao.add(toAccountEntity(account))
-    } catch (e: SQLiteConstraintException) {
-        if (e.message?.contains("unique", true) == true) {
-            throw AccountAlreadyExistsException()
-        } else {
-            throw e
+    override fun add(account: Account) {
+        try {
+            accountDao.add(toAccountEntity(account))
+        } catch (e: SQLiteConstraintException) {
+            if (e.message?.contains("unique", ignoreCase = true) == true) {
+                throw AccountAlreadyExistsException()
+            } else {
+                throw e
+            }
         }
     }
 
-    override fun update(account: Account) = accountDao.update(toAccountEntity(account))
+    override fun update(account: Account) {
+        accountDao.update(toAccountEntity(account))
+    }
 
-    override fun remove(account: Account) = accountDao.remove(toAccountEntity(account))
+    override fun remove(account: Account) {
+        accountDao.remove(toAccountEntity(account))
+    }
 
-    private fun toAccount(accountEntity: AccountEntity): Account = Account(
-        username = accountEntity.username,
-        password = encryptionService.decryptString(
-            EncryptedDataAndIv(
-                accountEntity.encryptedPassword,
-                accountEntity.passwordEncryptionIv
-            )
-        ),
-        name = accountEntity.name,
-        email = accountEntity.email,
-        photoData = accountEntity.photoData,
-        lastActive = accountEntity.lastActive
-    )
+    private fun toAccount(accountEntity: AccountEntity): Account {
+        return Account(
+            username = accountEntity.username,
+            password = encryptionService.decryptString(
+                EncryptedDataAndIv(
+                    accountEntity.encryptedPassword,
+                    accountEntity.passwordEncryptionIv
+                )
+            ),
+            name = accountEntity.name,
+            email = accountEntity.email,
+            photoData = accountEntity.photoData,
+            lastActive = accountEntity.lastActive
+        )
+    }
 
-    private fun toAccountEntity(account: Account): AccountEntity =
+    private fun toAccountEntity(account: Account): AccountEntity {
         with(encryptionService.encrypt(account.password)) {
             return AccountEntity(
                 username = account.username,
@@ -77,4 +92,5 @@ class AccountDataSourceImpl @Inject constructor(
                 lastActive = account.lastActive
             )
         }
+    }
 }

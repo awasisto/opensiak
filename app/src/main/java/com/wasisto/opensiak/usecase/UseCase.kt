@@ -17,15 +17,30 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.domain
+package com.wasisto.opensiak.usecase
 
-import com.wasisto.opensiak.data.account.AccountDataSource
-import com.wasisto.opensiak.model.Account
-import javax.inject.Inject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import kotlinx.coroutines.Dispatchers
 
-class GetActiveAccountUseCase @Inject constructor(
-    private val accountDataSource: AccountDataSource
-) : UseCase<Unit, Account>() {
+interface UseCase<in P, R> {
 
-    override fun execute(params: Unit) = accountDataSource.getLastAccountActive()
+    fun execute(params: P): R
+
+    fun executeAsync(params: P): LiveData<Result<R>> {
+        return liveData(Dispatchers.IO) {
+            emit(Result.Loading)
+            try {
+                emit(Result.Success(execute(params)))
+            } catch (error: Throwable) {
+                emit(Result.Error(error))
+            }
+        }
+    }
+
+    sealed class Result<out T> {
+        class Success<out T>(val data: T) : Result<T>()
+        class Error(val error: Throwable) : Result<Nothing>()
+        object Loading : Result<Nothing>()
+    }
 }

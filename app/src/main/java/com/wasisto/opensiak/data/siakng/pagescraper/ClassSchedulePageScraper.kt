@@ -26,13 +26,12 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalTime
 import javax.inject.Inject
 
-class ClassSchedulePageScraper @Inject constructor() : PageScraper<Unit, ClassSchedule> {
+class ClassSchedulePageScraper @Inject constructor() : PageScraper<Unit, ClassSchedule>() {
 
     override fun scrape(credentials: Credentials, params: Unit): ClassSchedule {
         val siakHttpClient = SiakHttpClient.get(credentials)
 
-        val classScheduleResponse = siakHttpClient.httpGet(
-            "https://academic.ui.ac.id/main/CoursePlan/CoursePlanViewSchedule")
+        val classScheduleResponse = siakHttpClient.httpGet("https://academic.ui.ac.id/main/CoursePlan/CoursePlanViewSchedule")
 
         val classScheduleDocumentInd = Jsoup.parse(classScheduleResponse.responseInd.body()!!.string())
         val classScheduleDocumentEng = Jsoup.parse(classScheduleResponse.responseEng.body()!!.string())
@@ -42,25 +41,25 @@ class ClassSchedulePageScraper @Inject constructor() : PageScraper<Unit, ClassSc
 
         val days = mutableListOf<ClassSchedule.Day>()
 
-        for (i in 1..6) {
-            val dayOfWeek: DayOfWeek = when (i) {
+        for (dayNumber in 1..6) {
+            val dayOfWeek: DayOfWeek = when (dayNumber) {
                 1 -> DayOfWeek.MONDAY
                 2 -> DayOfWeek.TUESDAY
                 3 -> DayOfWeek.WEDNESDAY
                 4 -> DayOfWeek.THURSDAY
                 5 -> DayOfWeek.FRIDAY
                 6 -> DayOfWeek.SATURDAY
-                else -> throw RuntimeException("i: $i")
+                else -> throw RuntimeException("dayNumber: $dayNumber")
             }
 
-            val classElementsInd = dayTdElementsInd[i].select(".sch-inner")
-            val classElementsEng = dayTdElementsEng[i].select(".sch-inner")
+            val classElementsInd = dayTdElementsInd[dayNumber].select(".sch-inner")
+            val classElementsEng = dayTdElementsEng[dayNumber].select(".sch-inner")
 
             val classes = mutableListOf<ClassSchedule.Day.Class>()
 
-            for (j in classElementsInd.indices) {
-                val classElementInd = classElementsInd[j]
-                val classElementEng = classElementsEng[j]
+            for (classElementIndex in classElementsInd.indices) {
+                val classElementInd = classElementsInd[classElementIndex]
+                val classElementEng = classElementsEng[classElementIndex]
 
                 val courseNameAndRoomElementInd = classElementInd.select("p").first()
                 val courseNameAndRoomInd = courseNameAndRoomElementInd.text().split(Regex("\\sRuang:\\s"))
@@ -71,32 +70,22 @@ class ClassSchedulePageScraper @Inject constructor() : PageScraper<Unit, ClassSc
                 val courseNameAndRoomEng = courseNameAndRoomElementEng.text().split(Regex("\\sRoom:\\s"))
                 val classCourseNameEng = courseNameAndRoomEng[0].trim()
 
-                val timeText = classElementInd.select("h3").first().text().replace(
-                    Regex("\\."), ":")
+                val timeText = classElementInd.select("h3").first().text().replace(Regex("\\."), ":")
                 val classStartTime = LocalTime.parse(timeText.substring(0, 5))
                 val classEndTime = LocalTime.parse(timeText.substring(8, 13))
 
-                classes.add(
-                    ClassSchedule.Day.Class(
-                        startTime = classStartTime,
-                        endTime = classEndTime,
-                        courseNameInd = classCourseNameInd,
-                        courseNameEng = classCourseNameEng,
-                        room = classRoom
-                    )
+                classes += ClassSchedule.Day.Class(
+                    classStartTime,
+                    classEndTime,
+                    classCourseNameInd,
+                    classCourseNameEng,
+                    classRoom
                 )
             }
 
-            days.add(
-                ClassSchedule.Day(
-                    dayOfWeek = dayOfWeek,
-                    classes = classes
-                )
-            )
+            days += ClassSchedule.Day(dayOfWeek, classes)
         }
 
-        return ClassSchedule(
-            days = days
-        )
+        return ClassSchedule(days)
     }
 }

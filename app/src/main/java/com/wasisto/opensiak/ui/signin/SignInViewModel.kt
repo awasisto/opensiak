@@ -20,12 +20,11 @@
 package com.wasisto.opensiak.ui.signin
 
 import androidx.lifecycle.*
-import com.wasisto.opensiak.R
-import com.wasisto.opensiak.data.account.AccountAlreadyExistsException
-import com.wasisto.opensiak.data.siakng.AuthenticationFailedException
+import com.wasisto.opensiak.exception.AccountAlreadyExistsException
+import com.wasisto.opensiak.exception.AuthenticationFailedException
 import com.wasisto.opensiak.model.Credentials
-import com.wasisto.opensiak.domain.SignInUseCase
-import com.wasisto.opensiak.domain.UseCase
+import com.wasisto.opensiak.usecase.SignInUseCase
+import com.wasisto.opensiak.usecase.UseCase
 import com.wasisto.opensiak.ui.Event
 import timber.log.Timber
 import java.util.*
@@ -35,21 +34,25 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
 
     private val signInResult = MediatorLiveData<UseCase.Result<Unit>>()
 
-    val username = MutableLiveData<String>()
+    val username: LiveData<String> = MutableLiveData<String>()
 
-    val password = MutableLiveData<String>()
+    val password: LiveData<String> = MutableLiveData<String>()
 
     val isLoading: LiveData<Boolean>
 
     val shouldDisableForm: LiveData<Boolean>
 
-    val launchSiakActivityEvent = MediatorLiveData<Event<Unit>>()
+    val launchSiakActivityEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
-    val finishActivityEvent = MediatorLiveData<Event<Unit>>()
+    val finishActivityEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
-    val showSignInErrorSnackbarEvent = MediatorLiveData<Event<SignInErrorSnackbarEventContent>>()
+    val showWrongUsernameOrPasswordEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
-    val launchAboutActivityEvent = MediatorLiveData<Event<Unit>>()
+    val showAccountAlreadyExistsEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
+
+    val showGeneralSignInErrorEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
+
+    val launchAboutActivityEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
     init {
         isLoading = Transformations.map(signInResult) { result ->
@@ -60,71 +63,57 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
             result is UseCase.Result.Loading || result is UseCase.Result.Success
         }
 
-        launchSiakActivityEvent.addSource(signInResult) { result ->
+        (launchSiakActivityEvent as MediatorLiveData).addSource(signInResult) { result ->
             if (result is UseCase.Result.Success) {
                 launchSiakActivityEvent.value = Event(Unit)
             }
         }
 
-        finishActivityEvent.addSource(signInResult) { result ->
+        (finishActivityEvent as MediatorLiveData).addSource(signInResult) { result ->
             if (result is UseCase.Result.Success) {
                 finishActivityEvent.value = Event(Unit)
             }
         }
 
-        showSignInErrorSnackbarEvent.addSource(signInResult) { result ->
-            if (result is UseCase.Result.Error) {
-                when {
-                    result.error is AuthenticationFailedException ->
-                        showSignInErrorSnackbarEvent.value = Event(
-                            SignInErrorSnackbarEventContent(
-                                messageResId = R.string.wrong_username_or_password,
-                                showRetryButton = false
-                            )
-                        )
-                    result.error is AccountAlreadyExistsException ->
-                        showSignInErrorSnackbarEvent.value = Event(
-                            SignInErrorSnackbarEventContent(
-                                messageResId = R.string.account_already_exists,
-                                showRetryButton = false
-                            )
-                        )
-                    else -> {
-                        Timber.w(result.error)
-                        showSignInErrorSnackbarEvent.value = Event(
-                            SignInErrorSnackbarEventContent(
-                                messageResId = R.string.something_went_wrong,
-                                showRetryButton = true
-                            )
-                        )
-                    }
-                }
+        (showWrongUsernameOrPasswordEvent as MediatorLiveData).addSource(signInResult) { result ->
+            if ((result as? UseCase.Result.Error)?.error is AuthenticationFailedException) {
+                showWrongUsernameOrPasswordEvent.value = Event(Unit)
+            }
+        }
+
+        (showAccountAlreadyExistsEvent as MediatorLiveData).addSource(signInResult) { result ->
+            if ((result as? UseCase.Result.Error)?.error is AccountAlreadyExistsException) {
+                showAccountAlreadyExistsEvent.value = Event(Unit)
+            }
+        }
+
+        (showGeneralSignInErrorEvent as MediatorLiveData).addSource(signInResult) { result ->
+            val error = (result as? UseCase.Result.Error)?.error
+            if (error !is AuthenticationFailedException && error !is AccountAlreadyExistsException) {
+                showGeneralSignInErrorEvent.value = Event(Unit)
             }
         }
     }
 
-    fun onSignInButtonClick() = doSignIn()
-
-    fun onRetrySignInButtonClick() = doSignIn()
-
-    fun onAboutButtonClick() {
-        launchAboutActivityEvent.value = Event(Unit)
+    fun onSignInButtonClick() {
+        signIn()
     }
 
-    private fun doSignIn() {
+    fun onRetrySignInButtonClick() {
+        signIn()
+    }
+
+    fun onAboutButtonClick() {
+        (launchAboutActivityEvent as MediatorLiveData).value = Event(Unit)
+    }
+
+    private fun signIn() {
         val credentials = Credentials(username.value.orEmpty().toLowerCase(Locale.getDefault()), password.value.orEmpty())
         signInResult.addSource(signInUseCase.executeAsync(credentials)) { result ->
-            if (result is UseCase.Result.Success) {
-                Timber.d("result.data: %s", result.data)
-            } else if (result is UseCase.Result.Error) {
+            if (result is UseCase.Result.Error) {
                 Timber.w(result.error)
             }
             signInResult.value = result
         }
     }
-
-    data class SignInErrorSnackbarEventContent(
-        val messageResId: Int,
-        val showRetryButton: Boolean
-    )
 }

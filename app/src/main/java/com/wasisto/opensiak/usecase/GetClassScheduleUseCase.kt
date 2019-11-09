@@ -17,19 +17,20 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.domain
+package com.wasisto.opensiak.usecase
 
 import com.wasisto.opensiak.data.account.AccountDataSource
 import com.wasisto.opensiak.data.siakng.SiakNgDataSource
+import com.wasisto.opensiak.model.ClassSchedule
 import com.wasisto.opensiak.model.Credentials
-import com.wasisto.opensiak.model.PaymentInfo
 import javax.inject.Inject
 
-class GetPaymentInfoUseCase @Inject constructor(
+class GetClassScheduleUseCase @Inject constructor(
     private val siakNgDataSource: SiakNgDataSource,
     private val accountDataSource: AccountDataSource
-) : UseCase<Unit, PaymentInfo>() {
+) : UseCase<Unit, ClassSchedule> {
 
-    override fun execute(params: Unit) =
-        siakNgDataSource.getPaymentInfo(Credentials.fromAccount(accountDataSource.getLastAccountActive()))
+    override fun execute(params: Unit): ClassSchedule {
+        return siakNgDataSource.getClassSchedule(Credentials.fromAccount(accountDataSource.getLastAccountActive()))
+    }
 }

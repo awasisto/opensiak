@@ -34,8 +34,9 @@ class OpenSiakApplication : DaggerApplication() {
         AndroidThreeTen.init(this)
     }
 
-    override fun applicationInjector(): AndroidInjector<OpenSiakApplication> =
-        DaggerApplicationComponent.builder().create(this)
+    override fun applicationInjector(): AndroidInjector<OpenSiakApplication> {
+        return DaggerApplicationComponent.builder().create(this)
+    }
 
     private class ReleaseTree : Timber.Tree() {
         override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {

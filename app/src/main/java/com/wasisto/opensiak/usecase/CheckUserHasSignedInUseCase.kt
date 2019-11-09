@@ -17,14 +17,16 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.domain
+package com.wasisto.opensiak.usecase
 
 import com.wasisto.opensiak.data.account.AccountDataSource
 import javax.inject.Inject
 
 class CheckUserHasSignedInUseCase @Inject constructor(
     private val accountDataSource: AccountDataSource
-) : UseCase<Unit, Boolean>() {
+) : UseCase<Unit, Boolean> {
 
-    override fun execute(params: Unit): Boolean = accountDataSource.getAll().isNotEmpty()
+    override fun execute(params: Unit): Boolean {
+        return accountDataSource.getAll().isNotEmpty()
+    }
 }

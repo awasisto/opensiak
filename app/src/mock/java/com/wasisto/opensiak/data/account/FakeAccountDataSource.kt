@@ -22,6 +22,7 @@ package com.wasisto.opensiak.data.account
 import android.content.Context
 
 import com.wasisto.opensiak.R
+import com.wasisto.opensiak.exception.AccountAlreadyExistsException
 import com.wasisto.opensiak.model.Account
 
 import java.util.Date
@@ -52,12 +53,17 @@ class FakeAccountDataSource @Inject constructor(context: Context) : AccountDataS
         )
     }
 
-    override fun getAll() = accounts.values.toList()
+    override fun getAll(): List<Account> {
+        return accounts.values.toList()
+    }
 
-    override fun getByEmail(email: String) = accounts.getValue(email)
+    override fun getByEmail(email: String): Account {
+        return accounts.getValue(email)
+    }
 
-    override fun getLastAccountActive() = accounts.values.sortedWith(Comparator { account1, account2 ->
-        account2.lastActive.compareTo(account1.lastActive) }).first()
+    override fun getLastAccountActive(): Account {
+        return accounts.values.sortedWith(Comparator { account1, account2 -> account2.lastActive.compareTo(account1.lastActive) }).first()
+    }
 
     override fun add(account: Account) {
         if (accounts.containsKey(account.email)) {

@@ -19,6 +19,7 @@
 
 package com.wasisto.opensiak.ui.about
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.wasisto.opensiak.R
@@ -27,19 +28,19 @@ import javax.inject.Inject
 
 class AboutViewModel @Inject constructor() : ViewModel() {
 
-    val launchBrowserEvent = MutableLiveData<Event<Int>>()
+    val launchBrowserEvent: LiveData<Event<Int>> = MutableLiveData<Event<Int>>()
 
-    val launchOssLicensesMenuActivity = MutableLiveData<Event<Unit>>()
+    val launchOssLicensesMenuActivity: LiveData<Event<Unit>> = MutableLiveData<Event<Unit>>()
 
     fun onPrivacyPolicyButtonClick() {
-        launchBrowserEvent.value = Event(R.string.privacy_policy_url)
+        (launchBrowserEvent as MutableLiveData<Event<Int>>).value = Event(R.string.privacy_policy_url)
     }
 
     fun onOpenSourceLicensesButtonClick() {
-        launchOssLicensesMenuActivity.value = Event(Unit)
+        (launchOssLicensesMenuActivity as MutableLiveData<Event<Unit>>).value = Event(Unit)
     }
 
     fun onSourceCodeButtonClick() {
-        launchBrowserEvent.value = Event(R.string.source_code_url)
+        (launchBrowserEvent as MutableLiveData<Event<Int>>).value = Event(R.string.source_code_url)
     }
 }

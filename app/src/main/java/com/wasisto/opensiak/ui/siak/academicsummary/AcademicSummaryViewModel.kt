@@ -21,9 +21,9 @@ package com.wasisto.opensiak.ui.siak.academicsummary
 
 import androidx.lifecycle.*
 import com.wasisto.opensiak.model.AcademicSummary
-import com.wasisto.opensiak.domain.GetAcademicSummaryUseCase
-import com.wasisto.opensiak.domain.UseCase
-import com.wasisto.opensiak.util.LocaleUtils
+import com.wasisto.opensiak.usecase.GetAcademicSummaryUseCase
+import com.wasisto.opensiak.usecase.UseCase
+import com.wasisto.opensiak.util.isDefaultLocaleLanguageIndonesian
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -35,19 +35,19 @@ class AcademicSummaryViewModel @Inject constructor(
 
     val isLoading: LiveData<Boolean>
 
-    val studentPhotoData = MediatorLiveData<ByteArray>()
+    val studentPhotoData: LiveData<ByteArray> = MediatorLiveData<ByteArray>()
 
-    val studentName = MediatorLiveData<String>()
+    val studentName: LiveData<String> = MediatorLiveData<String>()
 
-    val majorAndDegree = MediatorLiveData<String>()
+    val majorAndDegree: LiveData<String> = MediatorLiveData<String>()
 
-    val cgpa = MediatorLiveData<Float>()
+    val cgpa: LiveData<Float> = MediatorLiveData<Float>()
 
-    val totalCreditsEarned = MediatorLiveData<Int>()
+    val totalCreditsEarned: LiveData<Int> = MediatorLiveData<Int>()
 
-    val gradeCounts = MediatorLiveData<List<AcademicSummary.GradeStatistics.GradeCount>>()
+    val gradeCounts: LiveData<List<AcademicSummary.GradeStatistics.GradeCount>> = MediatorLiveData<List<AcademicSummary.GradeStatistics.GradeCount>>()
 
-    val shouldShowSummary = MediatorLiveData<Boolean>()
+    val shouldShowSummary: LiveData<Boolean> = MediatorLiveData<Boolean>()
 
     val shouldShowError: LiveData<Boolean>
 
@@ -58,21 +58,21 @@ class AcademicSummaryViewModel @Inject constructor(
             result is UseCase.Result.Loading
         }
 
-        studentPhotoData.addSource(getAcademicSummaryResult) { result ->
+        (studentPhotoData as MediatorLiveData).addSource(getAcademicSummaryResult) { result ->
             if (result is UseCase.Result.Success) {
                 studentPhotoData.value = result.data.studentPhotoData
             }
         }
 
-        studentName.addSource(getAcademicSummaryResult) { result ->
+        (studentName as MediatorLiveData).addSource(getAcademicSummaryResult) { result ->
             if (result is UseCase.Result.Success) {
                 studentName.value = result.data.studentName
             }
         }
 
-        majorAndDegree.addSource(getAcademicSummaryResult) { result ->
+        (majorAndDegree as MediatorLiveData).addSource(getAcademicSummaryResult) { result ->
             if (result is UseCase.Result.Success) {
-                if (LocaleUtils.isDefaultLocaleLanguageIndonesian()) {
+                if (isDefaultLocaleLanguageIndonesian()) {
                     majorAndDegree.value = "${result.data.degreeInd} ${result.data.majorInd}"
                 } else {
                     majorAndDegree.value = "${result.data.majorEng} ${result.data.degreeEng}"
@@ -80,19 +80,19 @@ class AcademicSummaryViewModel @Inject constructor(
             }
         }
 
-        cgpa.addSource(getAcademicSummaryResult) { result ->
+        (cgpa as MediatorLiveData).addSource(getAcademicSummaryResult) { result ->
             if (result is UseCase.Result.Success) {
                 cgpa.value = result.data.cumulativeGpa
             }
         }
 
-        totalCreditsEarned.addSource(getAcademicSummaryResult) { result ->
+        (totalCreditsEarned as MediatorLiveData).addSource(getAcademicSummaryResult) { result ->
             if (result is UseCase.Result.Success) {
                 totalCreditsEarned.value = result.data.totalCreditsEarned
             }
         }
 
-        gradeCounts.addSource(getAcademicSummaryResult) { result ->
+        (gradeCounts as MediatorLiveData).addSource(getAcademicSummaryResult) { result ->
             if (result is UseCase.Result.Success) {
                 gradeCounts.value = result.data.gradeStatistics.gradeCounts
             }
@@ -102,7 +102,7 @@ class AcademicSummaryViewModel @Inject constructor(
             result is UseCase.Result.Error
         }
 
-        shouldShowSummary.value = false
+        (shouldShowSummary as MediatorLiveData).value = false
 
         shouldShowSummary.addSource(getAcademicSummaryResult) { result ->
             if (result is UseCase.Result.Success) {
@@ -113,15 +113,16 @@ class AcademicSummaryViewModel @Inject constructor(
         }
     }
 
-    fun onRefresh() = loadAcademicSummary()
+    fun onRefresh() {
+        loadAcademicSummary()
+    }
 
-    private fun loadAcademicSummary() =
+    private fun loadAcademicSummary() {
         getAcademicSummaryResult.addSource(getAcademicSummaryUseCase.executeAsync(Unit)) { result ->
-            if (result is UseCase.Result.Success) {
-                Timber.d("result.data: %s", result.data)
-            } else if (result is UseCase.Result.Error) {
+            if (result is UseCase.Result.Error) {
                 Timber.w(result.error)
             }
             getAcademicSummaryResult.value = result
         }
+    }
 }

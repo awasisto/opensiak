@@ -17,19 +17,6 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.domain
+package com.wasisto.opensiak.exception
 
-import com.wasisto.opensiak.data.account.AccountDataSource
-import com.wasisto.opensiak.data.siakng.SiakNgDataSource
-import com.wasisto.opensiak.model.AcademicSummary
-import com.wasisto.opensiak.model.Credentials
-import javax.inject.Inject
-
-class GetAcademicSummaryUseCase @Inject constructor(
-    private val siakNgDataSource: SiakNgDataSource,
-    private val accountDataSource: AccountDataSource
-) : UseCase<Unit, AcademicSummary>() {
-
-    override fun execute(params: Unit): AcademicSummary =
-        siakNgDataSource.getAcademicSummary(Credentials.fromAccount(accountDataSource.getLastAccountActive()))
-}
+class AuthenticationFailedException : Exception()

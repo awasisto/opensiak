@@ -29,12 +29,17 @@ class AcademicYearsAdapter : RecyclerView.Adapter<AcademicYearsAdapter.ViewHolde
 
     lateinit var data: List<PaymentInfo.AcademicYear>
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(ItemPaymentInfoAcademicYearBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(ItemPaymentInfoAcademicYearBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount(): Int {
+        return data.size
+    }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(data[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(data[position])
+    }
 
     class ViewHolder(private val binding: ItemPaymentInfoAcademicYearBinding) : RecyclerView.ViewHolder(binding.root) {
 

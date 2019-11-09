@@ -22,9 +22,9 @@ package com.wasisto.opensiak.ui.launcher
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
 import com.wasisto.opensiak.R
 import com.wasisto.opensiak.ui.siak.SiakActivity
 import com.wasisto.opensiak.ui.signin.SignInActivity
@@ -41,30 +41,32 @@ class LauncherActivity : DaggerAppCompatActivity() {
 
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LauncherViewModel::class.java)
 
-        viewModel.launchSiakActivityEvent.observe(this, Observer { event ->
+        viewModel.launchSiakActivityEvent.observe(this) { event ->
             if (!event.hasBeenHandled) {
                 startActivity(Intent(this, SiakActivity::class.java))
             }
-        })
+        }
 
-        viewModel.launchSignInActivityEvent.observe(this, Observer { event ->
+        viewModel.launchSignInActivityEvent.observe(this) { event ->
             if (!event.hasBeenHandled) {
                 startActivity(Intent(this, SignInActivity::class.java))
             }
-        })
+        }
 
-        viewModel.finishActivityEvent.observe(this, Observer {
+        viewModel.finishActivityEvent.observe(this) {
             finish()
-        })
+        }
 
-        viewModel.showStartingErrorEvent.observe(this, Observer { event ->
+        viewModel.showGeneralErrorEvent.observe(this) { event ->
             if (!event.hasBeenHandled) {
                 AlertDialog.Builder(this)
                     .setMessage(R.string.starting_error_message)
-                    .setPositiveButton(R.string.close) { _, _ ->  finish() }
+                    .setPositiveButton(R.string.close) { _, _ ->
+                        finish()
+                    }
                     .setCancelable(false)
                     .show()
             }
-        })
+        }
     }
 }

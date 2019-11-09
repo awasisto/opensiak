@@ -17,6 +17,17 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.data.siakng
+package com.wasisto.opensiak.usecase
 
-class AuthenticationFailedException : RuntimeException()
+import com.wasisto.opensiak.data.account.AccountDataSource
+import com.wasisto.opensiak.model.Account
+import javax.inject.Inject
+
+class GetActiveAccountUseCase @Inject constructor(
+    private val accountDataSource: AccountDataSource
+) : UseCase<Unit, Account> {
+
+    override fun execute(params: Unit): Account {
+        return accountDataSource.getLastAccountActive()
+    }
+}

@@ -21,38 +21,11 @@ package com.wasisto.opensiak.model
 
 import java.util.Date
 
-data class Account(
+class Account(
     val username: String,
     val password: String,
     var name: String,
     var email: String,
     var photoData: ByteArray,
     val lastActive: Date = Date()
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        other as Account
-        if (username != other.username) return false
-        if (password != other.password) return false
-        if (name != other.name) return false
-        if (email != other.email) return false
-        if (!photoData.contentEquals(other.photoData)) return false
-        if (lastActive != other.lastActive) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = username.hashCode()
-        result = 31 * result + password.hashCode()
-        result = 31 * result + name.hashCode()
-        result = 31 * result + email.hashCode()
-        result = 31 * result + photoData.contentHashCode()
-        result = 31 * result + lastActive.hashCode()
-        return result
-    }
-
-    override fun toString(): String {
-        return "Account(username='$username', name='$name', email='$email', lastActive=$lastActive)"
-    }
-}
+)

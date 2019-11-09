@@ -22,7 +22,6 @@ package com.wasisto.opensiak.ui.signin
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
@@ -33,6 +32,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.observe
 import com.wasisto.opensiak.databinding.ActivitySignInBinding
 import com.wasisto.opensiak.ui.about.AboutActivity
 import com.wasisto.opensiak.ui.siak.SiakActivity
@@ -59,44 +59,56 @@ class SignInActivity : DaggerAppCompatActivity() {
             aboutButton.visibility = if (isOpen) View.GONE else View.VISIBLE
         }
 
-        viewModel.isLoading.observe(this, Observer { isLoading ->
+        viewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) {
                 currentFocus?.let { view ->
-                    (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.hideSoftInputFromWindow(
-                        view.windowToken, 0)
+                    (getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.hideSoftInputFromWindow(view.windowToken, 0)
                 }
             }
-        })
+        }
 
-        viewModel.launchSiakActivityEvent.observe(this, Observer { event ->
+        viewModel.launchSiakActivityEvent.observe(this) { event ->
             if (!event.hasBeenHandled) {
                 startActivity(Intent(this, SiakActivity::class.java))
             }
-        })
+        }
 
-        viewModel.finishActivityEvent.observe(this, Observer {
+        viewModel.finishActivityEvent.observe(this) {
             finish()
-        })
+        }
 
-        viewModel.showSignInErrorSnackbarEvent.observe(this, Observer { event ->
-            event.getContentIfNotHandled()?.let { content ->
-                val snackbar = Snackbar.make(coordinatorLayout, content.messageResId, Snackbar.LENGTH_LONG)
-                if (content.showRetryButton) {
-                    snackbar.setAction(R.string.retry) {
+        viewModel.showWrongUsernameOrPasswordEvent.observe(this) { event ->
+            if (!event.hasBeenHandled) {
+                Snackbar.make(coordinatorLayout, R.string.wrong_username_or_password, Snackbar.LENGTH_LONG).show()
+            }
+        }
+
+        viewModel.showAccountAlreadyExistsEvent.observe(this) { event ->
+            if (!event.hasBeenHandled) {
+                Snackbar.make(coordinatorLayout, R.string.account_already_exists, Snackbar.LENGTH_LONG).show()
+            }
+        }
+
+        viewModel.showGeneralSignInErrorEvent.observe(this) { event ->
+            if (!event.hasBeenHandled) {
+                Snackbar.make(coordinatorLayout, R.string.something_went_wrong, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.retry) {
                         viewModel.onRetrySignInButtonClick()
                     }
-                    val snackbarAction = snackbar.view.findViewById<TextView>(R.id.snackbar_action)
-                    snackbarAction.isAllCaps = false
-                    snackbarAction.letterSpacing = 0f
-                }
-                snackbar.show()
+                    .apply {
+                        view.findViewById<TextView>(R.id.snackbar_action).apply {
+                            isAllCaps = false
+                            letterSpacing = 0f
+                        }
+                    }
+                    .show()
             }
-        })
+        }
 
-        viewModel.launchAboutActivityEvent.observe(this, Observer { event ->
+        viewModel.launchAboutActivityEvent.observe(this) { event ->
             if (!event.hasBeenHandled) {
                 startActivity(Intent(this, AboutActivity::class.java))
             }
-        })
+        }
     }
 }

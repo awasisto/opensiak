@@ -28,9 +28,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
 import com.google.android.material.navigation.NavigationView
 import com.wasisto.opensiak.R
 import com.wasisto.opensiak.databinding.NavigationDrawerHeaderBinding
@@ -65,13 +65,7 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
             lifecycleOwner = this@SiakActivity
         }
 
-        actionBarDrawerToggle = ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            toolbar,
-            R.string.open_navigation_drawer,
-            R.string.close_navigation_drawer
-        ).apply {
+        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_navigation_drawer, R.string.close_navigation_drawer).apply {
             isDrawerSlideAnimationEnabled = false
             syncState()
         }
@@ -90,53 +84,64 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         navigationView.setCheckedItem(R.id.navigation_academic_summary)
         onNavigationItemSelected(navigationView.menu.findItem(R.id.navigation_academic_summary))
 
-        viewModel.showSignOutConfirmationDialogEvent.observe(this, Observer { event ->
+        viewModel.showSignOutConfirmationDialogEvent.observe(this) { event ->
             if (!event.hasBeenHandled) {
                 AlertDialog.Builder(this)
                     .setMessage(R.string.sign_out_confirmation_dialog_message)
-                    .setPositiveButton(R.string.sign_out) { _, _ -> viewModel.onSignOutConfirmationDialogYesButtonClick() }
-                    .setNegativeButton(R.string.cancel) { _, _ -> }
+                    .setPositiveButton(R.string.sign_out) { _, _ ->
+                        viewModel.onSignOutConfirmationDialogYesButtonClick()
+                    }
+                    .setNegativeButton(R.string.cancel) { _, _ ->
+                    }
                     .show()
             }
-        })
+        }
 
-        viewModel.showStartingErrorEvent.observe(this, Observer { event ->
+        viewModel.showGeneralErrorEvent.observe(this) { event ->
             if (!event.hasBeenHandled) {
                 AlertDialog.Builder(this)
                     .setMessage(R.string.starting_error_message)
-                    .setPositiveButton(R.string.close) { _, _ ->  finish() }
+                    .setPositiveButton(R.string.close) { _, _ ->
+                        finish()
+                    }
                     .setCancelable(false)
                     .show()
             }
-        })
+        }
 
-        viewModel.showSignOutErrorEvent.observe(this, Observer { event ->
+        viewModel.showSignOutErrorEvent.observe(this) { event ->
             if (!event.hasBeenHandled) {
                 AlertDialog.Builder(this)
                     .setMessage(R.string.sign_out_error_message)
-                    .setPositiveButton(R.string.close) { _, _ ->  finish() }
+                    .setPositiveButton(R.string.close) { _, _ ->
+                        finish()
+                    }
                     .setCancelable(false)
                     .show()
             }
-        })
+        }
 
-        viewModel.launchSignInActivityEvent.observe(this, Observer { event ->
+        viewModel.launchSignInActivityEvent.observe(this) { event ->
             if (!event.hasBeenHandled) {
                 startActivity(Intent(this, SignInActivity::class.java))
             }
-        })
+        }
 
-        viewModel.finishActivityEvent.observe(this, Observer {
+        viewModel.finishActivityEvent.observe(this) {
             finish()
-        })
+        }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        android.R.id.home -> {
-            drawerLayout.openDrawer(GravityCompat.START)
-            true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                drawerLayout.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
-        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -176,6 +181,7 @@ class SiakActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) =
-        supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment).commit()
+    private fun replaceFragment(fragment: Fragment): Int {
+        return supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment).commit()
+    }
 }

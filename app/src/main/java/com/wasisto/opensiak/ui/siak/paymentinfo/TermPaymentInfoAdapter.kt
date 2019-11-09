@@ -24,24 +24,29 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wasisto.opensiak.databinding.ItemTermPaymentInfoBinding
 import com.wasisto.opensiak.model.PaymentInfo
-import com.wasisto.opensiak.util.LocaleUtils
+import com.wasisto.opensiak.util.isDefaultLocaleLanguageIndonesian
 
 class TermPaymentInfoAdapter : RecyclerView.Adapter<TermPaymentInfoAdapter.ViewHolder>() {
 
     lateinit var data: List<PaymentInfo.AcademicYear.TermPaymentInfo>
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(ItemTermPaymentInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(ItemTermPaymentInfoBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount(): Int {
+        return data.size
+    }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(data[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(data[position])
+    }
 
     class ViewHolder(private val binding: ItemTermPaymentInfoBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(termPaymentInfo: PaymentInfo.AcademicYear.TermPaymentInfo) {
             binding.term = termPaymentInfo.term.toString()
-            binding.status = if (LocaleUtils.isDefaultLocaleLanguageIndonesian()) {
+            binding.status = if (isDefaultLocaleLanguageIndonesian()) {
                 termPaymentInfo.statusInd.toLowerCase().capitalize()
             } else {
                 termPaymentInfo.statusEng.toLowerCase().capitalize()

@@ -21,11 +21,10 @@ package com.wasisto.opensiak.ui.siak
 
 import androidx.lifecycle.*
 import com.wasisto.opensiak.model.Account
-import com.wasisto.opensiak.domain.GetActiveAccountUseCase
-import com.wasisto.opensiak.domain.SignOutUseCase
-import com.wasisto.opensiak.domain.UseCase
-import com.wasisto.opensiak.domain.UseCase.Result
+import com.wasisto.opensiak.usecase.GetActiveAccountUseCase
+import com.wasisto.opensiak.usecase.SignOutUseCase
 import com.wasisto.opensiak.ui.Event
+import com.wasisto.opensiak.usecase.UseCase
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -34,9 +33,9 @@ class SiakViewModel @Inject constructor(
     private val signOutUseCase: SignOutUseCase
 ): ViewModel() {
 
-    private val getActiveAccountResult = MediatorLiveData<Result<Account>>()
+    private val getActiveAccountResult = MediatorLiveData<UseCase.Result<Account>>()
 
-    private val signOutResult = MediatorLiveData<Result<Unit>>()
+    private val signOutResult = MediatorLiveData<UseCase.Result<Unit>>()
 
     val activeAccountPhotoData: LiveData<ByteArray>
 
@@ -44,82 +43,78 @@ class SiakViewModel @Inject constructor(
 
     val activeAccountEmail: LiveData<String>
 
-    val shouldShowAccountMenu = MutableLiveData<Boolean>()
+    val shouldShowAccountMenu: LiveData<Boolean> = MutableLiveData<Boolean>()
 
-    val showSignOutConfirmationDialogEvent = MutableLiveData<Event<Unit>>()
+    val showSignOutConfirmationDialogEvent: LiveData<Event<Unit>> = MutableLiveData<Event<Unit>>()
 
-    val launchSignInActivityEvent = MediatorLiveData<Event<Unit>>()
+    val launchSignInActivityEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
-    val finishActivityEvent = MediatorLiveData<Event<Unit>>()
+    val finishActivityEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
-    val showSignOutErrorEvent = MediatorLiveData<Event<Unit>>()
+    val showSignOutErrorEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
-    val showStartingErrorEvent = MediatorLiveData<Event<Unit>>()
+    val showGeneralErrorEvent: LiveData<Event<Unit>> = MediatorLiveData<Event<Unit>>()
 
     init {
         getActiveAccountResult.addSource(getActiveAccountUseCase.executeAsync(Unit)) { result ->
-            if (result is UseCase.Result.Success) {
-                Timber.d("result.data: %s", result.data)
-            } else if (result is UseCase.Result.Error) {
+            if (result is UseCase.Result.Error) {
                 Timber.w(result.error)
             }
             getActiveAccountResult.value = result
         }
 
         activeAccountPhotoData = Transformations.map(getActiveAccountResult) { result ->
-            (result as? Result.Success)?.data?.photoData
+            (result as? UseCase.Result.Success)?.data?.photoData
         }
 
         activeAccountName = Transformations.map(getActiveAccountResult) { result ->
-            (result as? Result.Success)?.data?.name
+            (result as? UseCase.Result.Success)?.data?.name
         }
 
         activeAccountEmail = Transformations.map(getActiveAccountResult) { result ->
-            (result as? Result.Success)?.data?.email
+            (result as? UseCase.Result.Success)?.data?.email
         }
 
-        launchSignInActivityEvent.addSource(signOutResult) { result ->
-            if (result is Result.Success) {
+        (launchSignInActivityEvent as MediatorLiveData).addSource(signOutResult) { result ->
+            if (result is UseCase.Result.Success) {
                 launchSignInActivityEvent.value = Event(Unit)
             }
         }
 
-        finishActivityEvent.addSource(signOutResult) { result ->
-            if (result is Result.Success) {
+        (finishActivityEvent as MediatorLiveData).addSource(signOutResult) { result ->
+            if (result is UseCase.Result.Success) {
                 finishActivityEvent.value = Event(Unit)
             }
         }
 
-        showSignOutErrorEvent.addSource(signOutResult) { result ->
-            if (result is Result.Error) {
+        (showSignOutErrorEvent as MediatorLiveData).addSource(signOutResult) { result ->
+            if (result is UseCase.Result.Error) {
                 showSignOutErrorEvent.value = Event(Unit)
             }
         }
 
-        showStartingErrorEvent.addSource(getActiveAccountResult) { result ->
+        (showGeneralErrorEvent as MediatorLiveData).addSource(getActiveAccountResult) { result ->
             if (result is UseCase.Result.Error) {
-                showStartingErrorEvent.value = Event(Unit)
+                showGeneralErrorEvent.value = Event(Unit)
             }
         }
     }
 
     fun onNavigationDrawerClosed() {
-        shouldShowAccountMenu.value = false
+        (shouldShowAccountMenu as MutableLiveData).value = false
     }
 
     fun onShowOrHideAccountMenuButtonClick() {
-        shouldShowAccountMenu.value = shouldShowAccountMenu.value != true
+        (shouldShowAccountMenu as MutableLiveData).value = shouldShowAccountMenu.value != true
     }
 
     fun onSignOutButtonClick() {
-        showSignOutConfirmationDialogEvent.value = Event(Unit)
+        (showSignOutConfirmationDialogEvent as MutableLiveData).value = Event(Unit)
     }
 
     fun onSignOutConfirmationDialogYesButtonClick() {
         signOutResult.addSource(signOutUseCase.executeAsync(Unit)) { result ->
-            if (result is UseCase.Result.Success) {
-                Timber.d("result.data: %s", result.data)
-            } else if (result is UseCase.Result.Error) {
+            if (result is UseCase.Result.Error) {
                 Timber.w(result.error)
             }
             signOutResult.value = result

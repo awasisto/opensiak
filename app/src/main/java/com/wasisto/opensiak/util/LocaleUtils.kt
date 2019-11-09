@@ -21,6 +21,6 @@ package com.wasisto.opensiak.util
 
 import java.util.Locale
 
-object LocaleUtils {
-    fun isDefaultLocaleLanguageIndonesian() = Locale.getDefault().isO3Language == "ind"
+fun isDefaultLocaleLanguageIndonesian(): Boolean {
+    return Locale.getDefault().isO3Language == "ind"
 }

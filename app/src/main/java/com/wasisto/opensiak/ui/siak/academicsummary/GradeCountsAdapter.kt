@@ -30,12 +30,17 @@ class GradeCountsAdapter : RecyclerView.Adapter<GradeCountsAdapter.ViewHolder>()
 
     lateinit var data: List<AcademicSummary.GradeStatistics.GradeCount>
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(ItemGradeCountBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(ItemGradeCountBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount(): Int {
+        return data.size
+    }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(data[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(data[position])
+    }
 
     class ViewHolder(private val binding: ItemGradeCountBinding) : RecyclerView.ViewHolder(binding.root) {
 

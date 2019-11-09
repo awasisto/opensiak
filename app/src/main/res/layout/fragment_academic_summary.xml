@@ -213,6 +213,7 @@
                                 android:id="@+id/gradeCountsRecyclerView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:nestedScrollingEnabled="false"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 app:gradeCounts="@{viewModel.gradeCounts}"
                                 tools:listitem="@layout/item_grade_count"/>

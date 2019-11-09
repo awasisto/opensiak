@@ -24,9 +24,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.wasisto.opensiak.R
 import dagger.android.support.DaggerAppCompatActivity
@@ -53,24 +53,28 @@ class AboutActivity : DaggerAppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        viewModel.launchBrowserEvent.observe(this, Observer { event ->
+        viewModel.launchBrowserEvent.observe(this) { event ->
             event.getContentIfNotHandled()?.let { url ->
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(url))))
             }
-        })
+        }
 
-        viewModel.launchOssLicensesMenuActivity.observe(this, Observer { event ->
+        viewModel.launchOssLicensesMenuActivity.observe(this) { event ->
             if (!event.hasBeenHandled) {
                 startActivity(Intent(this, OssLicensesMenuActivity::class.java))
                 OssLicensesMenuActivity.setActivityTitle(getString(R.string.open_source_licenses))
             }
-        })
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> finish()
-            else -> return super.onOptionsItemSelected(item)
+            android.R.id.home -> {
+                finish()
+            }
+            else -> {
+                return super.onOptionsItemSelected(item)
+            }
         }
         return true
     }

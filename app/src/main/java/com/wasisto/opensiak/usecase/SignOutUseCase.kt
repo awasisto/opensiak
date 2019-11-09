@@ -17,14 +17,16 @@
  * along with OpenSIAK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.wasisto.opensiak.domain
+package com.wasisto.opensiak.usecase
 
 import com.wasisto.opensiak.data.account.AccountDataSource
 import javax.inject.Inject
 
 class SignOutUseCase @Inject constructor(
     private val accountDataSource: AccountDataSource
-) : UseCase<Unit, Unit>() {
+) : UseCase<Unit, Unit> {
 
-    override fun execute(params: Unit) = accountDataSource.remove(accountDataSource.getLastAccountActive())
+    override fun execute(params: Unit) {
+        accountDataSource.remove(accountDataSource.getLastAccountActive())
+    }
 }
