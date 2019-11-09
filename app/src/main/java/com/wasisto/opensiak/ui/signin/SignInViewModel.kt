@@ -34,9 +34,9 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
 
     private val signInResult = MediatorLiveData<UseCase.Result<Unit>>()
 
-    val username: LiveData<String> = MutableLiveData<String>()
+    val username = MutableLiveData<String>()
 
-    val password: LiveData<String> = MutableLiveData<String>()
+    val password = MutableLiveData<String>()
 
     val isLoading: LiveData<Boolean>
 
