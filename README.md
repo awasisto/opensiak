@@ -27,8 +27,8 @@ A Repository layer is implemented for handling data operations. The data come fr
 sources - student data are scraped from the SIAK-NG website using jsoup library, user preferences
 and settings are stored in a local database.
 
-A lightweight domain layer is implemented between the data layer and the presentation layer to
-handle discrete pieces of business logic off the UI thread.
+A use case layer is implemented between the data layer and the presentation layer to handle discrete
+pieces of business logic off the UI thread.
 
 License
 -------
