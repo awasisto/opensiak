@@ -34,6 +34,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "opensiak-$versionName")
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     dataBinding {
         enabled = true
     }
