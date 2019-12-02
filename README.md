@@ -1,7 +1,7 @@
 OpenSIAK
 ========
 
-[![Build Status](https://travis-ci.com/awasisto/opensiak.svg?branch=master)](https://travis-ci.com/awasisto/opensiak)
+[![Build Status](https://travis-ci.com/awasisto/opensiak.svg?branch=develop)](https://travis-ci.com/awasisto/opensiak)
 
 An open source University of Indonesia SIAK-NG Android app.
 
