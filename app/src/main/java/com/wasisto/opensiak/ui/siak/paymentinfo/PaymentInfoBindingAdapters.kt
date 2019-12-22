@@ -19,31 +19,24 @@
 
 package com.wasisto.opensiak.ui.siak.paymentinfo
 
-import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wasisto.opensiak.model.PaymentInfo
 
 @BindingAdapter("paymentInfoAcademicYears")
 fun paymentInfoAcademicYears(recyclerView: RecyclerView, academicYears: List<PaymentInfo.AcademicYear>?) {
-    if (academicYears?.isNotEmpty() == true) {
-        recyclerView.visibility = View.VISIBLE
+    academicYears?.let {
         recyclerView.adapter = (recyclerView.adapter as? AcademicYearsAdapter ?: AcademicYearsAdapter()).apply {
             data = academicYears
         }
-    } else {
-        recyclerView.visibility = View.GONE
     }
 }
 
 @BindingAdapter("termPaymentInfoList")
 fun termPaymentInfoList(recyclerView: RecyclerView, termPaymentInfoList: List<PaymentInfo.AcademicYear.TermPaymentInfo>?) {
-    if (termPaymentInfoList?.isNotEmpty() == true) {
-        recyclerView.visibility = View.VISIBLE
+    termPaymentInfoList?.let {
         recyclerView.adapter = (recyclerView.adapter as? TermPaymentInfoAdapter ?: TermPaymentInfoAdapter()).apply {
             data = termPaymentInfoList
         }
-    } else {
-        recyclerView.visibility = View.GONE
     }
 }

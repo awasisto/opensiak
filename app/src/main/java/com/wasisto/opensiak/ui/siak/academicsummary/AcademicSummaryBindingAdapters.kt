@@ -19,19 +19,15 @@
 
 package com.wasisto.opensiak.ui.siak.academicsummary
 
-import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wasisto.opensiak.model.AcademicSummary
 
 @BindingAdapter("gradeCounts")
 fun gradeCounts(recyclerView: RecyclerView, gradeCounts: List<AcademicSummary.GradeStatistics.GradeCount>?) {
-    if (gradeCounts?.isNotEmpty() == true) {
-        recyclerView.visibility = View.VISIBLE
+    gradeCounts?.let {
         recyclerView.adapter = (recyclerView.adapter as? GradeCountsAdapter ?: GradeCountsAdapter()).apply {
             data = gradeCounts
         }
-    } else {
-        recyclerView.visibility = View.GONE
     }
 }
