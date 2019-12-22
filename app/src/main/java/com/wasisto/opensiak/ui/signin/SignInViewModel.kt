@@ -89,7 +89,7 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
 
         (showGeneralSignInErrorEvent as MediatorLiveData).addSource(signInResult) { result ->
             val error = (result as? UseCase.Result.Error)?.error
-            if (error !is AuthenticationFailedException && error !is AccountAlreadyExistsException) {
+            if (error != null && error !is AuthenticationFailedException && error !is AccountAlreadyExistsException) {
                 showGeneralSignInErrorEvent.value = Event(Unit)
             }
         }
